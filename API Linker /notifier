@@ -1,0 +1,1038 @@
+{
+  "meta": {
+    "instanceId": "5b6bea408c9788a89f8f5dd1d3f7d126a1346707edc3fb68d87f8822d35a3926"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 10
+            }
+          ]
+        }
+      },
+      "id": "fe34941f-1fa8-4755-b811-aaaed96556d3",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        820,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "6d2d0f3d-6434-431a-a81a-0224a91a7da8",
+      "name": "Consume Binance API",
+      "type": "n8n-nodes-binance.binance",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        380
+      ],
+      "credentials": {
+        "binanceApi": {
+          "id": "PeUekcZ7v19Z08xS",
+          "name": "Binance account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "balances",
+        "options": {}
+      },
+      "id": "c61d7583-76c7-4abe-90c6-1c4d48143e30",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        1260,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ Number($json.free) + Number($json.locked)}}",
+              "operation": "larger"
+            }
+          ]
+        }
+      },
+      "id": "7df3d20a-ca4c-4711-b9b2-50c83f4f0428",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "6df490a8-b8be-41c3-8272-6153f6aab388",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1816489083,
+          "mode": "list",
+          "cachedResultName": "Binance assets",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=1816489083"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Date"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "BTC",
+              "displayName": "BTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ETH",
+              "displayName": "ETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "BNB",
+              "displayName": "BNB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "USDT",
+              "displayName": "USDT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRP",
+              "displayName": "XRP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW"
+        }
+      },
+      "id": "129f80b4-83c8-4498-8eb1-834496e81301",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2160,
+        260
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "var assetJson = \" [{\\\"json\\\": {\"\nfor (const item of $input.all()) {\n  var assetAmount = Number(item.json.free) + Number(item.json.locked);\n  assetJson = assetJson + \"\\\"\"+item.json.asset+\"\\\"\" + \": \" + assetAmount+\",\";\n}\nassetJson = assetJson.slice(0,-1) +\"}}]\"\n\nconsole.log(assetJson);\nreturn JSON.parse(assetJson);"
+      },
+      "id": "de358579-6f83-44b5-8edc-dafe3744db01",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1740,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Date",
+              "stringValue": "={{ $today.setLocale('uk').toFormat(\"dd/MM/yyyy\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e22a7017-ca87-4e7c-9f12-48282d979dbf",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1960,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.livecoinwatch.com/coins/single",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "ba41349f-7ae8-4703-98d6-538074a4511b"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "currency",
+              "value": "GBP"
+            },
+            {
+              "name": "code",
+              "value": "={{ $json.asset }}"
+            },
+            {
+              "name": "meta",
+              "value": true
+            },
+            {
+              "name": "offset",
+              "value": 0
+            },
+            {
+              "name": "limit",
+              "value": 2
+            },
+            {
+              "name": "meta",
+              "value": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a7ccb35-1f55-4859-a467-a9ead03757e3",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1760,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "7caa27b5-3894-42f8-a257-82bc99991301",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        1980,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "asset",
+              "stringValue": "={{ $json.asset }}"
+            },
+            {
+              "name": "amount",
+              "type": "numberValue",
+              "numberValue": "={{ Number($json.free)+Number($json.locked) }}"
+            },
+            {
+              "name": "value",
+              "type": "numberValue",
+              "numberValue": "={{ (Number($json.free)+Number($json.locked))*$json.rate }}"
+            },
+            {
+              "name": "free_value",
+              "type": "numberValue",
+              "numberValue": "={{ Number($json.free)*$json.rate }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "35ccc016-19be-4b3e-a2e4-8caf917d4be0",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        2160,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "summarize",
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "sum",
+              "field": "value"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cab68422-05b8-459f-a414-e0e3e63c1dce",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        2160,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.value }}",
+              "operation": "equal",
+              "value2": "={{ $json.free_value }}"
+            }
+          ]
+        }
+      },
+      "id": "8931cc75-11ca-476b-839d-6570aa0cb27a",
+      "name": "IF2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        740
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "e5996dfb-c19a-41ef-8e09-7e759440f316",
+      "name": "not trading this asset",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3060,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var assetJson = \" [{\\\"json\\\": {\"\nfor (const item of $input.all()) {\n  var assetRate = Number(item.json.rate)\n  assetJson = assetJson + \"\\\"\"+item.json.asset+\"\\\"\" + \": \" + assetRate+\",\";\n}\nassetJson = assetJson.slice(0,-1) +\"}}]\"\n\nconsole.log(assetJson);\nreturn JSON.parse(assetJson);"
+      },
+      "id": "a85b5069-0156-42fc-a825-1e4df8dfcc1d",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Date",
+              "stringValue": "={{ $today.setLocale('uk').toFormat(\"dd/MM/yyyy\") }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "589fe6fb-ad90-4700-b0c0-3c4c660b91f3",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        2420,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1920451649,
+          "mode": "list",
+          "cachedResultName": "Asset Rates",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=1920451649"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Date"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "BTC",
+              "displayName": "BTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ETC",
+              "displayName": "ETC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "XRP",
+              "displayName": "XRP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "BNB",
+              "displayName": "BNB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "USDT",
+              "displayName": "USDT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ETH",
+              "displayName": "ETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "cellFormat": "RAW",
+          "locationDefine": {
+            "values": {
+              "headerRow": 6,
+              "firstDataRow": 7
+            }
+          }
+        }
+      },
+      "id": "7574c41b-c63e-4232-a2aa-82ef552a39d6",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2720,
+        440
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1860656954,
+          "mode": "list",
+          "cachedResultName": "eth btc",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=1860656954"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRange",
+              "headerRow": 6,
+              "firstDataRow": "={{ $today.diff(DateTime.fromISO('2023-09-28'), 'days').toObject().days + 7 }}"
+            }
+          }
+        }
+      },
+      "id": "26362531-878d-4c21-bfcb-3999d0fce60b",
+      "name": "Google Sheets2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1260,
+        20
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "priorETH",
+              "type": "numberValue",
+              "numberValue": "={{ $('Google Sheets2').first().json.ETH }}"
+            },
+            {
+              "name": "priorBTC",
+              "type": "numberValue",
+              "numberValue": "={{ $('Google Sheets2').first().json.BTC}}"
+            },
+            {
+              "name": "priorXRP",
+              "type": "numberValue",
+              "numberValue": "={{ $('Google Sheets2').first().json.XRP }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "080e5509-8cac-4c2d-af4b-eaff672c5e73",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1740,
+        20
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "1297d4da-65b5-443f-b33e-e6c5c7cd59a2",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        2160,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "={{ $json.text }}",
+        "priority": 1,
+        "additionalFields": {
+          "html": true,
+          "sound": "cashregister",
+          "title": "Tradebot Notification"
+        }
+      },
+      "id": "18f181a6-262d-4a9f-b2ea-3d53819c0a11",
+      "name": "Pushover2",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        1100
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "02c88620-7144-4ba0-bc86-dc3f1e9c70b8",
+      "name": "Merge2",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        2480,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var assetGBPJson = \" [{\\\"json\\\": {\"\nfor (const item of $input.all()) {\n  var assetAmountGBP = item.json.value;\n  assetGBPJson = assetGBPJson + \"\\\"\"+item.json.asset+\"inGBP\\\"\" + \": \" + assetAmountGBP+\",\";\n}\nassetGBPJson = assetGBPJson.slice(0,-1) +\"}}]\"\n\nconsole.log(assetGBPJson);\nreturn JSON.parse(assetGBPJson);"
+      },
+      "id": "444cd615-10b0-4998-81be-b479fbd0c0f5",
+      "name": "Code3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "1920451649",
+          "mode": "id"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRangeA1",
+              "range": "A1:5"
+            }
+          }
+        }
+      },
+      "id": "76a23bee-a417-47e8-bbce-cfcf3b97e1e2",
+      "name": "Google Sheets3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        3060,
+        440
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "var message = {text:\"\"};\nvar a = $input.first();\nvar averages = $('Google Sheets3').all()\n//Changes Signals\nif (isNaN(a.json.BTC) == false){\n  //BTC Change Signal\n  if (a.json.BTC !== a.json.priorBTC) {\n    message.text = message.text + \"<b>BTC</b> \" + (a.json.BTC -a.json.priorBTC).toFixed(8) + \" / \";\n    if (averages[0].json.BTC > averages[1].json.BTC) {message.text = message.text + \"+\"};\n    message.text = message.text + Math.round(((averages[0].json.BTC - averages[1].json.BTC)/averages[1].json.BTC)*100) + \"% MA7<br>\";\n  };\n  //ETH Change Signal\n  if (a.json.ETH !== a.json.priorETH) {\n    message.text = message.text + \"<b>ETH</b> \" + (a.json.ETH - a.json.priorETH).toFixed(8) + \" / \";\n    if (averages[0].json.ETH > averages[1].json.ETH) {message.text = message.text + \"+\"};\n    message.text = message.text + Math.round(((averages[0].json.ETH - averages[1].json.ETH)/averages[1].json.ETH)*100) + \"% MA7<br>\";\n  };\n  //XRP Change Signal\n  if (a.json.XRP !== a.json.priorXRP) {\n    message.text = message.text + \"<b>XRP</b> \" + (a.json.XRP - a.json.priorXRP).toFixed(8) + \" / \";\n    if (averages[0].json.XRP > averages[1].json.XRP) {message.text = message.text + \"+\"};\n    message.text = message.text + Math.round(((averages[0].json.XRP - averages[1].json.XRP)/averages[1].json.XRP)*100) + \"% MA7<br>\";\n  };\n};\n//BNB Top up Signal\nif ($('Code3').first().json.BNBinGBP < 10) {\n  message.text = message.text + \"<br><br><b>Warning:</b>BNB < £10, top up required.<br>\";\n};\n//Buy signals\n//BTC\nif (averages[1].json.BTC < averages[3].json.BTC) {\n  message.text = message.text + \"<br><b>DCA Alert:</b>BTC under 31 day MA<br>\";\n};\n//ETH\nif (averages[1].json.ETH < averages[3].json.ETH) {\n  message.text = message.text + \"<br><b>DCA >Alert:</b>ETH under 31 day MA<br>\";\n};\n//XRP\nif (averages[1].json.XRP < averages[3].json.XRP) {\n  message.text = message.text + \"<br><b>DCA Alert:</b>XRP under 31 day MA<br>\";\n};\n//Add Inventory Summary if message is to be sent\nif (message.text !== \"\") {\n  message.text = message.text + \"<br>Inventory Status:<br><b>BTC</b> \" + Math.round(($('Code3').first().json.BTCinGBP / a.json.sum_value ) * 100) + \"% / <b>ETH</b> \" + Math.round(($('Code3').first().json.ETHinGBP / a.json.sum_value ) * 100) + \"% / <b>XRP</b> \" + Math.round(($('Code3').first().json.XRPinGBP / a.json.sum_value ) * 100) + \"%<br>\";\n};\nreturn message;\n\n\n\n\n"
+      },
+      "id": "e12676a0-4928-4b74-b628-d11266221ce1",
+      "name": "Code4",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2700,
+        1020
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.text}}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "49d93ac4-cd64-4f3b-a437-ec987de777df",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        1020
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "eaeac6f9-0179-4a5d-817a-80583b4dcdf3",
+      "name": "No Alerts",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        900
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Consume Binance API",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consume Binance API": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF2": {
+      "main": [
+        [
+          {
+            "node": "not trading this asset",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "No Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pushover2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
