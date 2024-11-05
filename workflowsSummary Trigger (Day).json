@@ -1,0 +1,118 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-11-03T10:10:33.171Z",
+  "id": "OLTLs6cIDbsGv1rl",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Summary Trigger (Day)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 12
+            }
+          ]
+        }
+      },
+      "id": "202906fb-2c91-4945-96e8-650a6200ccf5",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        860,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "diEnfRmbqiNJABwb",
+          "mode": "list",
+          "cachedResultName": "Average Price Generator"
+        },
+        "options": {}
+      },
+      "id": "cb4d4e36-5c7c-413b-aaf2-2beda6c8e20b",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1380,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb55fd10-43c4-443a-9ba4-2af26238f72c",
+              "name": "summary_duration",
+              "value": "1 Day",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "249ac175-f6e2-4b1e-8ae7-317110b59636",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1080,
+        800
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger2": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger3": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-11-03T14:44:25.000Z",
+  "versionId": "349606f8-1c96-4634-9913-1c3316c10784"
+}
