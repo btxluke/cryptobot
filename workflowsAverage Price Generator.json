@@ -1,0 +1,994 @@
+{
+  "active": false,
+  "connections": {
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize1": {
+      "main": [
+        [
+          {
+            "node": "Pushover2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "latest_prices",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "assets_usd",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "assets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Summarize1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Pushover2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-20T18:36:48.489Z",
+  "id": "diEnfRmbqiNJABwb",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Average Price Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM trades WHERE time_hr >= now() - INTERVAL '{{ $json.summary_duration }}'",
+        "options": {}
+      },
+      "id": "e89cb973-754e-4b0a-96fe-4845cba88f84",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1480,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "average",
+              "field": "price"
+            },
+            {
+              "aggregation": "sum",
+              "field": "qty"
+            },
+            {
+              "aggregation": "sum",
+              "field": "weighted"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "side,symbol",
+        "options": {}
+      },
+      "id": "6423b032-c166-47fc-92dd-6bb30fb66103",
+      "name": "Summarize",
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5fb065cf-48ac-469e-a89e-f59a85c01f55",
+              "name": "price",
+              "value": "={{ $json.price }}",
+              "type": "number"
+            },
+            {
+              "id": "9facf6b3-90f1-4e75-89a9-4bee972b968a",
+              "name": "qty",
+              "value": "={{ $json.qty }}",
+              "type": "number"
+            },
+            {
+              "id": "fc3e5efa-f3c2-4b67-ada2-f0051fc7a40c",
+              "name": "symbol",
+              "value": "={{ $json.symbol.trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "98912761-009d-4524-91ba-7f299c18c5d0",
+              "name": "side",
+              "value": "={{ $json.isBuyer ? \"BUY\" : \"SELL\"}}",
+              "type": "string"
+            },
+            {
+              "id": "6a78f7f3-86a3-4be6-98ec-4092edfdb1f8",
+              "name": "weighted",
+              "value": "={{ Number($json.price) * Number($json.qty) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9b136e07-ef67-429a-be5b-ad69df2be27c",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1720,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "symbol"
+            },
+            {
+              "fieldName": "side"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0bc0c3ca-312e-4f0f-8c53-5290f8435463",
+      "name": "Sort",
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "32cd418e-f7c1-4267-960a-e3cd20346202",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "6f2e7242-0f8b-41d2-aebf-0dd34097dc36",
+              "name": "average_diff",
+              "value": "={{ ($input.all()[1].json.average_price)-($input.all()[0].json.average_price) }}",
+              "type": "number"
+            },
+            {
+              "id": "1c5485f0-2f35-43dc-af44-75a25142126a",
+              "name": "weighted_diff",
+              "value": "={{ ($input.all()[1].json.weighted_average)-($input.all()[0].json.weighted_average) }}",
+              "type": "number"
+            },
+            {
+              "id": "1e78cdfc-b5da-4548-96a1-737b86ac6409",
+              "name": "inventory_change",
+              "value": "={{ ($input.all()[0].json.sum_qty)-($input.all()[1].json.sum_qty) }}",
+              "type": "number"
+            },
+            {
+              "id": "ab718093-b369-4db2-b5ea-822b8366a2ca",
+              "name": "raw_diff",
+              "value": "={{ ((($input.all()[0].json.weighted_average * $input.all()[0].json.sum_qty) - ($input.all()[1].json.weighted_average * $input.all()[1].json.sum_qty)) / $input.all()[1].json.weighted_average) * $('latest_prices').all()[1].json.price}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "397316a5-7cc1-49fa-a681-af39972ebc8a",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1720,
+        840
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1c4c64f7-f50a-4902-9d3e-f6b7366357d6",
+              "name": "weighted_average",
+              "value": "={{ $json.sum_weighted / $json.sum_qty }}",
+              "type": "number"
+            },
+            {
+              "id": "dc1c071c-a723-4baf-9a9c-758a58c181eb",
+              "name": "side",
+              "value": "={{ $json.side }}",
+              "type": "string"
+            },
+            {
+              "id": "16832e40-0750-41cc-a2a7-f2a8a3677202",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "7ce8537a-f1fa-4375-8b2c-9f573d2ed7c1",
+              "name": "average_price",
+              "value": "={{ $json.average_price }}",
+              "type": "number"
+            },
+            {
+              "id": "c919bb1a-b495-403b-86b1-aab3d5cc9861",
+              "name": "sum_qty",
+              "value": "={{ $json.sum_qty }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "11197f0d-8146-44cc-b966-d76f81ac0f9a",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "32cd418e-f7c1-4267-960a-e3cd20346202",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "c0b8dfec-58f9-4ded-a4ad-3dba5e6f13bf",
+              "name": "taken_profit_USD",
+              "value": "={{ $json.average_price * $json.sum_qty }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d3de4074-1874-4399-a2bd-ed9bd9f8323c",
+      "name": "Edit Fields4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2400,
+        660
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {},
+      "id": "438cd749-ef48-4deb-a76c-588eb2d46bf4",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2020,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1b7218f0-fda4-414b-8737-0b069e10ca3d",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "909cbbfd-26cd-4d51-95e9-bdcd7bf7539e",
+              "name": "realised_profit_USD",
+              "value": "={{ $json.inventory_change < 0 ? \n$json.raw_diff\n: 0 }}",
+              "type": "number"
+            },
+            {
+              "id": "3076666d-5a0c-4b1e-a9c5-1a621f766e68",
+              "name": "unrealised_profit_USD",
+              "value": "={{ $json.inventory_change > 0 ? \n$json.raw_diff\n: 0}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c66586c4-b5f4-4f39-bdc2-e3c42ef40270",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2400,
+        1140
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "67676a07-a6c0-4088-9631-03e826ad99be",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2200,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT symbol, price FROM public.exchange_prices WHERE symbol LIKE '%USDT' ORDER BY time_hr LIMIT 4",
+        "options": {}
+      },
+      "id": "c730d46b-dd79-46dc-aa7c-249bb0483828",
+      "name": "latest_prices",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1480,
+        240
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "32cd418e-f7c1-4267-960a-e3cd20346202",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "6f2e7242-0f8b-41d2-aebf-0dd34097dc36",
+              "name": "average_diff",
+              "value": "={{ ($input.all()[1].json.average_price)-($input.all()[0].json.average_price) }}",
+              "type": "number"
+            },
+            {
+              "id": "1c5485f0-2f35-43dc-af44-75a25142126a",
+              "name": "weighted_diff",
+              "value": "={{ ($input.all()[1].json.weighted_average)-($input.all()[0].json.weighted_average) }}",
+              "type": "number"
+            },
+            {
+              "id": "1e78cdfc-b5da-4548-96a1-737b86ac6409",
+              "name": "inventory_change",
+              "value": "={{ ($input.all()[0].json.sum_qty)-($input.all()[1].json.sum_qty) }}",
+              "type": "number"
+            },
+            {
+              "id": "ab718093-b369-4db2-b5ea-822b8366a2ca",
+              "name": "raw_diff",
+              "value": "={{ ((($input.all()[0].json.weighted_average * $input.all()[0].json.sum_qty) - ($input.all()[1].json.weighted_average * $input.all()[1].json.sum_qty)) / $input.all()[1].json.weighted_average) * $('latest_prices').all()[2].json.price}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b54439ab-6782-43d1-9054-f89c7f182bbd",
+      "name": "Edit Fields5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1720,
+        1060
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "32cd418e-f7c1-4267-960a-e3cd20346202",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "6f2e7242-0f8b-41d2-aebf-0dd34097dc36",
+              "name": "average_diff",
+              "value": "={{ ($input.all()[1].json.average_price)-($input.all()[0].json.average_price) }}",
+              "type": "number"
+            },
+            {
+              "id": "1c5485f0-2f35-43dc-af44-75a25142126a",
+              "name": "weighted_diff",
+              "value": "={{ ($input.all()[1].json.weighted_average)-($input.all()[0].json.weighted_average) }}",
+              "type": "number"
+            },
+            {
+              "id": "1e78cdfc-b5da-4548-96a1-737b86ac6409",
+              "name": "inventory_change",
+              "value": "={{ ($input.all()[0].json.sum_qty)-($input.all()[1].json.sum_qty) }}",
+              "type": "number"
+            },
+            {
+              "id": "ab718093-b369-4db2-b5ea-822b8366a2ca",
+              "name": "raw_diff",
+              "value": "={{ ((($input.all()[1].json.weighted_average * $input.all()[1].json.sum_qty) - \n($input.all()[0].json.weighted_average * $input.all()[0].json.sum_qty)) / \n$input.all()[1].json.weighted_average) \n* $('latest_prices').all()[2].json.price}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fface508-45a0-4747-9763-fe283e87f8b8",
+      "name": "Edit Fields6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1720,
+        1260
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "sum",
+              "field": "realised_profit_USD"
+            },
+            {
+              "aggregation": "sum",
+              "field": "unrealised_profit_USD"
+            },
+            {
+              "aggregation": "sum",
+              "field": "taken_profit_USD"
+            }
+          ]
+        },
+        "options": {
+          "continueIfFieldNotFound": true,
+          "outputFormat": "singleItem"
+        }
+      },
+      "id": "d89438e6-4048-4b9e-b711-0b343b3b97de",
+      "name": "Summarize1",
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1,
+      "position": [
+        3300,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.symbol }}",
+                    "rightValue": "BTCUSDT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3963882e-e449-4851-a599-b660b7ef6194",
+                    "leftValue": "={{ $json.symbol.trim() }}",
+                    "rightValue": "ETHBTC",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ab985a9b-7c87-46b4-bcb7-9a75a86666ed",
+                    "leftValue": "={{ $json.symbol }}",
+                    "rightValue": "XRPBTC",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "339ef3e4-0227-4f30-8637-32fc799f0a41",
+                    "leftValue": "={{ $json.symbol }}",
+                    "rightValue": "XRPETH",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": 0
+        }
+      },
+      "id": "65ac3746-b25b-43c2-9283-ad8dc5803e32",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        740,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "=<b>Actual Profit Taken:</b> ${{ $json.sum_taken_profit_USD ? Math.round($json.sum_taken_profit_USD*100)/100 : 0 }}\n\n<b>Estimated Crypto Asset Gains</b>\nEstimated Realised Value (USD): ${{ $json.sum_realised_profit_USD ? Math.round($json.sum_realised_profit_USD*100)/100 : 0 }}\nEstimated Accumulation Value (USD): {{ $json.sum_unrealised_profit_USD ? Math.round(Math.abs($json.sum_unrealised_profit_USD)*100)/100 : 0 }}\n\n<b>Binance Asset Summary (in USD):</b>  ${{ \nMath.round((\nNumber($('assets_usd').first().json.BTC) + \nNumber($('assets_usd').first().json.ETH )+ \nNumber($('assets_usd').first().json.XRP) + \nNumber($('assets_usd').first().json.USDT) +\nNumber($('assets_usd').first().json.BNB)\n) *100)/100 }}, of which: \nBTC:  ${{ Math.round($('assets_usd').first().json.BTC *100)/100}} ({{ Math.round($('assets').first().json.BTC*100000)/100000 }})\nETH:  ${{ Math.round($('assets_usd').first().json.ETH *100)/100}} ({{ Math.round($('assets').first().json.ETH*100000)/100000 }})\nXRP:  ${{ Math.round($('assets_usd').first().json.XRP *100)/100}} ({{ Math.round($('assets').first().json.XRP*100)/100}})\nUSDT: ${{ Math.round($('assets_usd').first().json.USDT *100)/100}} ({{ Math.round($('assets').first().json.USDT*100)/100}})\nBNB:  ${{ Math.round($('assets_usd').first().json.BNB *100)/100}} ({{ Math.round($('assets').first().json.BNB*10000)/10000}})\n\n",
+        "priority": 1,
+        "additionalFields": {
+          "html": true,
+          "sound": "cashregister",
+          "title": "=Cryptobot Summary ({{ $('Execute Workflow Trigger').item.json.summary_duration }})"
+        }
+      },
+      "id": "aea3961f-1dde-4777-ae35-3bd2e92e7d45",
+      "name": "Pushover2",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        3300,
+        1360
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "0385b84f-3c66-4c05-be5e-36c9da4ec6c0",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        740,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * from public.assets_USD ORDER BY time_hr DESC LIMIT 1",
+        "options": {}
+      },
+      "id": "1015c580-3cfa-49e8-b7c3-337cce3108b0",
+      "name": "assets_usd",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1480,
+        60
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c36dfb77-ede3-4d16-bebe-20a17de78f4e",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c8399a66-d45b-4531-8b3a-6e148777d215",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2860,
+        1140
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "8c79d6be-ead3-4862-9011-1a1210287933",
+      "name": "Merge2",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2640,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4f54a9c-484c-4e46-b76e-ce67ea9462eb",
+              "name": "sum_taken_profit_USD",
+              "value": "={{ $json.taken_profit_USD ? $json.taken_profit_USD : 0 }}",
+              "type": "number"
+            },
+            {
+              "id": "7a6197d2-bb2e-44ff-a5fb-7cedb75f366f",
+              "name": "sum_unrealised_profit_USD",
+              "value": "={{ $json.unrealised_profit_USD ? $json.unrealised_profit_USD : 0 }}",
+              "type": "number"
+            },
+            {
+              "id": "c1b83d99-441e-4e35-a1cc-be5979b33540",
+              "name": "sum_realised_profit_USD",
+              "value": "={{ $json.realised_profit_USD ? $json.realised_profit_USD : 0 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8f341989-c142-4512-91cc-a0f0801202e3",
+      "name": "Edit Fields7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2860,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * from public.assets ORDER BY time_hr DESC LIMIT 1",
+        "options": {}
+      },
+      "id": "30b4189b-23a3-4ab0-a75e-85303094fb07",
+      "name": "assets",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1480,
+        -120
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "summary_duration": "1 Week"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-11-03T14:36:37.000Z",
+  "versionId": "f8527cd1-d4fa-469a-ae20-c558f3e862fa"
+}
