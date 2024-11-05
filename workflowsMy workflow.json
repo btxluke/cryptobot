@@ -1,0 +1,534 @@
+{
+  "active": false,
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query String": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Query String",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-11-01T17:11:53.196Z",
+  "id": "THGs4KMA9dMlVlwW",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a21af7b5-79a1-4f8c-88bc-6a5cc7bbd6b2",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -880,
+        780
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://api.binance.com/api/v3/myTrades",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "symbol",
+              "value": "={{ $json.symbol.trim() }}"
+            },
+            {
+              "name": "=fromId",
+              "value": "={{ $json.fromId }}"
+            },
+            {
+              "name": "signature",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "=timestamp",
+              "value": "={{ $json.timestamp }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c4c7a109-3605-4d16-87af-dcbf270b9183",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        660
+      ],
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "3flt4vHSgwMbnIA8",
+          "name": "Binance Header Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "=symbol={{ $json.symbol.trim() }}&fromId={{ $json.fromId }}&timestamp={{ $json.timestamp }}",
+        "secret": "OiOpVYEpwyNetbOXK85p0kPnrWneFyWk61DqOBzE19hqNtru2eQfDScmITQWaYDh"
+      },
+      "id": "bc962ba4-1ed5-47db-bd21-8bb72ea665af",
+      "name": "Crypto",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        900,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n    {\n    \"symbol\": \"BTCUSDT\"\n  },\n  {\n    \"symbol\": \"ETHUSDT\"\n  },\n  {\n    \"symbol\": \"XRPUSDT\"\n  },\n  {\n    \"symbol\": \"BNBUSDT\"\n  }\n];"
+      },
+      "id": "0e068ce5-bb73-4953-aae2-9cd3a67cc11c",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -800,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9f12ae23-d91a-42fb-851e-846dda79cde4",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -60,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
+              "name": "timestamp",
+              "value": "={{ Date.now() }}",
+              "type": "number"
+            },
+            {
+              "id": "c8fd336c-6d3b-407b-be52-940775ea25c5",
+              "name": "symbol",
+              "value": "={{ $json.symbol.trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "49678578-712b-4ec9-9862-69f469c2c56b",
+              "name": "fromId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "30be482f-33af-4fa2-9c8b-e447dbb8056c",
+      "name": "Query String",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        680,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "trades",
+          "mode": "list",
+          "cachedResultName": "trades"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "isBuyer": false,
+            "isMaker": false,
+            "isBestMatch": false
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "orderListId",
+              "displayName": "orderListId",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "qty",
+              "displayName": "qty",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "quoteQty",
+              "displayName": "quoteQty",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "commission",
+              "displayName": "commission",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "commissionAsset",
+              "displayName": "commissionAsset",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "isBuyer",
+              "displayName": "isBuyer",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "isMaker",
+              "displayName": "isMaker",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "isBestMatch",
+              "displayName": "isBestMatch",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "skipOnConflict": true
+        }
+      },
+      "id": "035e6dd5-b13e-4ef5-859a-01b035f26a0c",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1480,
+        660
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"id\",\"symbol\" FROM public.trades WHERE \"symbol\" = '{{ $('Loop Over Items').item.json.symbol }}' ORDER BY \"id\" DESC LIMIT 1",
+        "options": {}
+      },
+      "id": "6dbd933f-53ed-4816-81e2-e1b8007b2ed8",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        460,
+        660
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "aa737fd6-a6fc-41ac-b85b-34b4183d4304",
+              "leftValue": "={{ $('Postgres1').all().length }}",
+              "rightValue": 500,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "51c9edf0-1d47-4904-94c3-c84e54548160",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1480,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78b3aa70-04a4-483f-8aba-c4c294feb9cd",
+              "name": "time_hr",
+              "value": "={{ DateTime.fromMillis(Number($json.time))  }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "f6195264-3a2b-4dc8-94d4-660ab7bcdfe2",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1320,
+        660
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "53122fe0-0398-4a14-b00a-3640e6a766cc",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-11-01T17:11:53.196Z",
+  "versionId": "bd87d630-1d4a-4bd8-9985-35d0932a4fda"
+}
