@@ -1,0 +1,120 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-11-03T14:46:08.892Z",
+  "id": "XXfwqKOZsKc0sZYa",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Summary Trigger (Month)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtHour": 9,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "ddc7486b-61f8-4d49-aa83-d1bb25d879ab",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        860,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "diEnfRmbqiNJABwb",
+          "mode": "list",
+          "cachedResultName": "Average Price Generator"
+        },
+        "options": {}
+      },
+      "id": "a05c37fc-88c9-4f50-80d0-bdb048fac61a",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1380,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb55fd10-43c4-443a-9ba4-2af26238f72c",
+              "name": "summary_duration",
+              "value": "1 Month",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "751e5a7a-6ee8-4b6a-8b38-3f670c0a2482",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1080,
+        800
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger2": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger3": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-11-03T14:46:39.000Z",
+  "versionId": "2e00f044-82d4-42cf-97cd-92147c21bf20"
+}
