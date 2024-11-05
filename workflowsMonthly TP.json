@@ -1,0 +1,219 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Consume Binance API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consume Binance API": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Consume Binance API1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-09-15T09:28:16.074Z",
+  "id": "DpYm10eGhhQtreEQ",
+  "meta": null,
+  "name": "Monthly TP",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtHour": 4,
+              "triggerAtMinute": 53
+            },
+            {}
+          ]
+        }
+      },
+      "id": "77824f39-affb-440c-b1a9-6cdaefdb38c0",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        820,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "148e948e-247e-4bb0-87f5-3cdc8b29bfdb",
+      "name": "Consume Binance API",
+      "type": "n8n-nodes-binance.binance",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        380
+      ],
+      "credentials": {
+        "binanceApi": {
+          "id": "PeUekcZ7v19Z08xS",
+          "name": "Binance account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.first().json.balances;"
+      },
+      "id": "d1cca799-456a-460c-a207-b962c14301b5",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.asset }}",
+              "value2": "USDT"
+            }
+          ]
+        }
+      },
+      "id": "fc2c5573-01c2-4c10-aa88-587efaac57d3",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "fc019cc3-5ef5-4dff-a808-8d6b207b45f2",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.free }}",
+              "operation": "larger",
+              "value2": 10
+            }
+          ]
+        }
+      },
+      "id": "fdb5b3ae-9dfa-4108-accd-6128211a7626",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        380
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "cf6534d7-6bbc-4796-bf59-7b63d776d271",
+      "name": "Consume Binance API1",
+      "type": "n8n-nodes-binance.binance",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        380
+      ],
+      "credentials": {
+        "binanceApi": {
+          "id": "PeUekcZ7v19Z08xS",
+          "name": "Binance account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.binance.com/sapi/v1/capital/withdraw/apply",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "id": "1fcf1f44-2d11-4894-83af-32ee352b5b5a",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1180,
+        880
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-09-15T09:50:02.000Z",
+  "versionId": "1b79365f-eac1-4f82-9a42-301485c7ed4c"
+}
