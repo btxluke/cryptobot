@@ -1,0 +1,122 @@
+{
+  "active": true,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-11-03T14:44:40.656Z",
+  "id": "oIor41J5ODmSGgZ3",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Summary Trigger (Week)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "812b92c7-2a5a-4370-8c47-d21cd11c4f27",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        860,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "diEnfRmbqiNJABwb",
+          "mode": "list",
+          "cachedResultName": "Average Price Generator"
+        },
+        "options": {}
+      },
+      "id": "aed1f5d8-e538-4fa6-a072-515dea2137d6",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1380,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb55fd10-43c4-443a-9ba4-2af26238f72c",
+              "name": "summary_duration",
+              "value": "1 Week",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0eacad55-ac09-4e03-bbe1-70e00a2dc2c5",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1080,
+        800
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger1": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger2": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger3": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-11-03T14:45:53.000Z",
+  "versionId": "3895a5c3-ee52-460b-ba54-7f5fbf22e4e0"
+}
