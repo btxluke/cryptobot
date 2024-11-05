@@ -1,0 +1,67 @@
+{
+  "active": false,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-10-13T08:31:45.599Z",
+  "id": "ssbrlfAR6Ix0jnFa",
+  "meta": null,
+  "name": "Error Flow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "88902b96-f2f6-4230-9706-8365e9466ffd",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "=<b>{{$json.execution.error.message}}</b>\n{{ $json.execution.error.stack }}",
+        "priority": 0,
+        "additionalFields": {
+          "html": true,
+          "title": "={{ $json.workflow.name }}"
+        }
+      },
+      "id": "7c27f4ce-6034-4c2a-bdaa-5f592b6813a6",
+      "name": "Pushover",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        440
+      ],
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-10-14T06:14:09.000Z",
+  "versionId": "6796e2e4-0649-4ab3-bece-760d9aa7fd67"
+}
