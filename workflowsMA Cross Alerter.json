@@ -134,51 +134,6 @@
         ]
       ]
     },
-    "Switch": {
-      "main": [
-        [
-          {
-            "node": "close_buy",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Postgres1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Pushover2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "close_sell",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Postgres4",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Pushover",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Merge": {
       "main": [
         [
@@ -220,6 +175,51 @@
         [
           {
             "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "close_buy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pushover2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "close_sell",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -296,7 +296,7 @@
     {
       "parameters": {
         "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
-        "message": "=Buy Orders Opened, Sell Orders Closed\n\nPrice: {{ $json.price }}",
+        "message": "=Buy Orders Opened, Sell Orders Closed\n\nPrice: {{ $json.price }}\nRSI: {{ $json.rsi }}",
         "priority": 1,
         "additionalFields": {
           "html": true,
@@ -369,7 +369,7 @@
       "typeVersion": 2.5,
       "position": [
         2200,
-        160
+        180
       ],
       "executeOnce": true,
       "credentials": {
@@ -391,7 +391,7 @@
       "typeVersion": 2.5,
       "position": [
         2200,
-        0
+        20
       ],
       "executeOnce": true,
       "alwaysOutputData": true,
@@ -410,7 +410,7 @@
       "typeVersion": 1,
       "position": [
         2040,
-        0
+        20
       ]
     },
     {
@@ -472,7 +472,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT rsi(array_agg(price ORDER BY time_hr DESC), 14) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}';",
+        "query": "SELECT rsi(array_agg(price), 14) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' AND time_hr >= now() - INTERVAL '74m';",
         "options": {}
       },
       "id": "0575c7a6-67e7-43c5-bcfb-85b589a92c69",
@@ -489,74 +489,6 @@
           "name": "Databot"
         }
       }
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
-                    "leftValue": "={{ $input.all()[0].json.ma_1hr < $input.all()[0].json.ma_6hr && $input.all()[1].json.ma_1hr >= $input.all()[0].json.ma_6hr }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "MA1 < MA6 "
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $input.all()[0].json.ma_1hr > $input.all()[0].json.ma_6hr && $input.all()[1].json.ma_1hr <= $input.all()[0].json.ma_6hr }}",
-                    "rightValue": {},
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "MA1 > MA6"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
-      "name": "Switch",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        1700,
-        340
-      ]
     },
     {
       "parameters": {
@@ -605,7 +537,7 @@
       "typeVersion": 2.2,
       "position": [
         2360,
-        0
+        20
       ]
     },
     {
@@ -683,7 +615,7 @@
           "mappingMode": "defineBelow",
           "value": {
             "id": "={{ $json.id }}",
-            "profit": "={{ 0{{ ((Number($('close_buy').all()[0].json.price) - Number($json.open_price))/Number($json.open_price))*60}} }}",
+            "profit": "={{ ((Number($('close_buy').all()[0].json.price) - Number($json.open_price))/Number($json.open_price))*12000}}",
             "close_rsi": "={{ $('close_buy').all()[0].json.rsi }}",
             "close_price": "={{ $('close_buy').all()[0].json.price }}"
           },
@@ -816,9 +748,9 @@
           "mappingMode": "defineBelow",
           "value": {
             "id": "={{ $json.id }}",
-            "profit": "={{ 0{{ ((Number($('close_buy').all()[0].json.price) - Number($json.open_price))/Number($json.open_price))*60}} }}",
-            "close_rsi": "={{ $('close_buy').all()[0].json.rsi }}",
-            "close_price": "={{ $('close_buy').all()[0].json.price }}"
+            "profit": "={{ ((Number($json.open_price)-Number($('close_sell').all()[0].json.price))/Number($json.open_price))*12000}}",
+            "close_rsi": "={{ $('close_sell').all()[0].json.rsi }}",
+            "close_price": "={{ $('close_sell').all()[0].json.price }}"
           },
           "matchingColumns": [
             "id"
@@ -930,18 +862,86 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
+                    "leftValue": "={{ $input.all()[0].json.ma_1hr < $input.all()[0].json.ma_6hr && $input.all()[1].json.ma_1hr >= $input.all()[0].json.ma_6hr && $json.rsi > 70}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA1 < MA6 "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all()[0].json.ma_1hr > $input.all()[0].json.ma_6hr && $input.all()[1].json.ma_1hr <= $input.all()[0].json.ma_6hr && $json.rsi < 30}}",
+                    "rightValue": {},
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA1 > MA6"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1700,
+        340
+      ]
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none",
+    "saveDataSuccessExecution": "all",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-05T11:46:34.000Z",
-  "versionId": "542ab2f9-b545-44c7-bf0f-78dd39c14445"
+  "updatedAt": "2024-11-05T19:42:13.000Z",
+  "versionId": "c720b6e9-da76-4fc7-aba4-5148d70c1fd5"
 }
