@@ -1,0 +1,287 @@
+{
+  "active": false,
+  "connections": {
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-21T10:47:01.145Z",
+  "id": "GSJ2qhKr4oQfGvcm",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Todays Trades",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT DISTINCT(\"orderId\") FROM public.trades WHERE time_hr >= now() - INTERVAL '24h'\n",
+        "options": {}
+      },
+      "id": "65911ae1-74c7-42d0-9a5a-a6849fcf27d8",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        900,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "field": "symbol"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "symbol",
+        "options": {}
+      },
+      "id": "c1864e0b-cf46-4f3a-89c1-4c7012673724",
+      "name": "Summarize",
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "544036fc-0a2c-4e8e-864a-53e09d7c63b5",
+              "name": "spread_inc",
+              "value": "={{ (($json.count_symbol)-2)/10 > 0 ? ((($json.count_symbol)-2)/10) : 0 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "5d082a03-ac74-45af-a532-3a61eb9857bc",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1700,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 535103209,
+          "mode": "list",
+          "cachedResultName": "Hourly Volitility By Asset",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=535103209"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Hours Ago": "Spread Add",
+            "ETHBTC": "={{ $json.ETHBTC }}",
+            "XRPETH": "={{ $json.XRPETH }}",
+            "XRPBTC": "={{ $json.XRPBTC }}"
+          },
+          "matchingColumns": [
+            "Hours Ago"
+          ],
+          "schema": [
+            {
+              "id": "Hours Ago",
+              "displayName": "Hours Ago",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ETHBTC",
+              "displayName": "ETHBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPBTC",
+              "displayName": "XRPBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPETH",
+              "displayName": "XRPETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1b437eb5-5108-455a-8cf9-d563731c9387",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1280,
+        740
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "var assetJson = \" [{\\\"json\\\": {\"\nfor (const item of $input.all()) {\n  assetJson = assetJson + \"\\\"\"+item.json.symbol.trim()+\"\\\"\" + \": \" + item.json.spread_inc+\",\";\n}\nassetJson = assetJson.slice(0,-1) +\"}}]\"\n\nconsole.log(assetJson);\nreturn JSON.parse(assetJson);"
+      },
+      "id": "76dc562f-4a26-495c-9481-8df8f8dc5e24",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        440
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4734c7af-787f-45b1-ae70-8e798efe032d",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        760,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.trades WHERE \"orderId\" = '{{ $json.orderId }}' LIMIT 1",
+        "options": {}
+      },
+      "id": "cbf60216-5ccd-470e-8d9c-53872c1dfe36",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1120,
+        440
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-11-02T06:58:09.000Z",
+  "versionId": "9888f09b-4558-4907-8421-b3ba4ed0b74e"
+}
