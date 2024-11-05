@@ -472,7 +472,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT rsi(array_agg(price), 12) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}';",
+        "query": "SELECT rsi(array_agg(price ORDER BY time_hr DESC), 14) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}';",
         "options": {}
       },
       "id": "0575c7a6-67e7-43c5-bcfb-85b589a92c69",
@@ -942,6 +942,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-05T09:07:30.000Z",
-  "versionId": "684d5126-2161-4d8f-be3b-de361da4d0b3"
+  "updatedAt": "2024-11-05T11:46:34.000Z",
+  "versionId": "542ab2f9-b545-44c7-bf0f-78dd39c14445"
 }
