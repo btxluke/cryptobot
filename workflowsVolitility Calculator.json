@@ -1,0 +1,905 @@
+{
+  "active": false,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "OrderVals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "ethbtc volitility refresh",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "xrpbtc volitility refresh1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "xrpeth volitility refresh",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-11-14T09:38:09.504Z",
+  "id": "wPxmsKOIBLEsBRga",
+  "meta": null,
+  "name": "Volitility Calculator",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7cd96f88-e3fc-4d66-8de8-f929bce1b569",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        880,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1920451649,
+          "mode": "list",
+          "cachedResultName": "Asset Rates @ Close (GBP)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=1920451649"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRangeA1",
+              "range": "A6:F"
+            }
+          }
+        }
+      },
+      "id": "4373158c-46c3-4fce-babb-b7620bcc4eaa",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1100,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "dateTime": [
+            {
+              "value1": "={{ DateTime.fromFormat($json.Date,\"dd/MM/yyyy\") }}",
+              "value2": "={{ $today.minus({days:2}) }}"
+            }
+          ]
+        }
+      },
+      "id": "a6c63bbc-56f3-4a1e-9159-26a660b5792c",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "BTC",
+              "type": "numberValue",
+              "numberValue": "={{ Math.abs($input.all()[1].json.BTC-$input.all()[0].json.BTC)/$input.all()[0].json.BTC }}"
+            },
+            {
+              "name": "ETH",
+              "type": "numberValue",
+              "numberValue": "={{ Math.abs($input.all()[1].json.ETH-$input.all()[0].json.ETH)/$input.all()[0].json.ETH }}"
+            },
+            {
+              "name": "XRP",
+              "type": "numberValue",
+              "numberValue": "={{ Math.abs($input.all()[1].json.XRP-$input.all()[0].json.XRP)/$input.all()[0].json.XRP }}"
+            },
+            {
+              "name": "BNB",
+              "stringValue": "={{ Math.abs($input.all()[1].json.BNB-$input.all()[0].json.BNB)/$input.all()[0].json.BNB }}"
+            },
+            {
+              "name": "ETHBTC",
+              "type": "numberValue",
+              "numberValue": "={{ Math.abs(($input.all()[0].json.ETH/$input.all()[0].json.BTC)-($input.all()[1].json.ETH/$input.all()[1].json.BTC))/(($input.all()[0].json.ETH/$input.all()[0].json.BTC)) }}"
+            },
+            {
+              "name": "XRPBTC",
+              "type": "numberValue",
+              "numberValue": "={{ Math.abs(($input.all()[0].json.XRP/$input.all()[0].json.BTC)-($input.all()[1].json.XRP/$input.all()[1].json.BTC))/(($input.all()[0].json.XRP/$input.all()[0].json.BTC)) }}"
+            },
+            {
+              "name": "XRPETH",
+              "type": "numberValue",
+              "numberValue": "={{ Math.abs(($input.all()[0].json.XRP/$input.all()[0].json.ETH)-($input.all()[1].json.XRP/$input.all()[1].json.ETH))/(($input.all()[0].json.XRP/$input.all()[0].json.ETH)) }}"
+            },
+            {
+              "name": "Date",
+              "stringValue": "={{ $input.all()[1].json.Date }}"
+            },
+            {
+              "name": "USDT",
+              "type": "numberValue",
+              "numberValue": "={{ Math.abs($input.all()[1].json.USDT-$input.all()[0].json.USDT)/$input.all()[0].json.USDT }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "ad1dbf5d-e3f8-4223-b0ee-444405600e08",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1500,
+        380
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1074799303,
+          "mode": "list",
+          "cachedResultName": "Daily Volitility By Asset",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=1074799303"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "Average 30": "={{ $json.Date }}",
+            "BTC": "={{ $json.BTC }}",
+            "ETH": "={{ $json.ETH }}",
+            "XRP": "={{ $json.XRP }}",
+            "BNB": "={{ $json.BNB }}",
+            "ETHBTC": "={{ $json.ETHBTC }}",
+            "XRPBTC": "={{ $json.XRPBTC }}",
+            "XRPETH": "={{ $json.XRPETH }}"
+          },
+          "matchingColumns": [
+            "Date"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "BTC",
+              "displayName": "BTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ETH",
+              "displayName": "ETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRP",
+              "displayName": "XRP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "BNB",
+              "displayName": "BNB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "USDT",
+              "displayName": "USDT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ETHBTC",
+              "displayName": "ETHBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPBTC",
+              "displayName": "XRPBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPETH",
+              "displayName": "XRPETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "locationDefine": {
+            "values": {
+              "headerRow": 9,
+              "firstDataRow": 10
+            }
+          }
+        }
+      },
+      "id": "362485ff-358e-46f8-a287-33c79257f19c",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1920,
+        380
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=screen -S ethbtc -X stuff \"config ask_spread {{ $json['ETHBTC-spread'] }} \\015 config bid_spread {{ $json['ETHBTC-spread'] }} \\015 config order_amount {{ $('OrderVals').all()[0].json['Trade Val'] }} \\015\" "
+      },
+      "id": "1c7156d3-b9e7-465d-8b37-ef1419008a2e",
+      "name": "ethbtc volitility refresh",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        600
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "sshPassword": {
+          "id": "HLlP7P64bLQy2c0D",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=screen -S xrpbtc -X stuff \"config ask_spread {{ $json['XRPBTC-spread'] }} \\015 config bid_spread {{ $json['XRPBTC-spread'] }} \\015 config order_amount {{ $('OrderVals').all()[2].json['Trade Val'] }} \\015\" "
+      },
+      "id": "2a7b7076-f614-4417-839a-1d83bfe83203",
+      "name": "xrpbtc volitility refresh1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        800
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "HLlP7P64bLQy2c0D",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 535103209,
+          "mode": "list",
+          "cachedResultName": "Hourly Volitility By Asset",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=535103209"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRangeA1",
+              "range": "A1:I8"
+            }
+          }
+        }
+      },
+      "id": "be77816e-aa3d-4149-be9d-39d82c7bf1fa",
+      "name": "Google Sheets2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1500,
+        800
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json['Hours Ago'] }}",
+              "value2": "Suggested Spread"
+            }
+          ]
+        }
+      },
+      "id": "af3bc58c-1e38-442c-a257-79d15b65d2d5",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "ETHBTC-spread",
+              "type": "numberValue",
+              "numberValue": "={{Math.round(($json.ETHBTC)*100000)/1000 > 0.5 ? Math.round(($json.ETHBTC)*100000)/1000 : 0.5 }}"
+            },
+            {
+              "name": "XRPBTC-spread",
+              "type": "numberValue",
+              "numberValue": "={{Math.round(($json.XRPBTC)*100000)/1000 > 0.5 ? Math.round(($json.XRPBTC)*100000)/1000 : 0.5 }}"
+            },
+            {
+              "name": "XRPETH-spread",
+              "type": "numberValue",
+              "numberValue": "={{Math.round(($json.XRPETH)*100000)/1000 > 0.5 ? Math.round(($json.XRPETH)*100000)/1000 : 0.5 }}"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "392d737b-a359-4f09-bb85-6e5ede81f7a2",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1920,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 535103209,
+          "mode": "list",
+          "cachedResultName": "Hourly Volitility By Asset",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=535103209"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Hours Ago": "0",
+            "ETHBTC": "={{ $('IF').all()[1].json.ETH / $('IF').first().json.BTC  }}",
+            "XRPBTC": "={{ $('IF').all()[1].json.XRP / $('IF').first().json.BTC  }}",
+            "XRPETH": "={{ $('IF').all()[1].json.XRP / $('IF').first().json.ETH  }}"
+          },
+          "matchingColumns": [
+            "Hours Ago"
+          ],
+          "schema": [
+            {
+              "id": "Hours Ago",
+              "displayName": "Hours Ago",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ETHBTC",
+              "displayName": "ETHBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPBTC",
+              "displayName": "XRPBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPETH",
+              "displayName": "XRPETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "locationDefine": {
+            "values": {
+              "headerRow": 9,
+              "firstDataRow": 10
+            }
+          }
+        }
+      },
+      "id": "16d9a3bc-2371-4ee2-94e4-baf44b725366",
+      "name": "Google Sheets3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1920,
+        20
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 535103209,
+          "mode": "list",
+          "cachedResultName": "Hourly Volitility By Asset",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=535103209"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRangeA1",
+              "range": "A9:D34"
+            }
+          }
+        }
+      },
+      "id": "f1fb403d-403c-4acb-8424-5eaca3645ec9",
+      "name": "Google Sheets4",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1920,
+        200
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Hours Ago",
+              "type": "numberValue",
+              "numberValue": "={{ $json['Hours Ago'] + 1 }}"
+            }
+          ]
+        },
+        "include": "selected",
+        "includeFields": "ETHBTC,XRPBTC,XRPETH",
+        "options": {}
+      },
+      "id": "c6c3d117-2eab-4672-9764-eb8714bf9963",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        2120,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.ETHBTC }}",
+              "operation": "isNotEmpty"
+            },
+            {
+              "value1": "={{ $json['Hours Ago'] }}",
+              "operation": "smallerEqual",
+              "value2": 24
+            },
+            {
+              "value1": "={{ $json['Hours Ago'] }}",
+              "operation": "larger"
+            }
+          ]
+        }
+      },
+      "id": "ee3324f3-53bd-4b0d-863a-3fffa96c1b0b",
+      "name": "IF2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 535103209,
+          "mode": "list",
+          "cachedResultName": "Hourly Volitility By Asset",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=535103209"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "Hours Ago": "={{ $json['Hours Ago'] }}",
+            "ETHBTC": "={{ $('IF').first().json.ETH / $('IF').first().json.BTC  }}",
+            "XRPBTC": "={{ $('IF').first().json.XRP / $('IF').first().json.BTC  }}",
+            "XRPETH": "={{ $('IF').first().json.XRP / $('IF').first().json.ETH  }}"
+          },
+          "matchingColumns": [
+            "Hours Ago"
+          ],
+          "schema": [
+            {
+              "id": "Hours Ago",
+              "displayName": "Hours Ago",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ETHBTC",
+              "displayName": "ETHBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPBTC",
+              "displayName": "XRPBTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRPETH",
+              "displayName": "XRPETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "locationDefine": {
+            "values": {
+              "headerRow": 9,
+              "firstDataRow": 10
+            }
+          }
+        }
+      },
+      "id": "4b375511-7589-494f-89bc-929c9911ff6a",
+      "name": "Google Sheets5",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2520,
+        200
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=screen -S xrpeth -X stuff \"config ask_spread {{ $json['XRPETH-spread'] }} \\015 config bid_spread {{ $json['XRPETH-spread'] }} \\015 config order_amount {{ $('OrderVals').all()[2].json['Trade Val'] }} \\015\" "
+      },
+      "id": "9e7afdb4-cfbf-454d-9301-defcfd1f94b4",
+      "name": "xrpeth volitility refresh",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        1020
+      ],
+      "credentials": {
+        "sshPassword": {
+          "id": "HLlP7P64bLQy2c0D",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
+          "mode": "list",
+          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1860656954,
+          "mode": "list",
+          "cachedResultName": "eth btc",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=1860656954"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRangeA1",
+              "range": "AA2:AA5"
+            }
+          }
+        }
+      },
+      "id": "c85bf2dd-311e-41b7-ad11-0189452a771e",
+      "name": "OrderVals",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1100,
+        160
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "MCsNWA7c8RPHz3yK",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-04-29T15:23:01.000Z",
+  "versionId": "6888163a-7936-4984-b964-ca0cdec92006"
+}
