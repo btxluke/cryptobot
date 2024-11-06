@@ -43,22 +43,12 @@
       "main": [
         [
           {
-            "node": "Google Sheets1",
+            "node": "Postgres",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Google Sheets2",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Google Sheets3",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Google Sheets4",
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           }
@@ -140,11 +130,57 @@
           }
         ]
       ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres2": {
+      "main": [
+        [
+          {
+            "node": "ethbtc volitility refresh1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OrderVals": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Postgres3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-11-14T09:38:09.504Z",
   "id": "wPxmsKOIBLEsBRga",
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Volitility Calculator",
   "nodes": [
     {
@@ -411,7 +447,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1920,
+        2360,
         380
       ],
       "credentials": {
@@ -430,7 +466,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2160,
+        2600,
         600
       ],
       "executeOnce": true,
@@ -450,7 +486,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2160,
+        2600,
         800
       ],
       "credentials": {
@@ -490,7 +526,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1500,
+        1940,
         800
       ],
       "credentials": {
@@ -516,7 +552,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1720,
+        2160,
         800
       ]
     },
@@ -549,7 +585,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        1920,
+        2360,
         800
       ]
     },
@@ -635,7 +671,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1920,
+        2360,
         20
       ],
       "credentials": {
@@ -675,7 +711,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1920,
+        2360,
         200
       ],
       "credentials": {
@@ -705,7 +741,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        2120,
+        2560,
         200
       ]
     },
@@ -734,7 +770,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2340,
+        2780,
         200
       ]
     },
@@ -820,7 +856,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        2520,
+        2960,
         200
       ],
       "credentials": {
@@ -839,7 +875,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2160,
+        2600,
         1020
       ],
       "credentials": {
@@ -888,6 +924,141 @@
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT symbol,MAX(price),MIN(price) FROM public.exchange_prices WHERE time_hr >= now() - INTERVAL'120m' AND symbol NOT LIKE '%USDT' GROUP BY symbol ORDER BY symbol DESC",
+        "options": {}
+      },
+      "id": "1db56821-e0d3-456f-9f9e-8549d3e7c2e5",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2360,
+        -160
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE public.spot_volitility SET \n  \"max\" = {{ $json.max }},\n  \"min\" = {{ $json.min }}\nWHERE symbol = '{{ $json.symbol.trim() }}';",
+        "options": {}
+      },
+      "id": "415779ec-d9aa-497f-a507-6248ec5aebf4",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2580,
+        -160
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.spot_volitility;",
+        "options": {}
+      },
+      "id": "30538135-7db1-454d-b552-35693713bb85",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1940,
+        1160
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=screen -S {{ $json.symbol.trim().toLowerCase() }} -X stuff \"config ask_spread {{ $json.spread }} \\015 config bid_spread {{ $json.spread }} \\015 config order_amount {{ $json.order_val }} \\015\" "
+      },
+      "id": "9cadda8d-39b1-478c-a891-7235e247e11f",
+      "name": "ethbtc volitility refresh1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        1160
+      ],
+      "executeOnce": false,
+      "credentials": {
+        "sshPassword": {
+          "id": "HLlP7P64bLQy2c0D",
+          "name": "SSH Password account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0f7edc00-f0a3-40ab-82d0-e3848498e295",
+              "name": "row_number",
+              "value": "={{ $json.row_number == 2 ? \"ETH\" : $json.row_number == 3 ? \"BTC\" : \"XRP\"  }}",
+              "type": "string"
+            },
+            {
+              "id": "b23bbb75-7736-4fec-b816-c136e1a14a1e",
+              "name": "trade_val",
+              "value": "={{ Math.round(Number($json['Trade Val'])*10000)/10000 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "8a9067f8-861b-42f7-8cc9-a3d89e724942",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1320,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE public.spot_volitility SET\n  order_val =  {{$json.trade_val }}\nWHERE symbol LIKE '{{ $json.row_number }}%'",
+        "options": {}
+      },
+      "id": "83d62466-343f-48a4-9269-75036bc6f8a5",
+      "name": "Postgres3",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1500,
+        160
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -900,6 +1071,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-04-29T15:23:01.000Z",
-  "versionId": "6888163a-7936-4984-b964-ca0cdec92006"
+  "updatedAt": "2024-11-06T19:16:29.000Z",
+  "versionId": "18b29812-dfb9-401e-a22c-eda73bb7990b"
 }
