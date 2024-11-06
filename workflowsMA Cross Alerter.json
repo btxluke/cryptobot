@@ -878,7 +878,7 @@
                 "conditions": [
                   {
                     "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
-                    "leftValue": "={{ $input.all()[0].json.ma_1hr < $input.all()[0].json.ma_6hr && $input.all()[1].json.ma_1hr >= $input.all()[0].json.ma_6hr && $json.rsi > 70}}",
+                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.ma_1hr && $input.all()[1].json.price >= $input.all()[0].json.ma_1hr }}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -902,7 +902,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $input.all()[0].json.ma_1hr > $input.all()[0].json.ma_6hr && $input.all()[1].json.ma_1hr <= $input.all()[0].json.ma_6hr && $json.rsi < 30}}",
+                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.ma_1hr && $input.all()[1].json.price <= $input.all()[0].json.ma_1hr}}",
                     "rightValue": {},
                     "operator": {
                       "type": "boolean",
@@ -942,6 +942,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-05T19:42:13.000Z",
-  "versionId": "c720b6e9-da76-4fc7-aba4-5148d70c1fd5"
+  "updatedAt": "2024-11-06T08:37:43.000Z",
+  "versionId": "7520ec0d-7428-4b6b-a36c-cd360037436a"
 }
