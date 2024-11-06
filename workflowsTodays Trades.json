@@ -30,6 +30,11 @@
             "node": "Code",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Postgres2",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -235,7 +240,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1920,
+        2140,
         440
       ]
     },
@@ -270,6 +275,88 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "spot_volitility",
+          "mode": "list",
+          "cachedResultName": "spot_volitility"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "symbol": "={{ $json.symbol }}",
+            "multiplier": "={{ $json.spread_inc }}"
+          },
+          "matchingColumns": [
+            "symbol"
+          ],
+          "schema": [
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "min",
+              "displayName": "min",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "max",
+              "displayName": "max",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "multiplier",
+              "displayName": "multiplier",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f89e0607-e739-4278-a0a9-e1d2f6e877f4",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1900,
+        280
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -282,6 +369,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-02T06:58:09.000Z",
-  "versionId": "9888f09b-4558-4907-8421-b3ba4ed0b74e"
+  "updatedAt": "2024-11-06T18:38:19.000Z",
+  "versionId": "71dbf5f7-0f07-4c86-bb98-34cc8930a3f7"
 }
