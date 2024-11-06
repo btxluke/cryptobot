@@ -328,7 +328,8 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes"
+              "field": "seconds",
+              "secondsInterval": 120
             }
           ]
         }
@@ -1269,6 +1270,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-04T09:41:49.000Z",
-  "versionId": "2fa0a0c9-ffea-4d69-a5ec-753facdd0a1f"
+  "updatedAt": "2024-11-06T19:25:06.000Z",
+  "versionId": "63627a1e-fdd0-48ce-83ef-ca534b42f45f"
 }
