@@ -95,7 +95,10 @@
   ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": {
     "node:Schedule Trigger": {
@@ -113,6 +116,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-03T14:44:25.000Z",
-  "versionId": "349606f8-1c96-4634-9913-1c3316c10784"
+  "updatedAt": "2024-11-07T17:36:06.000Z",
+  "versionId": "54cc818f-4d16-4377-b311-c6398b44ed2d"
 }
