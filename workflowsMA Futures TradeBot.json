@@ -252,7 +252,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT a.symbol,a.time_hr,a.price, \n       AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 30 PRECEDING AND CURRENT ROW)\n       AS ma_1hr,\n\t   AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 180 PRECEDING AND CURRENT ROW)\n       AS ma_6hr\n\tFROM public.exchange_prices a \n\tWHERE symbol = '{{ $json.symbol }}'\n    ORDER BY time_hr DESC\n    LIMIT 2",
+        "query": "SELECT a.symbol,a.time_hr,a.price, \n       AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 60 PRECEDING AND CURRENT ROW)\n       AS ma_1hr,\n\t   AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 180 PRECEDING AND CURRENT ROW)\n       AS ma_3hr\n\tFROM public.exchange_prices a \n\tWHERE symbol = '{{ $json.symbol }}'\n    ORDER BY time_hr DESC\n    LIMIT 2",
         "options": {}
       },
       "id": "c781a026-a0b3-4bf9-a6bf-00e4df49e744",
@@ -489,7 +489,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT rsi(array_agg(price), 30) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' AND time_hr >= now() - INTERVAL '74m';",
+        "query": "SELECT rsi(array_agg(price), 60) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' AND time_hr >= now() - INTERVAL '60m';",
         "options": {}
       },
       "id": "0575c7a6-67e7-43c5-bcfb-85b589a92c69",
@@ -1125,6 +1125,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-07T08:04:51.000Z",
-  "versionId": "03dc5c4d-54d7-4be6-95f9-966c26b87a2b"
+  "updatedAt": "2024-11-07T17:30:43.000Z",
+  "versionId": "94f07f0a-6b41-49f1-b1f9-c69c2cb61800"
 }
