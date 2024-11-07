@@ -329,7 +329,7 @@
           "interval": [
             {
               "field": "seconds",
-              "secondsInterval": 120
+              "secondsInterval": 60
             }
           ]
         }
@@ -1270,6 +1270,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-06T19:25:06.000Z",
-  "versionId": "63627a1e-fdd0-48ce-83ef-ca534b42f45f"
+  "updatedAt": "2024-11-07T17:30:57.000Z",
+  "versionId": "72bc785f-c84c-4626-aae6-656eea9b3704"
 }
