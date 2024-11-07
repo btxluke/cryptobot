@@ -1,0 +1,1130 @@
+{
+  "active": false,
+  "connections": {
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pushover2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pushover": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "close_buy": {
+      "main": [
+        [
+          {
+            "node": "Postgres2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres5": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "close_sell": {
+      "main": [
+        [
+          {
+            "node": "Postgres5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres7": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Postgres8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Postgres9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "close_buy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pushover2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "close_sell",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-11-04T09:08:40.818Z",
+  "id": "DZXDaMK2Qv2dCyGG",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "MA Futures TradeBot",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT a.symbol,a.time_hr,a.price, \n       AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 30 PRECEDING AND CURRENT ROW)\n       AS ma_1hr,\n\t   AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 180 PRECEDING AND CURRENT ROW)\n       AS ma_6hr\n\tFROM public.exchange_prices a \n\tWHERE symbol = '{{ $json.symbol }}'\n    ORDER BY time_hr DESC\n    LIMIT 2",
+        "options": {}
+      },
+      "id": "c781a026-a0b3-4bf9-a6bf-00e4df49e744",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1560,
+        340
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "6d8de072-a4f8-48e6-a4aa-61217a05d630",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        440,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "=Sell Orders Opened, Buy Orders Closed.\n\nPrice: {{ $json.price }}\nRSI: {{ $json.rsi }}",
+        "priority": 1,
+        "additionalFields": {
+          "html": true,
+          "sound": "cashregister",
+          "title": "={{ $json.symbol }} MA1 Cross Up"
+        }
+      },
+      "id": "44c74100-196e-4f49-a77e-9ebabc19b905",
+      "name": "Pushover2",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        320
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "=Buy Orders Opened, Sell Orders Closed\n\nPrice: {{ $json.price }}\nRSI: {{ $json.rsi }}",
+        "priority": 1,
+        "additionalFields": {
+          "html": true,
+          "sound": "cashregister",
+          "title": "={{ $json.symbol }} MA Cross Down"
+        }
+      },
+      "id": "fa65ffb4-bc2c-4e15-abd9-f8b86c830564",
+      "name": "Pushover",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        1120
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n{\n\"symbol\": \n\"BTCUSDT\"\n},\n{\n\"symbol\": \n\"ETHUSDT\"\n},\n{\n\"symbol\": \n\"XRPUSDT\"\n}\n];"
+      },
+      "id": "96456034-53be-4015-b95b-bc32e31bebbf",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b3611ed3-6b49-49d2-978f-196b1cf39d94",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1100,
+        140
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7dc88108-cf39-4167-9c25-119b503b3df7",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO public.futures_orders (symbol,time_hr,side,open_price,open_rsi) VALUES ('{{ $json.symbol }}','{{ $now.toISO() }}','SELL','{{ $json.price }}',{{ $json.rsi }})",
+        "options": {}
+      },
+      "id": "871e7775-3301-4f21-ab11-b4371a6e8c88",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2420,
+        180
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.futures_orders WHERE symbol = '{{ $json.symbol }}' AND side = 'BUY'  ORDER BY time_hr DESC LIMIT 1",
+        "options": {}
+      },
+      "id": "1a3b3271-b52f-4301-8b5d-5ea1901abd54",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2420,
+        20
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "f26ff8a9-f3fa-47a0-9bfb-7295dd22759e",
+      "name": "close_buy",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO public.futures_orders (symbol,time_hr,side,open_price,open_rsi) VALUES ('{{ $json.symbol }}','{{ $now.toISO() }}','BUY','{{ $json.price }}',{{ $json.rsi }})",
+        "options": {}
+      },
+      "id": "cb9a8ed6-edab-4490-9378-3e0683c39252",
+      "name": "Postgres4",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2420,
+        960
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.futures_orders WHERE symbol = '{{ $json.symbol }}' AND side = 'SELL' ORDER BY time_hr DESC LIMIT 1",
+        "options": {}
+      },
+      "id": "e6d57964-7933-4148-917c-98cdb72d48fc",
+      "name": "Postgres5",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2420,
+        800
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "05e06930-8e2b-40e3-b544-7ff66dc49913",
+      "name": "close_sell",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT rsi(array_agg(price), 30) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' AND time_hr >= now() - INTERVAL '74m';",
+        "options": {}
+      },
+      "id": "0575c7a6-67e7-43c5-bcfb-85b589a92c69",
+      "name": "Postgres7",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1560,
+        160
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "00b14358-eeed-4bb6-977b-6650004d4353",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1740,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f78fafdb-9f7b-4548-93b0-68ed038b3f63",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "e85921cf-0283-44f2-afd5-441334a26248",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2580,
+        20
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "093fb508-0031-4b79-a350-a5cb43410987",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3120,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f78fafdb-9f7b-4548-93b0-68ed038b3f63",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "30be01a2-a7b7-4905-b163-896fbc053e19",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2580,
+        800
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a973dd35-5a1e-427d-b5d0-109f297eacf2",
+      "name": "No Operation, do nothing2",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3100,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "futures_orders",
+          "mode": "list",
+          "cachedResultName": "futures_orders"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "profit": "={{ ((Number($('close_buy').all()[0].json.price) - Number($json.open_price))/Number($json.open_price))*((Number($('globals').first().json.asset_total) / 10)*Number($('globals').first().json.leverage))}}",
+            "close_rsi": "={{ $('close_buy').all()[0].json.rsi }}",
+            "close_price": "={{ $('close_buy').all()[0].json.price }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time_hr",
+              "displayName": "time_hr",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "side",
+              "displayName": "side",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "open_price",
+              "displayName": "open_price",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "close_price",
+              "displayName": "close_price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "profit",
+              "displayName": "profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "open_rsi",
+              "displayName": "open_rsi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "close_rsi",
+              "displayName": "close_rsi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d100df78-86f7-4484-8e84-f592dd638a58",
+      "name": "Postgres8",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3120,
+        0
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "futures_orders",
+          "mode": "list",
+          "cachedResultName": "futures_orders"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "profit": "={{ ((Number($json.open_price)-Number($('close_sell').all()[0].json.price))/Number($json.open_price))*(($('globals').first().json.asset_total/10)*$('globals').first().json.leverage)}}",
+            "close_rsi": "={{ $('close_sell').all()[0].json.rsi }}",
+            "close_price": "={{ $('close_sell').all()[0].json.price }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time_hr",
+              "displayName": "time_hr",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "side",
+              "displayName": "side",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "open_price",
+              "displayName": "open_price",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "close_price",
+              "displayName": "close_price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "profit",
+              "displayName": "profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "open_rsi",
+              "displayName": "open_rsi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "close_rsi",
+              "displayName": "close_rsi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "812ff9d7-fec2-449f-a86f-d2a0f2c73739",
+      "name": "Postgres9",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3100,
+        800
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
+                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.ma_1hr && $input.all()[1].json.price >= $input.all()[1].json.ma_1hr }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA1 < MA6 "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.ma_1hr && $input.all()[1].json.price <= $input.all()[1].json.ma_1hr}}",
+                    "rightValue": {},
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA1 > MA6"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1920,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.config_futures",
+        "options": {}
+      },
+      "id": "89cd5fba-30e5-4341-b111-40011966afb3",
+      "name": "globals",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        880,
+        220
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "config_futures",
+          "mode": "list",
+          "cachedResultName": "config_futures"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": 1,
+            "asset_total": "={{ Number($('globals').first().json.asset_total) + ((Number($('close_buy').all()[0].json.price) - Number($json.open_price))/Number($json.open_price))*((Number($('globals').first().json.asset_total) / 10)*Number($('globals').first().json.leverage))}}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "asset_total",
+              "displayName": "asset_total",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "leverage",
+              "displayName": "leverage",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "992f3546-10f0-4152-8023-0e2edff9525d",
+      "name": "Postgres3",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3120,
+        -220
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "config_futures",
+          "mode": "list",
+          "cachedResultName": "config_futures"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": 1,
+            "asset_total": "={{ Number($('globals').first().json.asset_total) + ((Number($json.open_price)-Number($('close_sell').all()[0].json.price))/Number($json.open_price))*((Number($('globals').first().json.asset_total)/10)*Number($('globals').first().json.leverage)) }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "asset_total",
+              "displayName": "asset_total",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "leverage",
+              "displayName": "leverage",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b5b99a6e-cdee-4281-bd33-02b60b586fd4",
+      "name": "Postgres6",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3100,
+        620
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "saveDataErrorExecution": "all"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-11-07T08:04:51.000Z",
+  "versionId": "03dc5c4d-54d7-4be6-95f9-966c26b87a2b"
+}
