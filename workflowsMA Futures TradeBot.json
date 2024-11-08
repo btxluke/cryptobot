@@ -62,28 +62,6 @@
         ]
       ]
     },
-    "Pushover2": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Pushover": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Postgres2": {
       "main": [
         [
@@ -200,17 +178,14 @@
       "main": [
         [
           {
-            "node": "close_buy",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "Postgres1",
             "type": "main",
             "index": 0
-          },
+          }
+        ],
+        [
           {
-            "node": "Pushover2",
+            "node": "Postgres4",
             "type": "main",
             "index": 0
           }
@@ -220,14 +195,11 @@
             "node": "close_sell",
             "type": "main",
             "index": 0
-          },
+          }
+        ],
+        [
           {
-            "node": "Postgres4",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Pushover",
+            "node": "close_buy",
             "type": "main",
             "index": 0
           }
@@ -283,62 +255,6 @@
     },
     {
       "parameters": {
-        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
-        "message": "=Sell Orders Opened, Buy Orders Closed.\n\nPrice: {{ $json.price }}\nRSI: {{ $json.rsi }}",
-        "priority": 1,
-        "additionalFields": {
-          "html": true,
-          "sound": "cashregister",
-          "title": "={{ $json.symbol }} MA1 Cross Up"
-        }
-      },
-      "id": "44c74100-196e-4f49-a77e-9ebabc19b905",
-      "name": "Pushover2",
-      "type": "n8n-nodes-base.pushover",
-      "typeVersion": 1,
-      "position": [
-        2420,
-        320
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "pushoverApi": {
-          "id": "qmm7O1MHQ9s5cH25",
-          "name": "Pushover account"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
-        "message": "=Buy Orders Opened, Sell Orders Closed\n\nPrice: {{ $json.price }}\nRSI: {{ $json.rsi }}",
-        "priority": 1,
-        "additionalFields": {
-          "html": true,
-          "sound": "cashregister",
-          "title": "={{ $json.symbol }} MA Cross Down"
-        }
-      },
-      "id": "fa65ffb4-bc2c-4e15-abd9-f8b86c830564",
-      "name": "Pushover",
-      "type": "n8n-nodes-base.pushover",
-      "typeVersion": 1,
-      "position": [
-        2420,
-        1120
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "pushoverApi": {
-          "id": "qmm7O1MHQ9s5cH25",
-          "name": "Pushover account"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "jsCode": "return [\n{\n\"symbol\": \n\"BTCUSDT\"\n},\n{\n\"symbol\": \n\"ETHUSDT\"\n},\n{\n\"symbol\": \n\"XRPUSDT\"\n}\n];"
       },
       "id": "96456034-53be-4015-b95b-bc32e31bebbf",
@@ -386,7 +302,7 @@
       "typeVersion": 2.5,
       "position": [
         2420,
-        180
+        860
       ],
       "executeOnce": true,
       "credentials": {
@@ -442,7 +358,7 @@
       "typeVersion": 2.5,
       "position": [
         2420,
-        960
+        1060
       ],
       "executeOnce": true,
       "credentials": {
@@ -463,8 +379,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2420,
-        800
+        2440,
+        560
       ],
       "executeOnce": true,
       "alwaysOutputData": true,
@@ -482,8 +398,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2260,
-        800
+        2280,
+        560
       ]
     },
     {
@@ -599,8 +515,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2580,
-        800
+        2600,
+        560
       ]
     },
     {
@@ -610,8 +526,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3100,
-        1000
+        3120,
+        760
       ]
     },
     {
@@ -869,8 +785,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3100,
-        800
+        3120,
+        560
       ],
       "executeOnce": true,
       "credentials": {
@@ -879,74 +795,6 @@
           "name": "Databot"
         }
       }
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
-                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.ma_1hr && $input.all()[1].json.price >= $input.all()[1].json.ma_1hr }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "MA1 < MA6 "
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.ma_1hr && $input.all()[1].json.price <= $input.all()[1].json.ma_1hr}}",
-                    "rightValue": {},
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "MA1 > MA6"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
-      "name": "Switch",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        1920,
-        340
-      ]
     },
     {
       "parameters": {
@@ -1103,8 +951,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3100,
-        620
+        3120,
+        380
       ],
       "credentials": {
         "postgres": {
@@ -1112,12 +960,131 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
+                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.ma_1hr * 0.999 && $input.all()[1].json.price >= $input.all()[1].json.ma_1hr * 0.999}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Open Sell"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.ma_1hr * 1.001 && $input.all()[1].json.price <= $input.all()[1].json.ma_1hr * 1.001 }}",
+                    "rightValue": {},
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Open Buy"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
+                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.ma_1hr * 0.999 && $input.all()[1].json.price <= $input.all()[1].json.ma_1hr * 0.999}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Close Sell"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b0697279-0654-4e2f-9e70-b3ac0e66ea18",
+                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.ma_1hr * 1.001 && $input.all()[1].json.price >= $input.all()[1].json.ma_1hr* 1.001 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Close Buy"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1920,
+        340
+      ]
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none",
+    "saveDataSuccessExecution": "all",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
     "saveDataErrorExecution": "all"
@@ -1125,6 +1092,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-07T17:30:43.000Z",
-  "versionId": "94f07f0a-6b41-49f1-b1f9-c69c2cb61800"
+  "updatedAt": "2024-11-08T09:05:42.000Z",
+  "versionId": "b13bc430-ea63-4bf4-bc86-fcd4eff84ea0"
 }
