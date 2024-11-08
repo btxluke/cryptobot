@@ -117,17 +117,6 @@
         ]
       ]
     },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If": {
       "main": [
         [
@@ -174,6 +163,17 @@
         ]
       ]
     },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Switch": {
       "main": [
         [
@@ -212,6 +212,17 @@
           }
         ]
       ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-11-04T09:08:40.818Z",
@@ -224,7 +235,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT a.symbol,a.time_hr,a.price, \n       AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 60 PRECEDING AND CURRENT ROW)\n       AS ma_1hr,\n\t   AVG(a.price)\n       OVER(ORDER BY a.time_hr ROWS BETWEEN 180 PRECEDING AND CURRENT ROW)\n       AS ma_3hr\n\tFROM public.exchange_prices a \n\tWHERE symbol = '{{ $json.symbol }}'\n    ORDER BY time_hr DESC\n    LIMIT 2",
+        "query": "SELECT * FROM get_bollinger_bands('{{ $json.symbol }}') LIMIT 2",
         "options": {}
       },
       "id": "c781a026-a0b3-4bf9-a6bf-00e4df49e744",
@@ -232,7 +243,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1560,
+        1400,
         340
       ],
       "credentials": {
@@ -301,7 +312,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2420,
+        2640,
         860
       ],
       "executeOnce": true,
@@ -323,7 +334,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2420,
+        2640,
         20
       ],
       "executeOnce": true,
@@ -342,7 +353,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2260,
+        2480,
         20
       ]
     },
@@ -357,7 +368,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2420,
+        2640,
         1060
       ],
       "executeOnce": true,
@@ -379,7 +390,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2440,
+        2660,
         560
       ],
       "executeOnce": true,
@@ -398,7 +409,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2280,
+        2500,
         560
       ]
     },
@@ -413,7 +424,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1560,
+        1400,
         160
       ],
       "credentials": {
@@ -422,21 +433,6 @@
           "name": "Databot"
         }
       }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineAll",
-        "options": {}
-      },
-      "id": "00b14358-eeed-4bb6-977b-6650004d4353",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        1740,
-        240
-      ]
     },
     {
       "parameters": {
@@ -469,7 +465,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2580,
+        2800,
         20
       ]
     },
@@ -480,7 +476,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3120,
+        3340,
         180
       ]
     },
@@ -515,7 +511,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2600,
+        2820,
         560
       ]
     },
@@ -526,7 +522,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3120,
+        3340,
         760
       ]
     },
@@ -652,7 +648,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3120,
+        3340,
         0
       ],
       "executeOnce": true,
@@ -785,7 +781,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3120,
+        3340,
         560
       ],
       "executeOnce": true,
@@ -879,7 +875,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3120,
+        3340,
         -220
       ],
       "credentials": {
@@ -951,7 +947,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3120,
+        3340,
         380
       ],
       "credentials": {
@@ -960,6 +956,21 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "00b14358-eeed-4bb6-977b-6650004d4353",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1600,
+        240
+      ]
     },
     {
       "parameters": {
@@ -976,7 +987,7 @@
                 "conditions": [
                   {
                     "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
-                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.ma_1hr * 0.999 && $input.all()[1].json.price >= $input.all()[1].json.ma_1hr * 0.999}}",
+                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.lower_band && $input.all()[1].json.price >= $input.all()[1].json.lower_band }}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -1000,7 +1011,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.ma_1hr * 1.001 && $input.all()[1].json.price <= $input.all()[1].json.ma_1hr * 1.001 }}",
+                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.upper_band && $input.all()[1].json.price <= $input.all()[1].json.upper_band }}",
                     "rightValue": {},
                     "operator": {
                       "type": "boolean",
@@ -1025,7 +1036,7 @@
                 "conditions": [
                   {
                     "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
-                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.ma_1hr * 0.999 && $input.all()[1].json.price <= $input.all()[1].json.ma_1hr * 0.999}}",
+                    "leftValue": "={{ $input.all()[0].json.price > $input.all()[0].json.lower_band && $input.all()[1].json.price <= $input.all()[1].json.lower_band}}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -1050,7 +1061,7 @@
                 "conditions": [
                   {
                     "id": "b0697279-0654-4e2f-9e70-b3ac0e66ea18",
-                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.ma_1hr * 1.001 && $input.all()[1].json.price >= $input.all()[1].json.ma_1hr* 1.001 }}",
+                    "leftValue": "={{ $input.all()[0].json.price < $input.all()[0].json.upper_band && $input.all()[1].json.price >= $input.all()[1].json.upper_band }}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -1076,15 +1087,74 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1920,
+        2140,
         340
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d64131dc-c6fa-47bb-ba35-5f2d2de444e3",
+              "name": "rsi",
+              "value": "={{ $json.rsi }}",
+              "type": "number"
+            },
+            {
+              "id": "6eab440f-61a8-402e-be07-26dad8d74c91",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "c5c302fb-f588-4b48-b4be-5f1ea11b0df7",
+              "name": "time_hr",
+              "value": "={{ $json.time_hr }}",
+              "type": "string"
+            },
+            {
+              "id": "a3d3d6fa-7141-45dd-a2ce-63f73e0f1f9e",
+              "name": "price",
+              "value": "={{ $json.price }}",
+              "type": "number"
+            },
+            {
+              "id": "bec81519-b208-4321-8924-c773b58b6815",
+              "name": "moving_average",
+              "value": "={{ $json.moving_average }}",
+              "type": "number"
+            },
+            {
+              "id": "df565cc0-0cfe-419f-af7a-ef9c0790d25a",
+              "name": "upper_band",
+              "value": "={{ $json.upper_band }}",
+              "type": "number"
+            },
+            {
+              "id": "4a59e5f5-b1cd-43ef-a67d-3b16e2c9590f",
+              "name": "lower_band",
+              "value": "={{ $json.lower_band }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5cd34df6-1c05-497f-bda4-66e0c971322b",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1820,
+        240
       ]
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "all",
+    "saveDataSuccessExecution": "none",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
     "saveDataErrorExecution": "all"
@@ -1092,6 +1162,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-08T09:05:42.000Z",
-  "versionId": "b13bc430-ea63-4bf4-bc86-fcd4eff84ea0"
+  "updatedAt": "2024-11-08T17:24:28.000Z",
+  "versionId": "5336332e-d8e5-438e-a14a-ba7647a65422"
 }
