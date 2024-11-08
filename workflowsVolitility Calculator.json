@@ -13,6 +13,11 @@
             "node": "OrderVals",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "variables_in",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -146,7 +151,7 @@
       "main": [
         [
           {
-            "node": "ethbtc volitility refresh1",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -173,6 +178,29 @@
             "index": 0
           }
         ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "ethbtc volitility refresh1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "variables_in": {
+      "main": [
+        []
       ]
     }
   },
@@ -224,7 +252,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1100,
+        1320,
         380
       ],
       "credentials": {
@@ -250,7 +278,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1320,
+        1540,
         380
       ]
     },
@@ -311,7 +339,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        1500,
+        1720,
         380
       ],
       "executeOnce": true
@@ -466,8 +494,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2600,
-        600
+        3020,
+        540
       ],
       "executeOnce": true,
       "credentials": {
@@ -486,8 +514,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2600,
-        800
+        3020,
+        740
       ],
       "credentials": {
         "sshPassword": {
@@ -526,8 +554,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1940,
-        800
+        2360,
+        740
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -552,8 +580,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2160,
-        800
+        2580,
+        740
       ]
     },
     {
@@ -585,8 +613,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        2360,
-        800
+        2780,
+        740
       ]
     },
     {
@@ -875,8 +903,8 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2600,
-        1020
+        3020,
+        960
       ],
       "credentials": {
         "sshPassword": {
@@ -915,8 +943,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1100,
-        160
+        1320,
+        -40
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -936,7 +964,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2360,
+        2800,
         -160
       ],
       "credentials": {
@@ -957,7 +985,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2580,
+        3020,
         -160
       ],
       "credentials": {
@@ -970,7 +998,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT * FROM public.spot_volitility;",
+        "query": "SELECT * FROM public.spot_volitility ORDER BY symbol ASC;",
         "options": {}
       },
       "id": "30538135-7db1-454d-b552-35693713bb85",
@@ -978,7 +1006,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1940,
+        2160,
         1160
       ],
       "executeOnce": true,
@@ -998,7 +1026,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2160,
+        2680,
         1160
       ],
       "executeOnce": false,
@@ -1007,7 +1035,8 @@
           "id": "HLlP7P64bLQy2c0D",
           "name": "SSH Password account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1035,8 +1064,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1320,
-        160
+        1540,
+        -40
       ]
     },
     {
@@ -1050,8 +1079,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1500,
-        160
+        1720,
+        -40
       ],
       "credentials": {
         "postgres": {
@@ -1059,6 +1088,81 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "49d5aec3-df04-41a2-8e8f-3c7bae0ddc43",
+              "leftValue": "={{ Number($json.order_val) }}",
+              "rightValue": "={{ Number($('variables_in').all()[$itemIndex].json.order_val) }}",
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "25e9b14b-8a9f-4ba4-9fbe-7e12ffafce44",
+              "leftValue": "={{ Number($json.spread) }}",
+              "rightValue": "={{ Number($('variables_in').all()[$itemIndex].json.spread) }}",
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "bda9897e-bec7-4b4d-b7e1-62e04899fdd7",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2380,
+        1160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.spot_volitility ORDER BY symbol ASC;",
+        "options": {}
+      },
+      "id": "f39cec94-dce0-401a-998b-5222ef6ab3ba",
+      "name": "variables_in",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1320,
+        160
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "ed0d7813-a02a-4494-8bc5-1023adc13374",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        1400
+      ]
     }
   ],
   "pinData": {},
@@ -1071,6 +1175,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-06T19:16:29.000Z",
-  "versionId": "18b29812-dfb9-401e-a22c-eda73bb7990b"
+  "updatedAt": "2024-11-08T07:57:28.000Z",
+  "versionId": "9473328e-b37b-4871-8e62-c0a4d8882ba9"
 }
