@@ -293,7 +293,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "symbol": "={{ $json.symbol }}",
+            "symbol": "={{ $json.symbol.trim() }}",
             "multiplier": "={{ $json.spread_inc }}"
           },
           "matchingColumns": [
@@ -369,6 +369,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-06T18:38:19.000Z",
-  "versionId": "71dbf5f7-0f07-4c86-bb98-34cc8930a3f7"
+  "updatedAt": "2024-11-09T08:51:35.000Z",
+  "versionId": "640a439e-e8ee-4163-883c-2f11318d98cf"
 }
