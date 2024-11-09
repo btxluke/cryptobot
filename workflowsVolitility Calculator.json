@@ -197,11 +197,6 @@
           }
         ]
       ]
-    },
-    "variables_in": {
-      "main": [
-        []
-      ]
     }
   },
   "createdAt": "2023-11-14T09:38:09.504Z",
@@ -956,7 +951,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT symbol,MAX(price),MIN(price) FROM public.exchange_prices WHERE time_hr >= now() - INTERVAL'120m' AND symbol NOT LIKE '%USDT' GROUP BY symbol ORDER BY symbol DESC",
+        "query": "SELECT symbol,MAX(price),MIN(price), AVG(price) FROM public.exchange_prices WHERE time_hr >= now() - INTERVAL'120m' AND symbol NOT LIKE '%USDT' GROUP BY symbol ORDER BY symbol DESC",
         "options": {}
       },
       "id": "1db56821-e0d3-456f-9f9e-8549d3e7c2e5",
@@ -977,7 +972,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "UPDATE public.spot_volitility SET \n  \"max\" = {{ $json.max }},\n  \"min\" = {{ $json.min }}\nWHERE symbol = '{{ $json.symbol.trim() }}';",
+        "query": "UPDATE public.spot_volitility SET \n  \"max\" = {{ $json.max }},\n  \"min\" = {{ $json.min }},\n  \"average\" = {{ $json.avg }}\nWHERE symbol = '{{ $json.symbol.trim() }}';",
         "options": {}
       },
       "id": "415779ec-d9aa-497f-a507-6248ec5aebf4",
@@ -1019,7 +1014,7 @@
     },
     {
       "parameters": {
-        "command": "=screen -S {{ $json.symbol.trim().toLowerCase() }} -X stuff \"config ask_spread {{ $json.spread }} \\015 config bid_spread {{ $json.spread }} \\015 config order_amount {{ $json.order_val }} \\015\" "
+        "command": "=screen -S {{ $json.symbol.trim().toLowerCase() }} -X stuff \"config ask_spread {{ Number($json.spread_up)*2 }} \\015 config bid_spread {{ Number($json.spread_down)*2 }} \\015 config order_amount {{ $json.order_val }} \\015\" "
       },
       "id": "9cadda8d-39b1-478c-a891-7235e247e11f",
       "name": "ethbtc volitility refresh1",
@@ -1035,8 +1030,7 @@
           "id": "HLlP7P64bLQy2c0D",
           "name": "SSH Password account"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1110,8 +1104,17 @@
             },
             {
               "id": "25e9b14b-8a9f-4ba4-9fbe-7e12ffafce44",
-              "leftValue": "={{ Number($json.spread) }}",
-              "rightValue": "={{ Number($('variables_in').all()[$itemIndex].json.spread) }}",
+              "leftValue": "={{ Number($json.spread_up) }}",
+              "rightValue": "={{ Number($('variables_in').all()[$itemIndex].json.spread_up) }}",
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "2b3ccd83-0b40-4b1e-b131-f3ce5cb41662",
+              "leftValue": "={{ Number($json.spread_down) }}",
+              "rightValue": "={{ Number($('variables_in').all()[$itemIndex].json.spread_down) }}",
               "operator": {
                 "type": "number",
                 "operation": "notEquals"
@@ -1143,7 +1146,7 @@
       "typeVersion": 2.5,
       "position": [
         1320,
-        160
+        -260
       ],
       "executeOnce": true,
       "credentials": {
@@ -1175,6 +1178,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-08T07:57:28.000Z",
-  "versionId": "9473328e-b37b-4871-8e62-c0a4d8882ba9"
+  "updatedAt": "2024-11-09T09:30:06.000Z",
+  "versionId": "963c22aa-0094-450b-b20a-1565ab932630"
 }
