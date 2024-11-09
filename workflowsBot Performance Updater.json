@@ -328,8 +328,7 @@
         "rule": {
           "interval": [
             {
-              "field": "seconds",
-              "secondsInterval": 60
+              "field": "seconds"
             }
           ]
         }
@@ -1114,7 +1113,8 @@
         1280,
         1360
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -1130,10 +1130,11 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.1,
       "position": [
-        1500,
+        1560,
         1360
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -1248,10 +1249,11 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.1,
       "position": [
-        1680,
+        1780,
         1360
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "alwaysOutputData": true
     }
   ],
   "pinData": {},
@@ -1270,6 +1272,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-07T17:30:57.000Z",
-  "versionId": "72bc785f-c84c-4626-aae6-656eea9b3704"
+  "updatedAt": "2024-11-09T18:41:26.000Z",
+  "versionId": "bed591c2-d0e9-4a5c-b05a-b7d6a32ede29"
 }
