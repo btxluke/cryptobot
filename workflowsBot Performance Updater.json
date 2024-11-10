@@ -5,28 +5,12 @@
       "main": [
         [
           {
-            "node": "Consume Binance API",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Google Sheets2",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "Execute Workflow1",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Consume Binance API": {
-      "main": [
-        [
+          },
           {
-            "node": "Item Lists",
+            "node": "Query String",
             "type": "main",
             "index": 0
           }
@@ -79,11 +63,6 @@
             "node": "Edit Fields",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Merge1",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
@@ -122,11 +101,6 @@
             "node": "Edit Fields1",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Code2",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -134,11 +108,6 @@
     "Edit Fields1": {
       "main": [
         [
-          {
-            "node": "IF2",
-            "type": "main",
-            "index": 0
-          },
           {
             "node": "Code3",
             "type": "main",
@@ -220,17 +189,6 @@
         ]
       ]
     },
-    "Merge1": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
     "Merge2": {
       "main": [
         [
@@ -284,13 +242,7 @@
     },
     "Google Sheets3": {
       "main": [
-        [
-          {
-            "node": "Execute Workflow",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Execute Workflow1": {
@@ -309,6 +261,77 @@
         [
           {
             "node": "Execute Workflow4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query String": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
             "type": "main",
             "index": 0
           }
@@ -343,25 +366,8 @@
       ]
     },
     {
-      "parameters": {},
-      "id": "6d2d0f3d-6434-431a-a81a-0224a91a7da8",
-      "name": "Consume Binance API",
-      "type": "n8n-nodes-binance.binance",
-      "typeVersion": 1,
-      "position": [
-        1260,
-        380
-      ],
-      "credentials": {
-        "binanceApi": {
-          "id": "PeUekcZ7v19Z08xS",
-          "name": "Binance account"
-        }
-      }
-    },
-    {
       "parameters": {
-        "fieldToSplitOut": "balances",
+        "fieldToSplitOut": "body.balances",
         "options": {}
       },
       "id": "c61d7583-76c7-4abe-90c6-1c4d48143e30",
@@ -369,7 +375,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 3,
       "position": [
-        1480,
+        1740,
         380
       ]
     },
@@ -389,7 +395,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1700,
+        1920,
         380
       ]
     },
@@ -400,7 +406,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1700,
+        1920,
         740
       ]
     },
@@ -494,7 +500,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        2600,
+        2820,
         260
       ],
       "credentials": {
@@ -502,7 +508,8 @@
           "id": "MCsNWA7c8RPHz3yK",
           "name": "Google Sheets account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -513,7 +520,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1960,
+        2180,
         260
       ]
     },
@@ -534,7 +541,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        2180,
+        2400,
         260
       ]
     },
@@ -587,7 +594,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1980,
+        2200,
         740
       ]
     },
@@ -602,7 +609,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        2200,
+        2420,
         740
       ]
     },
@@ -639,7 +646,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        2380,
+        2600,
         740
       ]
     },
@@ -661,8 +668,8 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 3,
       "position": [
-        2380,
-        1020
+        2520,
+        1440
       ]
     },
     {
@@ -682,8 +689,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        2940,
-        740
+        3080,
+        1160
       ]
     },
     {
@@ -693,8 +700,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3280,
-        720
+        3420,
+        1140
       ]
     },
     {
@@ -706,7 +713,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2380,
+        2600,
         440
       ]
     },
@@ -727,7 +734,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        2640,
+        2820,
         440
       ]
     },
@@ -842,7 +849,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        2940,
+        3160,
         440
       ],
       "credentials": {
@@ -891,7 +898,8 @@
           "id": "MCsNWA7c8RPHz3yK",
           "name": "Google Sheets account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -925,7 +933,8 @@
         1960,
         20
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "disabled": true
     },
     {
       "parameters": {
@@ -938,9 +947,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        2380,
+        2600,
         0
-      ]
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -958,8 +968,8 @@
       "type": "n8n-nodes-base.pushover",
       "typeVersion": 1,
       "position": [
-        3500,
-        1100
+        3640,
+        1520
       ],
       "executeOnce": true,
       "credentials": {
@@ -981,8 +991,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 2.1,
       "position": [
-        2700,
-        1020
+        2840,
+        1440
       ]
     },
     {
@@ -994,8 +1004,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2640,
-        620
+        2820,
+        740
       ]
     },
     {
@@ -1026,7 +1036,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        3280,
+        3500,
         440
       ],
       "credentials": {
@@ -1045,10 +1055,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2920,
-        1020
+        3060,
+        1440
       ],
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "disabled": true
     },
     {
       "parameters": {
@@ -1066,9 +1077,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        3180,
-        1020
-      ]
+        3320,
+        1440
+      ],
+      "disabled": true
     },
     {
       "parameters": {},
@@ -1077,8 +1089,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3500,
-        900
+        3640,
+        1320
       ]
     },
     {
@@ -1091,8 +1103,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        3500,
-        440
+        3340,
+        740
       ],
       "executeOnce": true
     },
@@ -1110,8 +1122,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.1,
       "position": [
-        1280,
-        1360
+        1920,
+        1040
       ],
       "executeOnce": true,
       "alwaysOutputData": true
@@ -1130,8 +1142,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.1,
       "position": [
-        1560,
-        1360
+        2200,
+        1040
       ],
       "executeOnce": true,
       "alwaysOutputData": true
@@ -1225,7 +1237,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2600,
+        2820,
         80
       ],
       "credentials": {
@@ -1249,17 +1261,280 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.1,
       "position": [
-        1780,
-        1360
+        2420,
+        1040
       ],
       "executeOnce": true,
       "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
+              "name": "timestamp",
+              "value": "={{ Date.now() }}",
+              "type": "number"
+            },
+            {
+              "id": "49678578-712b-4ec9-9862-69f469c2c56b",
+              "name": "omitZeroBalances",
+              "value": "=true",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "02202323-1f1f-422c-b3a1-c46fb311e389",
+      "name": "Query String",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "=omitZeroBalances=true&timestamp={{ $json.timestamp }}",
+        "secret": "OiOpVYEpwyNetbOXK85p0kPnrWneFyWk61DqOBzE19hqNtru2eQfDScmITQWaYDh"
+      },
+      "id": "d09a9c6e-4742-4d09-8d93-a75481c0db6b",
+      "name": "Crypto",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.binance.com/api/v3/account",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "=omitZeroBalances",
+              "value": "true"
+            },
+            {
+              "name": "signature",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "=timestamp",
+              "value": "={{ $json.timestamp }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "ff1fd870-de0d-42b2-a425-0bd0cb22881d",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1380,
+        380
+      ],
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "3flt4vHSgwMbnIA8",
+          "name": "Binance Header Auth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0d2665cc-1a09-434d-8d79-6bf3d232ad60",
+              "leftValue": "={{ Number($json.headers['x-mbx-used-weight-1m']) }}",
+              "rightValue": 1000,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "767d45c9-360b-4877-9dea-e13a590738ed",
+              "leftValue": "={{ String($json.statusCode) }}",
+              "rightValue": "429",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "b7060d95-6927-481e-85f7-fcf973377174",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1740,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "=Binance API Limits Warning!\nStatus Code: {{ $json.statusCode }}\nStatus Message: {{ $json.statusMessage }}\nWeight Used (1m): {{ $json.headers['x-mbx-used-weight-1m'] }}\n\n",
+        "priority": 1,
+        "additionalFields": {
+          "html": true,
+          "sound": "bugle",
+          "title": "Binance API Warning"
+        }
+      },
+      "id": "41b882b4-5c59-48c2-bb12-8778d4155647",
+      "name": "Pushover",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        200
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "assets_gbp",
+          "mode": "list",
+          "cachedResultName": "assets_gbp"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "time_hr": "={{ $now.toISO() }}",
+            "BTC": "={{ $json.BTCinGBP }}",
+            "ETH": "={{ $json.ETHinGBP }}",
+            "BNB": "={{ $json.BNBinGBP }}",
+            "USDT": "={{ $json.USDTinGBP }}",
+            "XRP": "={{ $json.XRPinGBP }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "time_hr",
+              "displayName": "time_hr",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "BTC",
+              "displayName": "BTC",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ETH",
+              "displayName": "ETH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "BNB",
+              "displayName": "BNB",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "USDT",
+              "displayName": "USDT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "XRP",
+              "displayName": "XRP",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "628204e5-8a9c-4a4c-a5cc-8170f38f35dc",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3040,
+        740
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none",
+    "saveDataSuccessExecution": "all",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "ssbrlfAR6Ix0jnFa"
@@ -1272,6 +1547,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-09T18:41:26.000Z",
-  "versionId": "bed591c2-d0e9-4a5c-b05a-b7d6a32ede29"
+  "updatedAt": "2024-11-10T10:35:18.000Z",
+  "versionId": "92f803d0-8bd9-4955-92af-5008dac707c2"
 }
