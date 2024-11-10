@@ -5,17 +5,22 @@
       "main": [
         [
           {
-            "node": "Google Sheets",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "OrderVals",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "variables_in",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           }
@@ -46,18 +51,7 @@
     },
     "Edit Fields": {
       "main": [
-        [
-          {
-            "node": "Postgres",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Postgres2",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Google Sheets2": {
@@ -197,6 +191,28 @@
           }
         ]
       ]
+    },
+    "Postgres4": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Postgres5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-11-14T09:38:09.504Z",
@@ -247,15 +263,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1320,
-        380
+        520,
+        1220
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "MCsNWA7c8RPHz3yK",
           "name": "Google Sheets account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -273,9 +290,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1540,
-        380
-      ]
+        740,
+        1220
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -334,10 +352,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        1720,
-        380
+        920,
+        1220
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "disabled": true
     },
     {
       "parameters": {
@@ -938,8 +957,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        1320,
-        -40
+        540,
+        1020
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -959,7 +978,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2800,
+        3020,
         -160
       ],
       "credentials": {
@@ -980,7 +999,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3020,
+        3240,
         -160
       ],
       "credentials": {
@@ -1001,7 +1020,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2160,
+        2380,
         1160
       ],
       "executeOnce": true,
@@ -1021,7 +1040,7 @@
       "type": "n8n-nodes-base.ssh",
       "typeVersion": 1,
       "position": [
-        2680,
+        2900,
         1160
       ],
       "executeOnce": false,
@@ -1058,8 +1077,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1540,
-        -40
+        760,
+        1020
       ]
     },
     {
@@ -1073,8 +1092,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1720,
-        -40
+        940,
+        1020
       ],
       "credentials": {
         "postgres": {
@@ -1130,7 +1149,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2380,
+        2600,
         1160
       ]
     },
@@ -1145,8 +1164,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1320,
-        -260
+        1540,
+        -380
       ],
       "executeOnce": true,
       "credentials": {
@@ -1163,12 +1182,92 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2680,
+        2900,
         1400
       ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH latest_assets AS (\n    SELECT \"time_hr\", \"BTC\", \"ETH\", \"XRP\"\n    FROM \"assets\"\n    ORDER BY \"time_hr\" DESC\n    LIMIT 1\n),\nlatest_assets_gbp AS (\n    SELECT \"time_hr\", \"BTC\", \"ETH\", \"XRP\"\n    FROM \"assets_gbp\"\n    ORDER BY \"time_hr\" DESC\n    LIMIT 1\n)\nSELECT \n    la.\"time_hr\" AS \"assets_time_hr\",\n    lag.\"time_hr\" AS \"assets_gbp_time_hr\",\n    jsonb_build_array(\n        jsonb_build_object('symbol', 'BTC', 'amount', jsonb_build_object('raw', la.\"BTC\", 'gbp', lag.\"BTC\")),\n        jsonb_build_object('symbol', 'ETH', 'amount', jsonb_build_object('raw', la.\"ETH\", 'gbp', lag.\"ETH\")),\n        jsonb_build_object('symbol', 'XRP', 'amount', jsonb_build_object('raw', la.\"XRP\", 'gbp', lag.\"XRP\"))\n    ) AS \"assets\"\nFROM \n    latest_assets la\nCROSS JOIN \n    latest_assets_gbp lag;\n",
+        "options": {}
+      },
+      "id": "630b2d81-0f88-4adc-a3f1-fc6ab0a815d4",
+      "name": "Postgres4",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1540,
+        160
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "assets",
+        "options": {}
+      },
+      "id": "f51d61ba-ac6e-43a2-84c4-6b8a9637f090",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE public.spot_volitility \n  SET order_val = {{ ($input.all()[0].json.amount.gbp+$input.all()[1].json.amount.gbp+$input.all()[2].json.amount.gbp) / 12 < 300 ? (($input.all()[0].json.amount.gbp+$input.all()[1].json.amount.gbp+$input.all()[2].json.amount.gbp) / 12) / ($json.amount.gbp / $json.amount.raw) : 300 / ($json.amount.gbp / $json.amount.raw) }} \n  WHERE symbol LIKE '{{ $json.symbol }}%'",
+        "options": {}
+      },
+      "id": "195c05b2-dd84-4db8-bca1-31e611c05522",
+      "name": "Postgres5",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1940,
+        160
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Edit Fields3": [
+      {
+        "json": {
+          "row_number": "ETH",
+          "Trade Val": 0.12132194962018351,
+          "trade_val": 0.1213
+        }
+      },
+      {
+        "json": {
+          "row_number": "BTC",
+          "Trade Val": 0.004883528480629692,
+          "trade_val": 0.0049
+        }
+      },
+      {
+        "json": {
+          "row_number": "XRP",
+          "Trade Val": 661.7515665720558,
+          "trade_val": 661.7516
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1",
     "saveDataSuccessExecution": "none",
@@ -1178,6 +1277,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-09T12:36:43.000Z",
-  "versionId": "47fc9e95-ff2e-4878-bbd5-0778114a258c"
+  "updatedAt": "2024-11-10T10:21:29.000Z",
+  "versionId": "655bef0a-0ae4-46e6-a2cf-b4ebeb36c908"
 }
