@@ -196,16 +196,11 @@
         ]
       ]
     },
-    "Postgres2": {
-      "main": [
-        []
-      ]
-    },
     "Edit Fields1": {
       "main": [
         [
           {
-            "node": "Postgres2",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -411,6 +406,17 @@
         [
           {
             "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           }
@@ -916,7 +922,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3500,
+        3780,
         1240
       ],
       "credentials": {
@@ -1652,7 +1658,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3500,
+        3780,
         1080
       ],
       "credentials": {
@@ -1692,8 +1698,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3340,
-        760
+        3780,
+        820
       ],
       "credentials": {
         "postgres": {
@@ -1723,6 +1729,40 @@
         3340,
         920
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "24abca0a-cb3c-4dcb-b6db-17654b7d5953",
+              "leftValue": "={{ $json.orderId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e88a06b4-145b-412a-b5cd-0b58d703bd36",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3560,
+        1240
+      ]
     }
   ],
   "pinData": {},
@@ -1739,6 +1779,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-09T09:25:23.000Z",
-  "versionId": "9887aa2a-478b-4d4e-a5f0-b670fc2d20b5"
+  "updatedAt": "2024-11-10T05:50:22.000Z",
+  "versionId": "c5b59e22-db9a-43e0-859a-4cfb4f70e96b"
 }
