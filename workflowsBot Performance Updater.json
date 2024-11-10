@@ -1534,7 +1534,7 @@
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "all",
+    "saveDataSuccessExecution": "none",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
     "errorWorkflow": "ssbrlfAR6Ix0jnFa"
@@ -1547,6 +1547,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-10T10:35:18.000Z",
-  "versionId": "92f803d0-8bd9-4955-92af-5008dac707c2"
+  "updatedAt": "2024-11-10T10:39:02.000Z",
+  "versionId": "fd9b10ae-3469-41eb-9720-1a7ac9a78064"
 }
