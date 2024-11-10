@@ -189,18 +189,12 @@
       "main": [
         [
           {
-            "node": "Postgres4",
+            "node": "Postgres11",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "open_sell": {
-      "main": [
-        [
+          },
           {
-            "node": "Postgres1",
+            "node": "Merge2",
             "type": "main",
             "index": 0
           }
@@ -284,6 +278,113 @@
         ]
       ]
     },
+    "open_sell": {
+      "main": [
+        [
+          {
+            "node": "Postgres10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres10": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres11": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Postgres4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Switch": {
       "main": [
         [
@@ -314,8 +415,55 @@
             "index": 0
           }
         ],
-        [],
-        [],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing3",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Loop Over Items",
@@ -413,8 +561,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2660,
-        860
+        3160,
+        880
       ],
       "executeOnce": true,
       "credentials": {
@@ -469,7 +617,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2660,
+        3160,
         1060
       ],
       "executeOnce": true,
@@ -1118,6 +1266,30 @@
               "name": "lower_band",
               "value": "={{ $json.lower_band }}",
               "type": "number"
+            },
+            {
+              "id": "f042e31c-3dd5-4441-aa57-07985c19ddab",
+              "name": "upper_band_1_05",
+              "value": "={{ $json.upper_band_1_05 }}",
+              "type": "number"
+            },
+            {
+              "id": "81ffc92c-fd14-480d-85ff-ef49e70ef40f",
+              "name": "lower_band_1_05",
+              "value": "={{ $json.lower_band_1_05 }}",
+              "type": "number"
+            },
+            {
+              "id": "e2941650-d971-40d4-a7e7-33988f8955de",
+              "name": "upper_band_0_5025",
+              "value": "={{ $json.upper_band_0_5025 }}",
+              "type": "number"
+            },
+            {
+              "id": "abb47fe7-305b-4742-8868-50f14635c6eb",
+              "name": "lower_band_0_5025",
+              "value": "={{ $json.lower_band_0_5025 }}",
+              "type": "number"
             }
           ]
         },
@@ -1140,7 +1312,7 @@
       "typeVersion": 1,
       "position": [
         2500,
-        1060
+        1220
       ]
     },
     {
@@ -1151,7 +1323,7 @@
       "typeVersion": 1,
       "position": [
         2500,
-        860
+        740
       ]
     },
     {
@@ -1163,6 +1335,159 @@
       "position": [
         3340,
         1260
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ac2e5599-b162-4df6-adea-55da17c050d4",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "af107cb6-0027-440d-b600-e31cde172889",
+      "name": "If2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2820,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"id\" FROM public.futures_orders WHERE close_price IS NULL AND symbol = '{{ $json.symbol }}';",
+        "options": {}
+      },
+      "id": "c2190d5d-b46b-43a0-95ad-73a22c54b4dd",
+      "name": "Postgres10",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2660,
+        880
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ac2e5599-b162-4df6-adea-55da17c050d4",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3ce827be-1f6f-4f54-b39f-e58d7dd68d0a",
+      "name": "If3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2820,
+        1060
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \"id\" FROM public.futures_orders WHERE close_price IS NULL AND symbol = '{{ $json.symbol }}';",
+        "options": {}
+      },
+      "id": "0710fbe4-70b6-4f73-878d-c0a7a7f3628d",
+      "name": "Postgres11",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2660,
+        1060
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "id": "0e45e8d0-7d6c-47f0-a5c2-65a8b30aeaeb",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2980,
+        800
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "id": "268bc7a1-1b6d-4092-a801-48ecf7b1c24d",
+      "name": "Merge2",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2980,
+        1220
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {},
+      "id": "b1dcaeea-b73d-4410-b9af-39f06a094587",
+      "name": "No Operation, do nothing3",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        1200
       ]
     },
     {
@@ -1279,7 +1604,7 @@
                 "conditions": [
                   {
                     "id": "d72bad87-ca0e-493a-9413-a4200ec20b92",
-                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.moving_average && $input.all()[1].json.price <= $input.all()[1].json.moving_average }}",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.upper_band_1_05 && $input.all()[1].json.price <= $input.all()[1].json.upper_band_1_05 }}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -1291,7 +1616,7 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "MA Up"
+              "outputKey": "up_mid up"
             },
             {
               "conditions": {
@@ -1304,7 +1629,7 @@
                 "conditions": [
                   {
                     "id": "5f397761-c32d-40f1-b32e-7428558dd1f6",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.moving_average && $input.all()[1].json.price >= $input.all()[1].json.moving_average }}",
+                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band_1_05 && $input.all()[1].json.price >= $input.all()[1].json.upper_band_1_05 }}",
                     "rightValue": "",
                     "operator": {
                       "type": "boolean",
@@ -1316,7 +1641,132 @@
                 "combinator": "and"
               },
               "renameOutput": true,
-              "outputKey": "MA Down"
+              "outputKey": "up_mid down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d1d1f0e7-a5c5-4e5a-aa40-ee5255333ee4",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.upper_band_0_5025 && $input.all()[1].json.price <= $input.all()[1].json.upper_band_0_5025 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "up_low up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2b8fccc5-d653-4587-990f-a530ac64e917",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band_1_05 && $input.all()[1].json.price <= $input.all()[1].json.lower_band_1_05 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lower_mid up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "aa76c2af-73bb-4fbe-8c67-a6bf99819923",
+                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band_1_05 && $input.all()[1].json.price >= $input.all()[1].json.lowerer_band_1_05 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lower_mid down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5a623bf7-0df8-4ccf-ab1c-c6874138436d",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band_0_5025 && $input.all()[1].json.price <= $input.all()[1].json.lower_band_0_5025 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lower_low up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "94b0db84-a078-4381-87de-5fbbc2c857c4",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band_0_5025 && $input.all()[1].json.price <= $input.all()[1].json.lower_band_0_5025 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "lower_low down"
             }
           ]
         },
@@ -1338,7 +1788,7 @@
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none",
+    "saveDataSuccessExecution": "all",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
     "saveDataErrorExecution": "all"
@@ -1346,6 +1796,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-10T05:40:04.000Z",
-  "versionId": "bf809a13-f8d5-41fa-b89c-132d1518d043"
+  "updatedAt": "2024-11-10T23:09:06.000Z",
+  "versionId": "bd9b8265-c3b8-4ca7-85e8-b12054cb8f95"
 }
