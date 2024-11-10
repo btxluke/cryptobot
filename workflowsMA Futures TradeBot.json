@@ -291,11 +291,6 @@
             "node": "open_sell",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "close_buy",
-            "type": "main",
-            "index": 0
           }
         ],
         [
@@ -303,33 +298,11 @@
             "node": "open_buy",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "close_sell",
-            "type": "main",
-            "index": 0
           }
         ],
         [
           {
             "node": "close_sell",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "open_buy",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "close_buy",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "open_sell",
             "type": "main",
             "index": 0
           }
@@ -341,13 +314,8 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "close_sell",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
+        [],
         [
           {
             "node": "Loop Over Items",
@@ -1378,6 +1346,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-09T18:44:19.000Z",
-  "versionId": "1970d9fb-e835-434c-a011-98b8af573a5a"
+  "updatedAt": "2024-11-10T05:40:04.000Z",
+  "versionId": "bf809a13-f8d5-41fa-b89c-132d1518d043"
 }
