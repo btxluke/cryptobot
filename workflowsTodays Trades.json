@@ -27,12 +27,12 @@
       "main": [
         [
           {
-            "node": "Code",
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Postgres2",
+            "node": "Postgres3",
             "type": "main",
             "index": 0
           }
@@ -240,8 +240,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2140,
-        440
+        1480,
+        740
       ]
     },
     {
@@ -348,8 +348,30 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1900,
+        1960,
         280
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE public.spot_volitility \n  SET multiplier = {{ $json.spread_inc }}\n  WHERE symbol = '{{ $json.symbol }}';\n  \n  ",
+        "options": {}
+      },
+      "id": "02fcf386-6e22-4fd2-82c7-5b9dc7e285cd",
+      "name": "Postgres3",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1960,
+        440
       ],
       "credentials": {
         "postgres": {
@@ -369,6 +391,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-09T08:51:35.000Z",
-  "versionId": "640a439e-e8ee-4163-883c-2f11318d98cf"
+  "updatedAt": "2024-11-11T10:25:48.000Z",
+  "versionId": "73e29d7d-35c3-448d-aba3-8d5d2fabbd84"
 }
