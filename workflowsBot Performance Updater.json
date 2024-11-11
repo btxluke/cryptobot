@@ -98,7 +98,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields1",
+            "node": "If2",
             "type": "main",
             "index": 0
           }
@@ -322,11 +322,6 @@
         ]
       ]
     },
-    "Postgres1": {
-      "main": [
-        []
-      ]
-    },
     "Execute Workflow": {
       "main": [
         [
@@ -343,6 +338,17 @@
         [
           {
             "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
             "type": "main",
             "index": 0
           }
@@ -607,14 +613,15 @@
       "position": [
         2320,
         740
-      ],
-      "disabled": true
+      ]
     },
     {
       "parameters": {
         "mode": "combine",
         "combinationMode": "mergeByPosition",
-        "options": {}
+        "options": {
+          "includeUnpaired": false
+        }
       },
       "id": "7caa27b5-3894-42f8-a257-82bc99991301",
       "name": "Merge",
@@ -623,8 +630,7 @@
       "position": [
         2540,
         740
-      ],
-      "disabled": true
+      ]
     },
     {
       "parameters": {
@@ -659,10 +665,9 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        2720,
+        3040,
         740
-      ],
-      "disabled": true
+      ]
     },
     {
       "parameters": {
@@ -1018,10 +1023,9 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2940,
+        3260,
         740
-      ],
-      "disabled": true
+      ]
     },
     {
       "parameters": {
@@ -1535,7 +1539,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3160,
+        3480,
         740
       ],
       "credentials": {
@@ -1543,8 +1547,7 @@
           "id": "sxFt0uvtx3x5AcFz",
           "name": "Databot"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1558,7 +1561,7 @@
           "conditions": [
             {
               "id": "f910515e-5e9c-4489-864d-af27c462e999",
-              "leftValue": "={{$now.second <= 31}}",
+              "leftValue": "={{$now.second <= 29}}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
@@ -1579,6 +1582,40 @@
         2140,
         740
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6cc941c7-7196-4854-9bd8-6f9e7ef3f9e1",
+              "leftValue": "={{ Number($json.rate) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "75646ae4-9287-4fff-9ef2-996ea0d49af1",
+      "name": "If2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2820,
+        740
+      ]
     }
   ],
   "pinData": {},
@@ -1597,6 +1634,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-10T17:09:59.000Z",
-  "versionId": "1fd8d2d0-57a1-47c1-a9f3-846698124143"
+  "updatedAt": "2024-11-11T08:01:51.000Z",
+  "versionId": "84189f2f-ac15-4f9b-928d-710302203108"
 }
