@@ -24,6 +24,11 @@
             "node": "globals",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "get account",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -374,11 +379,49 @@
         ]
       ]
     },
+    "close order": {
+      "main": [
+        [
+          {
+            "node": "Query String2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query String2": {
+      "main": [
+        [
+          {
+            "node": "Crypto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Switch": {
       "main": [
         [
           {
             "node": "open_sell",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields2",
             "type": "main",
             "index": 0
           }
@@ -388,11 +431,21 @@
             "node": "open_buy",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
           }
         ],
         [
           {
             "node": "close_sell",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "close order",
             "type": "main",
             "index": 0
           }
@@ -402,11 +455,104 @@
             "node": "close_buy",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "close order",
+            "type": "main",
+            "index": 0
           }
         ],
         [
           {
             "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get account": {
+      "main": [
+        [
+          {
+            "node": "Query String3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query String3": {
+      "main": [
+        [
+          {
+            "node": "Crypto3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query String": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Place Order": {
+      "main": [
+        [
+          {
+            "node": "Query String",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Place Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Place Order",
             "type": "main",
             "index": 0
           }
@@ -432,7 +578,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1400,
+        1620,
         340
       ],
       "credentials": {
@@ -475,7 +621,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1100,
+        1320,
         140
       ]
     },
@@ -486,7 +632,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1560,
+        1780,
         -40
       ]
     },
@@ -501,8 +647,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3160,
-        880
+        3380,
+        1100
       ],
       "executeOnce": true,
       "credentials": {
@@ -523,7 +669,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2640,
+        2860,
         20
       ],
       "executeOnce": true,
@@ -542,7 +688,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2480,
+        2700,
         20
       ]
     },
@@ -557,8 +703,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3160,
-        1060
+        3380,
+        1560
       ],
       "executeOnce": true,
       "credentials": {
@@ -579,7 +725,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2660,
+        2880,
         560
       ],
       "executeOnce": true,
@@ -598,7 +744,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2500,
+        2720,
         560
       ]
     },
@@ -613,7 +759,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        1400,
+        1620,
         160
       ],
       "credentials": {
@@ -654,7 +800,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2800,
+        3020,
         20
       ]
     },
@@ -665,7 +811,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3340,
+        3560,
         180
       ]
     },
@@ -700,7 +846,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2820,
+        3040,
         560
       ]
     },
@@ -711,7 +857,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3340,
+        3560,
         760
       ]
     },
@@ -837,7 +983,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3340,
+        3560,
         0
       ],
       "executeOnce": true,
@@ -970,7 +1116,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3340,
+        3560,
         560
       ],
       "executeOnce": true,
@@ -992,8 +1138,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        880,
-        220
+        900,
+        -80
       ],
       "credentials": {
         "postgres": {
@@ -1064,7 +1210,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3340,
+        3560,
         -220
       ],
       "credentials": {
@@ -1136,7 +1282,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3340,
+        3560,
         380
       ],
       "credentials": {
@@ -1157,7 +1303,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        1600,
+        1820,
         240
       ]
     },
@@ -1240,7 +1386,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1820,
+        2040,
         240
       ]
     },
@@ -1251,8 +1397,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2500,
-        1220
+        2720,
+        1720
       ]
     },
     {
@@ -1262,8 +1408,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2500,
-        740
+        2720,
+        960
       ]
     },
     {
@@ -1273,7 +1419,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3340,
+        3560,
         1260
       ]
     },
@@ -1307,8 +1453,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2820,
-        880
+        3040,
+        1100
       ]
     },
     {
@@ -1322,8 +1468,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2660,
-        880
+        2880,
+        1100
       ],
       "alwaysOutputData": true,
       "executeOnce": true,
@@ -1364,8 +1510,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2820,
-        1060
+        3040,
+        1560
       ]
     },
     {
@@ -1379,8 +1525,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2660,
-        1060
+        2880,
+        1560
       ],
       "alwaysOutputData": true,
       "executeOnce": true,
@@ -1400,8 +1546,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        2980,
-        800
+        3200,
+        1020
       ],
       "executeOnce": true
     },
@@ -1414,10 +1560,148 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        2980,
-        1220
+        3200,
+        1720
       ],
       "executeOnce": true
+    },
+    {
+      "parameters": {},
+      "id": "e56a85ea-6259-4405-8ed3-658827b349ea",
+      "name": "close order",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
+              "name": "timestamp",
+              "value": "={{ Date.now() }}",
+              "type": "number"
+            },
+            {
+              "id": "70d90f4f-8472-44e7-a2f4-2d416988964b",
+              "name": "method",
+              "value": "POST",
+              "type": "string"
+            },
+            {
+              "id": "f47e6259-b78c-4225-9113-e457f18c7713",
+              "name": "requestPath",
+              "value": "/api/v2/mix/order/close-positions",
+              "type": "string"
+            },
+            {
+              "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
+              "name": "body",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ ($json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\") +'\", \"productType\": \"SUSDT-FUTURES\"}') }}",
+              "type": "object"
+            },
+            {
+              "id": "35e8f57d-8153-4cc3-9499-efc23894a9d6",
+              "name": "symbol",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "9ea897a0-fefe-4244-8bb5-95356a4f66fa",
+      "name": "Query String2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2860,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ $json.timestamp + $json.method.toUpperCase() + $json.requestPath + JSON.stringify($json.body) }}",
+        "secret": "031d4b790ef3ff4d115c5da2196732f602ad467235cc299519810c58e62a0c41",
+        "encoding": "base64"
+      },
+      "id": "7b3b4365-aa3a-4d97-a8be-5fe0f9b88913",
+      "name": "Crypto2",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        3020,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "f36d3f14-4da5-45b8-bc3a-e89847bdcd2f",
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3160,
+        -300
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      }
     },
     {
       "parameters": {
@@ -1534,12 +1818,373 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        1820,
+        2040,
         520
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "c236fb3b-19d1-48f1-901d-ca038a8b2caa",
+      "name": "get account",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        900,
+        -280
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
+              "name": "timestamp",
+              "value": "={{ Date.now() }}",
+              "type": "number"
+            },
+            {
+              "id": "70d90f4f-8472-44e7-a2f4-2d416988964b",
+              "name": "method",
+              "value": "GET",
+              "type": "string"
+            },
+            {
+              "id": "f47e6259-b78c-4225-9113-e457f18c7713",
+              "name": "requestPath",
+              "value": "/api/v2/mix/account/sub-account-assets",
+              "type": "string"
+            },
+            {
+              "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
+              "name": "body",
+              "value": "=?productType=SUSDT-FUTURES",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "1a38193e-5e1f-4c70-91dc-deaaecde58f2",
+      "name": "Query String3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1060,
+        -280
+      ]
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ $json.timestamp + $json.method.toUpperCase() + $json.requestPath + $json.body }}",
+        "secret": "031d4b790ef3ff4d115c5da2196732f602ad467235cc299519810c58e62a0c41",
+        "encoding": "base64"
+      },
+      "id": "e5f55ada-65d0-4094-bf21-3948677b8251",
+      "name": "Crypto3",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -280
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "productType",
+              "value": "SUSDT-FUTURES"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "1aa0fbd6-a70d-47b3-bf22-be241a55ae9c",
+      "name": "HTTP Request3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        -280
+      ],
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
+              "name": "timestamp",
+              "value": "={{ Date.now() }}",
+              "type": "number"
+            },
+            {
+              "id": "70d90f4f-8472-44e7-a2f4-2d416988964b",
+              "name": "method",
+              "value": "POST",
+              "type": "string"
+            },
+            {
+              "id": "f47e6259-b78c-4225-9113-e457f18c7713",
+              "name": "requestPath",
+              "value": "/api/v2/mix/order/place-order",
+              "type": "string"
+            },
+            {
+              "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
+              "name": "body",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true }') }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "d34918f8-e185-427c-b328-c33409149343",
+      "name": "Query String",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2920,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ $json.timestamp + $json.method.toUpperCase() + $json.requestPath + JSON.stringify($json.body) }}",
+        "secret": "031d4b790ef3ff4d115c5da2196732f602ad467235cc299519810c58e62a0c41",
+        "encoding": "base64"
+      },
+      "id": "50373737-e3fb-4858-9ee3-ab22c5a7dd31",
+      "name": "Crypto",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        3060,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "50208525-defd-4363-89ab-0336f7cc2bd2",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3200,
+        760
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "1c034ccf-f5e8-4d48-aee3-45cdcedb49c8",
+      "name": "Place Order",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7c176057-e3c2-4013-b44a-42ee3dcda905",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2780,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
+              "name": "side",
+              "value": "sell",
+              "type": "string"
+            },
+            {
+              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
+              "name": "size",
+              "value": "={{ Math.round((($('globals').first().json.asset_total / 10)/$json.price)*1000)/1000 }}",
+              "type": "number"
+            },
+            {
+              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
+              "name": "symbol",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "088e2a77-6707-429c-a8ce-7b42277ec3bb",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2500,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
+              "name": "side",
+              "value": "buy",
+              "type": "string"
+            },
+            {
+              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
+              "name": "size",
+              "value": "={{ Math.round((($('globals').first().json.asset_total / 10)/$json.price)*1000)/1000 }}",
+              "type": "number"
+            },
+            {
+              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
+              "name": "symbol",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "64714541-9cd3-464d-baa7-28a7a2a89de6",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2500,
+        820
       ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "globals": [
+      {
+        "json": {
+          "asset_total": "344.020",
+          "leverage": "200",
+          "id": "1"
+        }
+      }
+    ]
+  },
   "settings": {
     "executionOrder": "v1",
     "saveDataSuccessExecution": "none",
@@ -1550,6 +2195,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-10T23:43:20.000Z",
-  "versionId": "9c943386-d48a-4d9d-9ace-f13981e427ec"
+  "updatedAt": "2024-11-11T17:50:11.000Z",
+  "versionId": "d2530569-0271-4ece-957e-315cc782dc05"
 }
