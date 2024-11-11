@@ -1,0 +1,199 @@
+{
+  "active": false,
+  "connections": {
+    "Query String": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Query String",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-11-11T08:19:15.586Z",
+  "id": "jKvCbI1SBCvTLlBt",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Bitget Test Order",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "16599907-f8a7-4cc0-984b-8ccae1163f8e",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        760,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
+              "name": "timestamp",
+              "value": "={{ Date.now() }}",
+              "type": "number"
+            },
+            {
+              "id": "70d90f4f-8472-44e7-a2f4-2d416988964b",
+              "name": "method",
+              "value": "POST",
+              "type": "string"
+            },
+            {
+              "id": "f47e6259-b78c-4225-9113-e457f18c7713",
+              "name": "requestPath",
+              "value": "/api/v2/mix/order/place-order",
+              "type": "string"
+            },
+            {
+              "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
+              "name": "body",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"clientOid\": \"' + $json.id + '\" }') }}",
+              "type": "object"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "2343fe44-4354-4ea5-8f39-bfeb0a4b5f1e",
+      "name": "Query String",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "action": "hmac",
+        "type": "SHA256",
+        "value": "={{ $json.timestamp + $json.method.toUpperCase() + $json.requestPath + JSON.stringify($json.body) }}",
+        "secret": "031d4b790ef3ff4d115c5da2196732f602ad467235cc299519810c58e62a0c41",
+        "encoding": "base64"
+      },
+      "id": "5f3452ac-2863-4484-b34c-5ca952410d45",
+      "name": "Crypto",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "0cfaea68-c532-4d04-9be8-ed3bc8a69a84",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        700
+      ],
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Test workflow’": [
+      {
+        "json": {
+          "id": "1",
+          "symbol": "SETHSUSDT",
+          "size": 0.001,
+          "side": "buy"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-11-11T11:02:41.000Z",
+  "versionId": "e4487848-4523-48f3-923e-3053a7f6077a"
+}
