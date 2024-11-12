@@ -351,6 +351,11 @@
             "node": "Edit Fields1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Postgres2",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -665,7 +670,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3,
       "position": [
-        3040,
+        3260,
         740
       ]
     },
@@ -1023,7 +1028,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3260,
+        3480,
         740
       ]
     },
@@ -1539,7 +1544,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3480,
+        3700,
         740
       ],
       "credentials": {
@@ -1613,9 +1618,131 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2820,
+        3040,
         740
       ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "assets_details",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "asset": "={{ $json.asset }}",
+            "free": "={{ $json.free }}"
+          },
+          "matchingColumns": [
+            "asset"
+          ],
+          "schema": [
+            {
+              "id": "asset",
+              "displayName": "asset",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "free",
+              "displayName": "free",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "locked",
+              "displayName": "locked",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "rate",
+              "displayName": "rate",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "volume",
+              "displayName": "volume",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "cap",
+              "displayName": "cap",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "liquidity",
+              "displayName": "liquidity",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "delta",
+              "displayName": "delta",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e1cd484b-ab24-4f19-8bea-7778debff12b",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3260,
+        920
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1634,6 +1761,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-11T08:01:51.000Z",
-  "versionId": "84189f2f-ac15-4f9b-928d-710302203108"
+  "updatedAt": "2024-11-12T04:08:39.000Z",
+  "versionId": "676da383-cf9b-4a78-916f-88c1c93c18e2"
 }
