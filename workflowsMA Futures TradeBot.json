@@ -412,65 +412,6 @@
         ]
       ]
     },
-    "Switch": {
-      "main": [
-        [
-          {
-            "node": "open_sell",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Edit Fields2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "open_buy",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Edit Fields3",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "close_sell",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "close order",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "close_buy",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "close order",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "get account": {
       "main": [
         [
@@ -537,7 +478,7 @@
         ]
       ]
     },
-    "Edit Fields2": {
+    "buy_fields": {
       "main": [
         [
           {
@@ -548,11 +489,106 @@
         ]
       ]
     },
-    "Edit Fields3": {
+    "sell_fields": {
       "main": [
         [
           {
             "node": "Place Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "open_sell",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "sell_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "open_buy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "buy_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "close_sell",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "close order",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "close_buy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "close order",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "sell_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "buy_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "close order",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "close_buy",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "close order",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "close_sell",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -1642,187 +1678,6 @@
       ]
     },
     {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://api.bitget.com{{ $json.requestPath }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "ACCESS-SIGN",
-              "value": "={{ $json.data }}"
-            },
-            {
-              "name": "ACCESS-TIMESTAMP",
-              "value": "={{ $json.timestamp }}"
-            },
-            {
-              "name": "ACCESS-PASSPHRASE",
-              "value": "Inferno123"
-            },
-            {
-              "name": "locale",
-              "value": "en-US"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ $json.body }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "id": "f36d3f14-4da5-45b8-bc3a-e89847bdcd2f",
-      "name": "HTTP Request2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3160,
-        -300
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "httpQueryAuth": {
-          "id": "xPPmrpo7lNZEQD92",
-          "name": "Binance ApiKey"
-        },
-        "httpHeaderAuth": {
-          "id": "s7MYHJ2AeCAbH6Lb",
-          "name": "BitGet Api"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band && $input.all()[1].json.price > $input.all()[1].json.lower_band }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Lower Down"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.upper_band && $input.all()[1].json.price < $input.all()[1].json.upper_band }}",
-                    "rightValue": {},
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Upper Up"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
-                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band && $input.all()[1].json.price <= $input.all()[1].json.lower_band}}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Lower Up"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "b0697279-0654-4e2f-9e70-b3ac0e66ea18",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band && $input.all()[1].json.price >= $input.all()[1].json.upper_band }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Upper Down"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra",
-          "allMatchingOutputs": true
-        }
-      },
-      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
-      "name": "Switch",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        2040,
-        520
-      ]
-    },
-    {
       "parameters": {},
       "id": "c236fb3b-19d1-48f1-901d-ca038a8b2caa",
       "name": "get account",
@@ -2110,48 +1965,13 @@
             {
               "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
               "name": "side",
-              "value": "sell",
-              "type": "string"
-            },
-            {
-              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
-              "name": "size",
-              "value": "={{ Math.round((($('globals').first().json.asset_total / 10)/$json.price)*1000)/1000 }}",
-              "type": "number"
-            },
-            {
-              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
-              "name": "symbol",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "088e2a77-6707-429c-a8ce-7b42277ec3bb",
-      "name": "Edit Fields2",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2500,
-        640
-      ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
-              "name": "side",
               "value": "buy",
               "type": "string"
             },
             {
               "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
               "name": "size",
-              "value": "={{ Math.round((($('globals').first().json.asset_total / 10)/$json.price)*1000)/1000 }}",
+              "value": "={{ (Math.round((($('globals').first().json.asset_total / 10)/$json.price)*1000)/1000)*100 }}",
               "type": "number"
             },
             {
@@ -2165,12 +1985,304 @@
         "options": {}
       },
       "id": "64714541-9cd3-464d-baa7-28a7a2a89de6",
-      "name": "Edit Fields3",
+      "name": "buy_fields",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
         2500,
         820
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
+              "name": "side",
+              "value": "sell",
+              "type": "string"
+            },
+            {
+              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
+              "name": "size",
+              "value": "={{ (Math.round((($('globals').first().json.asset_total / 10)/$json.price)*1000)/1000)*100 }}",
+              "type": "number"
+            },
+            {
+              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
+              "name": "symbol",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "088e2a77-6707-429c-a8ce-7b42277ec3bb",
+      "name": "sell_fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2500,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "f36d3f14-4da5-45b8-bc3a-e89847bdcd2f",
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3160,
+        -300
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
+                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band && $input.all()[1].json.price > $input.all()[1].json.lower_band }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Lower Down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.upper_band && $input.all()[1].json.price < $input.all()[1].json.upper_band }}",
+                    "rightValue": {},
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Upper Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band && $input.all()[1].json.price <= $input.all()[1].json.lower_band}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Lower Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b0697279-0654-4e2f-9e70-b3ac0e66ea18",
+                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band_1_05 && $input.all()[1].json.price >= $input.all()[1].json.upper_band_1_05 && $json.rsi >= 60 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "UM Down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6283a803-5334-437a-8eef-611cea8fa3fe",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band_1_05 && $input.all()[1].json.price <= $input.all()[1].json.lower_band_1_05 && $json.rsi <= 40}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "LM Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "88d1e638-cef5-4ddf-9f32-ffe6b84410c8",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.moving_average && $input.all()[1].json.price <= $input.all()[1].json.moving_average}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e1c58c18-c915-48fc-b95f-e37561eeaa01",
+                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band && $input.all()[1].json.price > $input.all()[1].json.lower_band }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA Down"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2040,
+        520
       ]
     }
   ],
@@ -2195,6 +2307,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-11T17:50:11.000Z",
-  "versionId": "d2530569-0271-4ece-957e-315cc782dc05"
+  "updatedAt": "2024-11-12T10:01:07.000Z",
+  "versionId": "623295ad-bdac-4dab-827d-5cee1856d3e3"
 }
