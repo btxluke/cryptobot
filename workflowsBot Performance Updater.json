@@ -373,7 +373,8 @@
         "rule": {
           "interval": [
             {
-              "field": "seconds"
+              "field": "seconds",
+              "secondsInterval": 20
             }
           ]
         }
@@ -1761,6 +1762,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-12T04:08:39.000Z",
-  "versionId": "676da383-cf9b-4a78-916f-88c1c93c18e2"
+  "updatedAt": "2024-11-13T13:47:58.000Z",
+  "versionId": "23e48620-8f8b-46ec-81fd-9e1a1001ce54"
 }
