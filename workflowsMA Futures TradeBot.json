@@ -250,24 +250,6 @@
         ]
       ]
     },
-    "HTTP Request2": {
-      "main": [
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Pushover",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Pushover": {
       "main": [
         [
@@ -295,42 +277,6 @@
         [
           {
             "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Pushover",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Query String2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "redirector",
             "type": "main",
             "index": 0
           }
@@ -532,6 +478,53 @@
           }
         ]
       ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Query String2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-11-04T09:08:40.818Z",
@@ -613,7 +606,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT rsi(array_agg(price), 180) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' AND time_hr >= now() - INTERVAL '60m';",
+        "query": "SELECT rsi(array_agg(price), 120) AS rsi\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' AND time_hr >= now() - INTERVAL '60m';",
         "options": {}
       },
       "id": "0575c7a6-67e7-43c5-bcfb-85b589a92c69",
@@ -797,7 +790,7 @@
             {
               "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
               "name": "body",
-              "value": "={{ JSON.parse('{ \"symbol\": \"'+ ($json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\") +'\", \"productType\": \"SUSDT-FUTURES\"}') }}",
+              "value": "={{ JSON.parse('{ \"symbol\": \"' + $('Query String4').itemMatching($runIndex).json.symbol + '\", \"productType\": \"SUSDT-FUTURES\"}') }}",
               "type": "object"
             },
             {
@@ -998,7 +991,7 @@
             {
               "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
               "name": "body",
-              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": 1 }') }}",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ' }') }}",
               "type": "object"
             }
           ]
@@ -1056,7 +1049,7 @@
             {
               "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
               "name": "size",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.00048 : $json.symbol == \"ETHUSDT\" ? 0.0034 : 16}}",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.001 : $json.symbol == \"ETHUSDT\" ? 0.16 : 710}}",
               "type": "number"
             },
             {
@@ -1068,7 +1061,7 @@
             {
               "id": "7797d2e7-90a4-4dc2-b6bd-8bc81c07abdf",
               "name": "stopLoss",
-              "value": "={{$json.price * 0.99}}",
+              "value": "={{Math.round((Number($json.price) * 0.995)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
               "type": "number"
             }
           ]
@@ -1097,7 +1090,7 @@
             {
               "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
               "name": "size",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.00048 : $json.symbol == \"ETHUSDT\" ? 0.0034 : 16}}",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.001 : $json.symbol == \"ETHUSDT\" ? 0.016 : 71}}",
               "type": "number"
             },
             {
@@ -1109,7 +1102,7 @@
             {
               "id": "e4e6fa00-d27a-4a42-bfba-40b9b769b0cf",
               "name": "stopLoss",
-              "value": "={{$json.price * 1.01}}",
+              "value": "={{Math.round((Number($json.price) * 1.005)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
               "type": "number"
             }
           ]
@@ -1203,8 +1196,8 @@
       "type": "n8n-nodes-base.pushover",
       "typeVersion": 1,
       "position": [
-        3400,
-        340
+        3360,
+        20
       ],
       "credentials": {
         "pushoverApi": {
@@ -1212,69 +1205,6 @@
           "name": "Pushover account"
         }
       }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://api.bitget.com{{ $json.requestPath }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "ACCESS-SIGN",
-              "value": "={{ $json.data }}"
-            },
-            {
-              "name": "ACCESS-TIMESTAMP",
-              "value": "={{ $json.timestamp }}"
-            },
-            {
-              "name": "ACCESS-PASSPHRASE",
-              "value": "Inferno123"
-            },
-            {
-              "name": "locale",
-              "value": "en-US"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ $json.body }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "id": "f36d3f14-4da5-45b8-bc3a-e89847bdcd2f",
-      "name": "HTTP Request2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3140,
-        20
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "httpQueryAuth": {
-          "id": "xPPmrpo7lNZEQD92",
-          "name": "Binance ApiKey"
-        },
-        "httpHeaderAuth": {
-          "id": "s7MYHJ2AeCAbH6Lb",
-          "name": "BitGet Api"
-        }
-      },
-      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -1342,116 +1272,6 @@
         -260
       ],
       "executeOnce": true
-    },
-    {
-      "parameters": {
-        "method": "={{$json.method}}",
-        "url": "=https://api.bitget.com{{ $json.requestPath }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "symbol",
-              "value": "={{ $('Query String4').item.json.symbol }}"
-            },
-            {
-              "name": "productType",
-              "value": "SUSDT-FUTURES"
-            },
-            {
-              "name": "marginCoin",
-              "value": "SUSDT"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "ACCESS-SIGN",
-              "value": "={{ $json.data }}"
-            },
-            {
-              "name": "ACCESS-TIMESTAMP",
-              "value": "={{ $json.timestamp }}"
-            },
-            {
-              "name": "ACCESS-PASSPHRASE",
-              "value": "Inferno123"
-            },
-            {
-              "name": "locale",
-              "value": "en-US"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "id": "2e8ef704-2814-48af-a61a-8a638e106fab",
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3140,
-        -260
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "httpQueryAuth": {
-          "id": "xPPmrpo7lNZEQD92",
-          "name": "Binance ApiKey"
-        },
-        "httpHeaderAuth": {
-          "id": "s7MYHJ2AeCAbH6Lb",
-          "name": "BitGet Api"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "8f86d387-69df-4a92-a745-8ccc9f14311d",
-              "leftValue": "={{ Number($json.body.data[0].unrealizedPL) }}",
-              "rightValue": 0,
-              "operator": {
-                "type": "number",
-                "operation": "gte"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "888c8928-bd25-4ec0-add2-8a929bb4fea2",
-      "name": "If",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3360,
-        -260
-      ]
     },
     {
       "parameters": {
@@ -1842,6 +1662,179 @@
         2540,
         240
       ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "f36d3f14-4da5-45b8-bc3a-e89847bdcd2f",
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3140,
+        20
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "={{$json.method}}",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "symbol",
+              "value": "={{ $('Query String4').item.json.symbol }}"
+            },
+            {
+              "name": "productType",
+              "value": "SUSDT-FUTURES"
+            },
+            {
+              "name": "marginCoin",
+              "value": "SUSDT"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "2e8ef704-2814-48af-a61a-8a638e106fab",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3140,
+        -260
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8f86d387-69df-4a92-a745-8ccc9f14311d",
+              "leftValue": "={{ Number($json.body.data[0].unrealizedPL) - Number($json.body.data[0].deductedFee) }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "888c8928-bd25-4ec0-add2-8a929bb4fea2",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3360,
+        -260
+      ]
     }
   ],
   "pinData": {
@@ -1865,6 +1858,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-14T11:08:14.000Z",
-  "versionId": "07edfc3a-f355-44e7-afb2-d6764ec8cd89"
+  "updatedAt": "2024-11-14T16:36:01.000Z",
+  "versionId": "42cf9fce-03cc-474d-8f68-781b57c86366"
 }
