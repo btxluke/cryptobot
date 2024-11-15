@@ -10,7 +10,7 @@
             "index": 0
           },
           {
-            "node": "Execute Workflow",
+            "node": "data",
             "type": "main",
             "index": 0
           }
@@ -116,35 +116,6 @@
         ]
       ]
     },
-    "Item Lists1": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF2": {
-      "main": [
-        [
-          {
-            "node": "not trading this asset",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Item Lists1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code2": {
       "main": [
         [
@@ -167,95 +138,11 @@
         ]
       ]
     },
-    "Google Sheets2": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields3": {
-      "main": [
-        [
-          {
-            "node": "Merge1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge2": {
-      "main": [
-        [
-          {
-            "node": "Code4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Sheets1": {
       "main": [
         [
           {
             "node": "Google Sheets3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code4": {
-      "main": [
-        [
-          {
-            "node": "IF1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF1": {
-      "main": [
-        [
-          {
-            "node": "No Alerts",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Pushover2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Workflow1": {
-      "main": [
-        [
-          {
-            "node": "Execute Workflow3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Workflow3": {
-      "main": [
-        [
-          {
-            "node": "Execute Workflow4",
             "type": "main",
             "index": 0
           }
@@ -322,17 +209,6 @@
         ]
       ]
     },
-    "Execute Workflow": {
-      "main": [
-        [
-          {
-            "node": "Execute Workflow1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If1": {
       "main": [
         [
@@ -354,6 +230,39 @@
           },
           {
             "node": "Postgres2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "data": {
+      "main": [
+        [
+          {
+            "node": "futures",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "futures": {
+      "main": [
+        [
+          {
+            "node": "spot trade mods",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "spot trade mods": {
+      "main": [
+        [
+          {
+            "node": "Spot",
             "type": "main",
             "index": 0
           }
@@ -676,60 +585,6 @@
     },
     {
       "parameters": {
-        "operation": "summarize",
-        "fieldsToSummarize": {
-          "values": [
-            {
-              "aggregation": "sum",
-              "field": "value"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "cab68422-05b8-459f-a414-e0e3e63c1dce",
-      "name": "Item Lists1",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 3,
-      "position": [
-        2520,
-        1440
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $json.value }}",
-              "operation": "equal",
-              "value2": "={{ $json.free_value }}"
-            }
-          ]
-        }
-      },
-      "id": "8931cc75-11ca-476b-839d-6570aa0cb27a",
-      "name": "IF2",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        3080,
-        1160
-      ]
-    },
-    {
-      "parameters": {},
-      "id": "e5996dfb-c19a-41ef-8e09-7e759440f316",
-      "name": "not trading this asset",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3420,
-        1140
-      ]
-    },
-    {
-      "parameters": {
         "jsCode": "var assetJson = \" [{\\\"json\\\": {\"\nfor (const item of $input.all()) {\n  var assetRate = Number(item.json.rate)\n  assetJson = assetJson + \"\\\"\"+item.json.asset+\"\\\"\" + \": \" + assetRate+\",\";\n}\nassetJson = assetJson.slice(0,-1) +\"}}]\"\n\nconsole.log(assetJson);\nreturn JSON.parse(assetJson);"
       },
       "id": "a85b5069-0156-42fc-a825-1e4df8dfcc1d",
@@ -885,142 +740,6 @@
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
-          "mode": "list",
-          "cachedResultName": "Bot Performance BTC - ETH",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1860656954,
-          "mode": "list",
-          "cachedResultName": "eth btc",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=1860656954"
-        },
-        "options": {
-          "dataLocationOnSheet": {
-            "values": {
-              "rangeDefinition": "specifyRange",
-              "headerRow": 6,
-              "firstDataRow": "={{ $today.diff(DateTime.fromISO('2023-09-28'), 'days').toObject().days + 7 }}"
-            }
-          }
-        }
-      },
-      "id": "26362531-878d-4c21-bfcb-3999d0fce60b",
-      "name": "Google Sheets2",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4,
-      "position": [
-        1480,
-        20
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "MCsNWA7c8RPHz3yK",
-          "name": "Google Sheets account"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "fields": {
-          "values": [
-            {
-              "name": "priorETH",
-              "type": "numberValue",
-              "numberValue": "={{ $('Google Sheets2').first().json.ETH }}"
-            },
-            {
-              "name": "priorBTC",
-              "type": "numberValue",
-              "numberValue": "={{ $('Google Sheets2').first().json.BTC}}"
-            },
-            {
-              "name": "priorXRP",
-              "type": "numberValue",
-              "numberValue": "={{ $('Google Sheets2').first().json.XRP }}"
-            }
-          ]
-        },
-        "include": "none",
-        "options": {}
-      },
-      "id": "080e5509-8cac-4c2d-af4b-eaff672c5e73",
-      "name": "Edit Fields3",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3,
-      "position": [
-        1960,
-        20
-      ],
-      "executeOnce": true,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
-        "options": {}
-      },
-      "id": "1297d4da-65b5-443f-b33e-e6c5c7cd59a2",
-      "name": "Merge1",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2.1,
-      "position": [
-        2600,
-        0
-      ],
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
-        "message": "={{ $json.text }}",
-        "priority": 1,
-        "additionalFields": {
-          "html": true,
-          "sound": "cashregister",
-          "title": "Tradebot Notification"
-        }
-      },
-      "id": "18f181a6-262d-4a9f-b2ea-3d53819c0a11",
-      "name": "Pushover2",
-      "type": "n8n-nodes-base.pushover",
-      "typeVersion": 1,
-      "position": [
-        3640,
-        1520
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "pushoverApi": {
-          "id": "qmm7O1MHQ9s5cH25",
-          "name": "Pushover account"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combinationMode": "mergeByPosition",
-        "options": {}
-      },
-      "id": "02c88620-7144-4ba0-bc86-dc3f1e9c70b8",
-      "name": "Merge2",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 2.1,
-      "position": [
-        2840,
-        1440
-      ]
-    },
-    {
-      "parameters": {
         "jsCode": "var assetGBPJson = \" [{\\\"json\\\": {\"\nfor (const item of $input.all()) {\n  var assetAmountGBP = item.json.value;\n  assetGBPJson = assetGBPJson + \"\\\"\"+item.json.asset+\"inGBP\\\"\" + \": \" + assetAmountGBP+\",\";\n}\nassetGBPJson = assetGBPJson.slice(0,-1) +\"}}]\"\n\nconsole.log(assetGBPJson);\nreturn JSON.parse(assetGBPJson);"
       },
       "id": "444cd615-10b0-4998-81be-b479fbd0c0f5",
@@ -1069,108 +788,6 @@
           "name": "Google Sheets account"
         }
       }
-    },
-    {
-      "parameters": {
-        "jsCode": "var message = {text:\"\"};\nvar a = $input.first();\nvar averages = $('Google Sheets3').all()\n//Changes Signals\nif (isNaN(a.json.BTC) == false){\n  //BTC Change Signal\n  if (a.json.BTC !== a.json.priorBTC) {\n    message.text = message.text + \"<b>BTC</b> \" + (a.json.BTC -a.json.priorBTC).toFixed(8) + \" / \";\n    if (averages[0].json.BTC > averages[1].json.BTC) {message.text = message.text + \"+\"};\n    message.text = message.text + Math.round(((averages[0].json.BTC - averages[1].json.BTC)/averages[1].json.BTC)*100) + \"% MA7<br>\";\n  };\n  //ETH Change Signal\n  if (a.json.ETH !== a.json.priorETH) {\n    message.text = message.text + \"<b>ETH</b> \" + (a.json.ETH - a.json.priorETH).toFixed(8) + \" / \";\n    if (averages[0].json.ETH > averages[1].json.ETH) {message.text = message.text + \"+\"};\n    message.text = message.text + Math.round(((averages[0].json.ETH - averages[1].json.ETH)/averages[1].json.ETH)*100) + \"% MA7<br>\";\n  };\n  //XRP Change Signal\n  if (a.json.XRP !== a.json.priorXRP) {\n    message.text = message.text + \"<b>XRP</b> \" + (a.json.XRP - a.json.priorXRP).toFixed(8) + \" / \";\n    if (averages[0].json.XRP > averages[1].json.XRP) {message.text = message.text + \"+\"};\n    message.text = message.text + Math.round(((averages[0].json.XRP - averages[1].json.XRP)/averages[1].json.XRP)*100) + \"% MA7<br>\";\n  };\n};\n\n//BNB Top up Signal\nif ($('Code3').first().json.BNBinGBP < 5) {\n  message.text = message.text + \"<br><br><b>Warning:</b>BNB < £5, top up required.<br>\";\n};\n\n//Buy signals\n//BTC\nif (averages[1].json.BTC < averages[3].json.BTC && message.text !== \"\") {\n  message.text = message.text + \"<br><b>DCA Alert:</b>BTC under 31 day MA<br>\";\n};\n//ETH\nif (averages[1].json.ETH < averages[3].json.ETH && message.text !== \"\") {\n  message.text = message.text + \"<br><b>DCA >Alert:</b>ETH under 31 day MA<br>\";\n};\n//XRP\nif (averages[1].json.XRP < averages[3].json.XRP && message.text !== \"\") {\n  message.text = message.text + \"<br><b>DCA Alert:</b>XRP under 31 day MA<br>\";\n};\n\n//Critical Top Up Signals\n// variables\nvar btc_inv_percent = Math.round(($('Code3').first().json.BTCinGBP / a.json.sum_value ) * 100);\nvar eth_inv_percent = Math.round(($('Code3').first().json.ETHinGBP / a.json.sum_value ) * 100);\nvar xrp_inv_percent = Math.round(($('Code3').first().json.XRPinGBP / a.json.sum_value ) * 100);\nif (message.text !== \"\") {\n  //BTC\n  if (btc_inv_percent < 8.4) {\n    message.text = message.text + \"<br><b>Inventory Alert:</b>BTC approaching maximum target- add more to continue selling<br>\";\n  };\n  //ETH\n  if (eth_inv_percent < 8.4) {\n    message.text = message.text + \"<br><b>Inventory Alert:</b>ETH approaching maximum target- add more to continue selling<br>\";\n  };\n  //XRP\n  if (xrp_inv_percent < 8.4) {\n    message.text = message.text + \"<br><b>Inventory Alert:</b>XRP approaching maximum - add more to continue selling<br>\";\n  };\n};\n//Add Inventory Summary if message is to be sent\nif (message.text !== \"\") {\n  message.text = message.text + \"<br>Inventory Status:<br><b>BTC</b> \" + btc_inv_percent + \"% / <b>ETH</b> \" + eth_inv_percent + \"% / <b>XRP</b> \" + xrp_inv_percent + \"%<br> USDT (profit taken) \" + averages[1].USDT + \"%<br>\";\n};\nreturn message;\n\n\n\n\n"
-      },
-      "id": "e12676a0-4928-4b74-b628-d11266221ce1",
-      "name": "Code4",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3060,
-        1440
-      ],
-      "alwaysOutputData": true,
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{$json.text}}",
-              "operation": "isEmpty"
-            }
-          ]
-        }
-      },
-      "id": "49d93ac4-cd64-4f3b-a437-ec987de777df",
-      "name": "IF1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        3320,
-        1440
-      ],
-      "disabled": true
-    },
-    {
-      "parameters": {},
-      "id": "eaeac6f9-0179-4a5d-817a-80583b4dcdf3",
-      "name": "No Alerts",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3640,
-        1320
-      ]
-    },
-    {
-      "parameters": {
-        "workflowId": "wPxmsKOIBLEsBRga",
-        "options": {}
-      },
-      "id": "2e99018f-ce13-4e8a-bcee-5725fdd873ea",
-      "name": "Execute Workflow",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
-      "position": [
-        1720,
-        1040
-      ],
-      "executeOnce": true
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "aGeHadhoo9YkT5Jf",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "id": "f6099c12-7003-4627-b20d-6765c454c557",
-      "name": "Execute Workflow1",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.1,
-      "position": [
-        1920,
-        1040
-      ],
-      "executeOnce": true,
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "GSJ2qhKr4oQfGvcm",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "id": "4e0d587b-7315-4f94-9272-d9b00712e48a",
-      "name": "Execute Workflow3",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.1,
-      "position": [
-        2120,
-        1040
-      ],
-      "executeOnce": true,
-      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -1270,26 +887,6 @@
           "name": "Databot"
         }
       }
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "DZXDaMK2Qv2dCyGG",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "id": "03093684-f92c-4e9a-998b-f0804b84a819",
-      "name": "Execute Workflow4",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.1,
-      "position": [
-        2320,
-        1040
-      ],
-      "executeOnce": true,
-      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -1743,6 +1340,81 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {
+        "workflowId": "wPxmsKOIBLEsBRga",
+        "options": {}
+      },
+      "id": "2e99018f-ce13-4e8a-bcee-5725fdd873ea",
+      "name": "Spot",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        1040
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "aGeHadhoo9YkT5Jf",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "f6099c12-7003-4627-b20d-6765c454c557",
+      "name": "data",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        1040
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "GSJ2qhKr4oQfGvcm",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "4e0d587b-7315-4f94-9272-d9b00712e48a",
+      "name": "spot trade mods",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        1040
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "DZXDaMK2Qv2dCyGG",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "03093684-f92c-4e9a-998b-f0804b84a819",
+      "name": "futures",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1740,
+        1040
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true
     }
   ],
   "pinData": {},
@@ -1761,6 +1433,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-14T11:59:04.000Z",
-  "versionId": "94b8624a-aa0e-4d66-be4b-3bd7860b49f0"
+  "updatedAt": "2024-11-15T23:28:07.000Z",
+  "versionId": "e2efe024-c08c-4aef-9541-98fbc641bc5b"
 }
