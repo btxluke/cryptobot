@@ -991,7 +991,7 @@
             {
               "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
               "name": "body",
-              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ' }') }}",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ', \"presetStopSurplusPrice\": ' + $json.takeProfit + ' }') }}",
               "type": "object"
             }
           ]
@@ -1063,6 +1063,12 @@
               "name": "stopLoss",
               "value": "={{Math.round((Number($json.price) * 0.995)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
               "type": "number"
+            },
+            {
+              "id": "47ca3989-dc33-4386-86a7-7127ec4bd26a",
+              "name": "takeProfit",
+              "value": "={{Math.round((Number($json.price) * 1.015)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
+              "type": "string"
             }
           ]
         },
@@ -1103,6 +1109,12 @@
               "id": "e4e6fa00-d27a-4a42-bfba-40b9b769b0cf",
               "name": "stopLoss",
               "value": "={{Math.round((Number($json.price) * 1.005)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
+              "type": "number"
+            },
+            {
+              "id": "cc2e552c-e62a-4bdb-9b9b-0015632d6880",
+              "name": "takeProfit",
+              "value": "={{Math.round((Number($json.price) * 0.985)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
               "type": "number"
             }
           ]
@@ -1858,6 +1870,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-14T16:36:01.000Z",
-  "versionId": "42cf9fce-03cc-474d-8f68-781b57c86366"
+  "updatedAt": "2024-11-15T06:31:32.000Z",
+  "versionId": "cc50a46b-d6cc-46f1-a9ae-cd6245d4769a"
 }
