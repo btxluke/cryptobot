@@ -790,13 +790,13 @@
             {
               "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
               "name": "body",
-              "value": "={{ JSON.parse('{ \"symbol\": \"' + $('Query String4').itemMatching($runIndex).json.symbol + '\", \"productType\": \"SUSDT-FUTURES\"}') }}",
+              "value": "={{ JSON.parse('{ \"symbol\": \"' + $json.body.data[0].symbol + '\", \"productType\": \"SUSDT-FUTURES\"}') }}",
               "type": "object"
             },
             {
               "id": "35e8f57d-8153-4cc3-9499-efc23894a9d6",
               "name": "symbol",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
+              "value": "={{  $json.body.data[0].symbol }}",
               "type": "string"
             }
           ]
@@ -1067,7 +1067,7 @@
             {
               "id": "47ca3989-dc33-4386-86a7-7127ec4bd26a",
               "name": "takeProfit",
-              "value": "={{Math.round((Number($json.price) * 1.015)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
+              "value": "={{Math.round((Number($json.price) * 1.025)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
               "type": "string"
             }
           ]
@@ -1114,7 +1114,7 @@
             {
               "id": "cc2e552c-e62a-4bdb-9b9b-0015632d6880",
               "name": "takeProfit",
-              "value": "={{Math.round((Number($json.price) * 0.985)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
+              "value": "={{Math.round((Number($json.price) * 0.975)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
               "type": "number"
             }
           ]
@@ -1870,6 +1870,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-15T06:31:32.000Z",
-  "versionId": "cc50a46b-d6cc-46f1-a9ae-cd6245d4769a"
+  "updatedAt": "2024-11-15T15:27:41.000Z",
+  "versionId": "bdd094b9-4adf-4f24-bb4f-bbd1ca3afd7f"
 }
