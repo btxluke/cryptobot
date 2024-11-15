@@ -213,17 +213,6 @@
         ]
       ]
     },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Postgres2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Postgres7": {
       "main": [
         [
@@ -242,17 +231,6 @@
             "node": "Merge",
             "type": "main",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -328,6 +306,62 @@
         ]
       ]
     },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query String": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "ethbtc volitility refresh1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ethbtc volitility refresh1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        []
+      ]
+    },
     "Switch": {
       "main": [
         [
@@ -358,33 +392,11 @@
         ]
       ]
     },
-    "Crypto": {
+    "Merge": {
       "main": [
         [
           {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Query String": {
-      "main": [
-        [
-          {
-            "node": "Crypto",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "ethbtc volitility refresh1",
+            "node": "Switch",
             "type": "main",
             "index": 0
           }
@@ -1177,7 +1189,7 @@
       "typeVersion": 2.5,
       "position": [
         2220,
-        -100
+        -80
       ],
       "credentials": {
         "postgres": {
@@ -1197,34 +1209,14 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2240,
-        420
+        2260,
+        660
       ],
       "executeOnce": true,
       "credentials": {
         "postgres": {
           "id": "sxFt0uvtx3x5AcFz",
           "name": "Databot"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "command": "=screen -S {{ $json.symbol.trim().toLowerCase() }} -X stuff \"config ask_spread {{ Number($json.spread_up)*2 }} \\015 config bid_spread {{ Number($json.spread_down)*2 }} \\015 config order_amount {{ $json.order_val }} \\015\" "
-      },
-      "id": "9cadda8d-39b1-478c-a891-7235e247e11f",
-      "name": "ethbtc volitility refresh1",
-      "type": "n8n-nodes-base.ssh",
-      "typeVersion": 1,
-      "position": [
-        2460,
-        660
-      ],
-      "executeOnce": false,
-      "credentials": {
-        "sshPassword": {
-          "id": "HLlP7P64bLQy2c0D",
-          "name": "SSH Password account"
         }
       }
     },
@@ -1423,7 +1415,7 @@
       "typeVersion": 2,
       "position": [
         2000,
-        420
+        440
       ]
     },
     {
@@ -1458,21 +1450,6 @@
           "name": "Databot"
         }
       }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "id": "f4cd1158-96e2-4752-aa42-4200e2df6b3b",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        3340,
-        420
-      ]
     },
     {
       "parameters": {},
@@ -1605,94 +1582,6 @@
         400
       ],
       "executeOnce": true
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $input.all().length }}",
-                    "rightValue": 2,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Pair Intact"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "05338493-a68d-4202-a67a-9539b42b89a3",
-                    "leftValue": "={{ $input.all().length }}",
-                    "rightValue": 1,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Single Order"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "6ed7c8fb-62e5-4e18-af84-105ef8c7a9d0",
-                    "leftValue": "={{ $input.all().length }}",
-                    "rightValue": 0,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "No Orders"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "86e3cdaa-de0c-412e-8553-0800b87d6234",
-      "name": "Switch",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        3540,
-        420
-      ]
     },
     {
       "parameters": {
@@ -1835,7 +1724,168 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2460,
+        2480,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=screen -S {{ $json.symbol.trim().toLowerCase() }} -X stuff \"config ask_spread {{ Number($json.spread_up)*2 }} \\015 config bid_spread {{ Number($json.spread_down)*2 }} \\015 config order_amount {{ $json.order_val }} \\015\" "
+      },
+      "id": "9cadda8d-39b1-478c-a891-7235e247e11f",
+      "name": "ethbtc volitility refresh1",
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        900
+      ],
+      "executeOnce": false,
+      "credentials": {
+        "sshPassword": {
+          "id": "HLlP7P64bLQy2c0D",
+          "name": "SSH Password account"
+        }
+      },
+      "disabled": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "={{ JSON.stringify($json) }}",
+        "priority": 0,
+        "additionalFields": {
+          "html": true,
+          "title": "=Tradebot3 Error"
+        }
+      },
+      "id": "33d1e12f-b794-442c-a82e-d5bf95d26f79",
+      "name": "Pushover",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        1180
+      ],
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "dc16d391-4ab9-44d3-93b0-a9f7f5941a01",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 2,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Pair Intact"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "05338493-a68d-4202-a67a-9539b42b89a3",
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 1,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Single Order"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6ed7c8fb-62e5-4e18-af84-105ef8c7a9d0",
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No Orders"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "86e3cdaa-de0c-412e-8553-0800b87d6234",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3540,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "id": "f4cd1158-96e2-4752-aa42-4200e2df6b3b",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3340,
         420
       ]
     }
@@ -1930,6 +1980,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-12T09:14:09.000Z",
-  "versionId": "6c9f41b7-a469-4e16-893a-c24d51777469"
+  "updatedAt": "2024-11-15T10:06:35.000Z",
+  "versionId": "827607fe-884f-49ce-9df3-80b3a2101caf"
 }
