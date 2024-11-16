@@ -39,17 +39,6 @@
         ]
       ]
     },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Execute Workflow Trigger": {
       "main": [
         [
@@ -129,7 +118,7 @@
             {
               "id": "544036fc-0a2c-4e8e-864a-53e09d7c63b5",
               "name": "spread_inc",
-              "value": "={{ (($json.count_symbol)-2)/10 > 0 ? ((($json.count_symbol)-2)/10) : 0 }}",
+              "value": "={{ (($json.count_symbol)-2)/5 > 0 ? ((($json.count_symbol)-2)/5) : 0 }}",
               "type": "number"
             }
           ]
@@ -144,104 +133,6 @@
       "position": [
         1700,
         440
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "appendOrUpdate",
-        "documentId": {
-          "__rl": true,
-          "value": "1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY",
-          "mode": "list",
-          "cachedResultName": "Bot Performance BTC - ETH - XRP ",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 535103209,
-          "mode": "list",
-          "cachedResultName": "Hourly Volitility By Asset",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1feTNyHRLhVJ33PmDjkr5OkkRHk7-YBCD_dfieyLaHKY/edit#gid=535103209"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Hours Ago": "Spread Add",
-            "ETHBTC": "={{ $json.ETHBTC }}",
-            "XRPETH": "={{ $json.XRPETH }}",
-            "XRPBTC": "={{ $json.XRPBTC }}"
-          },
-          "matchingColumns": [
-            "Hours Ago"
-          ],
-          "schema": [
-            {
-              "id": "Hours Ago",
-              "displayName": "Hours Ago",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "ETHBTC",
-              "displayName": "ETHBTC",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "XRPBTC",
-              "displayName": "XRPBTC",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "XRPETH",
-              "displayName": "XRPETH",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "1b437eb5-5108-455a-8cf9-d563731c9387",
-      "name": "Google Sheets",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
-      "position": [
-        1280,
-        740
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "MCsNWA7c8RPHz3yK",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "var assetJson = \" [{\\\"json\\\": {\"\nfor (const item of $input.all()) {\n  assetJson = assetJson + \"\\\"\"+item.json.symbol.trim()+\"\\\"\" + \": \" + item.json.spread_inc+\",\";\n}\nassetJson = assetJson.slice(0,-1) +\"}}]\"\n\nconsole.log(assetJson);\nreturn JSON.parse(assetJson);"
-      },
-      "id": "76dc562f-4a26-495c-9481-8df8f8dc5e24",
-      "name": "Code",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1480,
-        740
       ]
     },
     {
@@ -391,6 +282,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-11T10:25:48.000Z",
-  "versionId": "73e29d7d-35c3-448d-aba3-8d5d2fabbd84"
+  "updatedAt": "2024-11-16T11:54:19.000Z",
+  "versionId": "2803ff6e-fc4c-4374-9a4c-ee42c2556404"
 }
