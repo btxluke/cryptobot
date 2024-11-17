@@ -89,17 +89,6 @@
         ]
       ]
     },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "redirector": {
       "main": [
         [
@@ -239,6 +228,11 @@
             "node": "redirector",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
           }
         ],
         [
@@ -342,6 +336,11 @@
         [
           {
             "node": "redirector",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           }
@@ -525,6 +524,29 @@
           }
         ]
       ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Pushover1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-11-04T09:08:40.818Z",
@@ -661,102 +683,13 @@
       ]
     },
     {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "d64131dc-c6fa-47bb-ba35-5f2d2de444e3",
-              "name": "rsi",
-              "value": "={{ $json.rsi }}",
-              "type": "number"
-            },
-            {
-              "id": "6eab440f-61a8-402e-be07-26dad8d74c91",
-              "name": "symbol",
-              "value": "={{ $json.symbol }}",
-              "type": "string"
-            },
-            {
-              "id": "c5c302fb-f588-4b48-b4be-5f1ea11b0df7",
-              "name": "time_hr",
-              "value": "={{ $json.time_hr }}",
-              "type": "string"
-            },
-            {
-              "id": "a3d3d6fa-7141-45dd-a2ce-63f73e0f1f9e",
-              "name": "price",
-              "value": "={{ $json.price }}",
-              "type": "number"
-            },
-            {
-              "id": "bec81519-b208-4321-8924-c773b58b6815",
-              "name": "moving_average",
-              "value": "={{ $json.moving_average }}",
-              "type": "number"
-            },
-            {
-              "id": "df565cc0-0cfe-419f-af7a-ef9c0790d25a",
-              "name": "upper_band",
-              "value": "={{ $json.upper_band }}",
-              "type": "number"
-            },
-            {
-              "id": "4a59e5f5-b1cd-43ef-a67d-3b16e2c9590f",
-              "name": "lower_band",
-              "value": "={{ $json.lower_band }}",
-              "type": "number"
-            },
-            {
-              "id": "f042e31c-3dd5-4441-aa57-07985c19ddab",
-              "name": "upper_band_1_05",
-              "value": "={{ $json.upper_band_1_05 }}",
-              "type": "number"
-            },
-            {
-              "id": "81ffc92c-fd14-480d-85ff-ef49e70ef40f",
-              "name": "lower_band_1_05",
-              "value": "={{ $json.lower_band_1_05 }}",
-              "type": "number"
-            },
-            {
-              "id": "e2941650-d971-40d4-a7e7-33988f8955de",
-              "name": "upper_band_0_5025",
-              "value": "={{ $json.upper_band_0_5025 }}",
-              "type": "number"
-            },
-            {
-              "id": "abb47fe7-305b-4742-8868-50f14635c6eb",
-              "name": "lower_band_0_5025",
-              "value": "={{ $json.lower_band_0_5025 }}",
-              "type": "number"
-            },
-            {
-              "id": "fbf533b0-3ced-4b6b-a84c-aa8c413eb167",
-              "name": "slope",
-              "value": "={{ $json.slope  }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "5cd34df6-1c05-497f-bda4-66e0c971322b",
-      "name": "Edit Fields",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1960,
-        240
-      ]
-    },
-    {
       "parameters": {},
       "id": "720ad5af-73c4-43c0-aaa4-b0538a9b6f7b",
       "name": "redirector",
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3740,
+        3960,
         740
       ]
     },
@@ -1183,7 +1116,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3180,
+        3400,
         440
       ],
       "executeOnce": true,
@@ -1214,8 +1147,8 @@
       "type": "n8n-nodes-base.pushover",
       "typeVersion": 1,
       "position": [
-        3360,
-        20
+        3960,
+        560
       ],
       "credentials": {
         "pushoverApi": {
@@ -1439,7 +1372,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3140,
+        3360,
         20
       ],
       "executeOnce": true,
@@ -1561,7 +1494,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3360,
+        3580,
         -260
       ]
     },
@@ -1853,15 +1786,551 @@
         2260,
         440
       ]
+    },
+    {
+      "parameters": {
+        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
+        "message": "={{ JSON.stringify($json) }}",
+        "priority": 0,
+        "additionalFields": {
+          "html": true,
+          "title": "=Futures Order Update Error"
+        }
+      },
+      "id": "a3cbf659-0766-4a84-abd8-db6f50411718",
+      "name": "Pushover1",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        4160,
+        140
+      ],
+      "credentials": {
+        "pushoverApi": {
+          "id": "qmm7O1MHQ9s5cH25",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d64131dc-c6fa-47bb-ba35-5f2d2de444e3",
+              "name": "rsi",
+              "value": "={{ $json.rsi }}",
+              "type": "number"
+            },
+            {
+              "id": "6eab440f-61a8-402e-be07-26dad8d74c91",
+              "name": "symbol",
+              "value": "={{ $json.symbol }}",
+              "type": "string"
+            },
+            {
+              "id": "c5c302fb-f588-4b48-b4be-5f1ea11b0df7",
+              "name": "time_hr",
+              "value": "={{ $json.time_hr }}",
+              "type": "string"
+            },
+            {
+              "id": "a3d3d6fa-7141-45dd-a2ce-63f73e0f1f9e",
+              "name": "price",
+              "value": "={{ $json.price }}",
+              "type": "number"
+            },
+            {
+              "id": "bec81519-b208-4321-8924-c773b58b6815",
+              "name": "moving_average",
+              "value": "={{ $json.moving_average }}",
+              "type": "number"
+            },
+            {
+              "id": "df565cc0-0cfe-419f-af7a-ef9c0790d25a",
+              "name": "upper_band",
+              "value": "={{ $json.upper_band }}",
+              "type": "number"
+            },
+            {
+              "id": "4a59e5f5-b1cd-43ef-a67d-3b16e2c9590f",
+              "name": "lower_band",
+              "value": "={{ $json.lower_band }}",
+              "type": "number"
+            },
+            {
+              "id": "f042e31c-3dd5-4441-aa57-07985c19ddab",
+              "name": "upper_band_1_05",
+              "value": "={{ $json.upper_band_1_05 }}",
+              "type": "number"
+            },
+            {
+              "id": "81ffc92c-fd14-480d-85ff-ef49e70ef40f",
+              "name": "lower_band_1_05",
+              "value": "={{ $json.lower_band_1_05 }}",
+              "type": "number"
+            },
+            {
+              "id": "e2941650-d971-40d4-a7e7-33988f8955de",
+              "name": "upper_band_0_5025",
+              "value": "={{ $json.upper_band_0_5025 }}",
+              "type": "number"
+            },
+            {
+              "id": "abb47fe7-305b-4742-8868-50f14635c6eb",
+              "name": "lower_band_0_5025",
+              "value": "={{ $json.lower_band_0_5025 }}",
+              "type": "number"
+            },
+            {
+              "id": "fbf533b0-3ced-4b6b-a84c-aa8c413eb167",
+              "name": "slope",
+              "value": "={{ $json.slope  }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5cd34df6-1c05-497f-bda4-66e0c971322b",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1960,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "futures_orders",
+          "mode": "list",
+          "cachedResultName": "futures_orders"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "orderId": "={{ $('HTTP Request').first().json.body.data.successList[0].orderId }}",
+            "bot_price_close": "={{ $('Edit Fields').item.json.price }}",
+            "bot_rsi_close": "={{ $('Edit Fields').item.json.rsi }}",
+            "bot_slope_close": "={{ $('Edit Fields').item.json.slope }}",
+            "exchange_price_close": "={{ $json.body.data[0].markPrice }}",
+            "exchange_profit": "={{ $json.body.data[0].achievedProfits }}",
+            "time_close": "={{ DateTime.fromMillis(Number($json.body.requestTime)) }}",
+            "bot_state_close": "={{ $('Edit Fields').item.json }}",
+            "exchange_price_open": "={{ $json.body.data[0].openPriceAvg }}"
+          },
+          "matchingColumns": [
+            "orderId"
+          ],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time_open",
+              "displayName": "time_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time_close",
+              "displayName": "time_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_price_open",
+              "displayName": "bot_price_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_price_close",
+              "displayName": "bot_price_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_rsi_open",
+              "displayName": "bot_rsi_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_rsi_close",
+              "displayName": "bot_rsi_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_slope_open",
+              "displayName": "bot_slope_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_slope_close",
+              "displayName": "bot_slope_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "exchange_price_open",
+              "displayName": "exchange_price_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "exchange_price_close",
+              "displayName": "exchange_price_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_state_open",
+              "displayName": "bot_state_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_state_close",
+              "displayName": "bot_state_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "exchange_profit",
+              "displayName": "exchange_profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c712ae28-d323-49f1-b1eb-ea19a716a772",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3960,
+        20
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "futures_orders",
+          "mode": "list",
+          "cachedResultName": "futures_orders"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "orderId": "={{ $json.body.data.orderId }}",
+            "time_open": "={{ DateTime.fromMillis(Number($json.body.requestTime)) }}",
+            "bot_slope_open": "={{ $('Edit Fields').item.json.slope }}",
+            "bot_price_open": "={{ $('Edit Fields').item.json.price }}",
+            "bot_rsi_open": "={{ $('Edit Fields').item.json.rsi }}",
+            "bot_state_open": "={{ $('Edit Fields').item.json }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time_open",
+              "displayName": "time_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "time_close",
+              "displayName": "time_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_price_open",
+              "displayName": "bot_price_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_price_close",
+              "displayName": "bot_price_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_rsi_open",
+              "displayName": "bot_rsi_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_rsi_close",
+              "displayName": "bot_rsi_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_slope_open",
+              "displayName": "bot_slope_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_slope_close",
+              "displayName": "bot_slope_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "exchange_price_open",
+              "displayName": "exchange_price_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "exchange_price_close",
+              "displayName": "exchange_price_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_state_open",
+              "displayName": "bot_state_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "bot_state_close",
+              "displayName": "bot_state_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "exchange_profit",
+              "displayName": "exchange_profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2c88d67-2818-4000-ba9d-be33790b1b1b",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3960,
+        320
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
   "pinData": {
-    "globals": [
+    "Place Order": [
       {
         "json": {
-          "asset_total": "344.020",
-          "leverage": "200",
-          "id": "1"
+          "rsi": 46.538187009279085,
+          "symbol": "XRPUSDT",
+          "time_hr": "2024-11-17T17:39:37.786Z",
+          "price": 1.0727,
+          "moving_average": 1.0806966386554622,
+          "upper_band": 1.0877153960527264,
+          "lower_band": 1.073677881258198,
+          "upper_band_1_05": 1.0842060173540944,
+          "lower_band_1_05": 1.07718725995683,
+          "upper_band_0_5025": 1.0824513280047783,
+          "lower_band_0_5025": 1.078941949306146,
+          "slope": "0.0000"
+        }
+      },
+      {
+        "json": {
+          "rsi": 46.538187009279085,
+          "symbol": "XRPUSDT",
+          "time_hr": "2024-11-17T17:39:08.510Z",
+          "price": 1.0737,
+          "moving_average": 1.0807781512605041,
+          "upper_band": 1.0876534937126452,
+          "lower_band": 1.0739028088083633,
+          "upper_band_1_05": 1.0842158224865748,
+          "lower_band_1_05": 1.0773404800344337,
+          "upper_band_0_5025": 1.0824969868735395,
+          "lower_band_0_5025": 1.079059315647469,
+          "slope": "0.0000"
+        }
+      }
+    ],
+    "close order": [
+      {
+        "json": {
+          "rsi": 46.538187009279085,
+          "symbol": "XRPUSDT",
+          "time_hr": "2024-11-17T17:39:37.786Z",
+          "price": 1.0727,
+          "moving_average": 1.0806966386554622,
+          "upper_band": 1.0877153960527264,
+          "lower_band": 1.073677881258198,
+          "upper_band_1_05": 1.0842060173540944,
+          "lower_band_1_05": 1.07718725995683,
+          "upper_band_0_5025": 1.0824513280047783,
+          "lower_band_0_5025": 1.078941949306146,
+          "slope": "0.0000"
+        }
+      },
+      {
+        "json": {
+          "rsi": 46.538187009279085,
+          "symbol": "XRPUSDT",
+          "time_hr": "2024-11-17T17:39:08.510Z",
+          "price": 1.0737,
+          "moving_average": 1.0807781512605041,
+          "upper_band": 1.0876534937126452,
+          "lower_band": 1.0739028088083633,
+          "upper_band_1_05": 1.0842158224865748,
+          "lower_band_1_05": 1.0773404800344337,
+          "upper_band_0_5025": 1.0824969868735395,
+          "lower_band_0_5025": 1.079059315647469,
+          "slope": "0.0000"
         }
       }
     ]
@@ -1876,6 +2345,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-16T07:55:53.000Z",
-  "versionId": "d9be7847-77c8-46cb-bb51-c75e216b10e5"
+  "updatedAt": "2024-11-17T19:08:21.000Z",
+  "versionId": "0d59aadb-9962-4ae6-bc0f-ee17f197c366"
 }
