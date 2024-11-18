@@ -100,17 +100,6 @@
         ]
       ]
     },
-    "close order": {
-      "main": [
-        [
-          {
-            "node": "Query String4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Query String2": {
       "main": [
         [
@@ -188,17 +177,6 @@
         ]
       ]
     },
-    "Place Order": {
-      "main": [
-        [
-          {
-            "node": "Query String",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "buy_fields": {
       "main": [
         [
@@ -249,17 +227,6 @@
         [
           {
             "node": "redirector",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Query String4": {
-      "main": [
-        [
-          {
-            "node": "Crypto4",
             "type": "main",
             "index": 0
           }
@@ -318,58 +285,6 @@
         [
           {
             "node": "sell_fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request2": {
-      "main": [
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Postgres2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Pushover",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Query String2",
             "type": "main",
             "index": 0
           }
@@ -536,12 +451,90 @@
         ]
       ]
     },
+    "close order": {
+      "main": [
+        [
+          {
+            "node": "Query String4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Place Order": {
+      "main": [
+        [
+          {
+            "node": "Query String",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query String4": {
+      "main": [
+        [
+          {
+            "node": "Crypto4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Query String2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Postgres2": {
       "main": [
         [],
         [
           {
             "node": "Pushover1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres2",
             "type": "main",
             "index": 0
           }
@@ -691,17 +684,6 @@
       "position": [
         3960,
         740
-      ]
-    },
-    {
-      "parameters": {},
-      "id": "e56a85ea-6259-4405-8ed3-658827b349ea",
-      "name": "close order",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        2540,
-        20
       ]
     },
     {
@@ -930,7 +912,7 @@
             {
               "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
               "name": "body",
-              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ', \"presetStopSurplusPrice\": ' + $json.takeProfit + ' }') }}",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDT-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDT\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ', \"presetStopSurplusPrice\": ' + $json.takeProfit + ', \"clientOid\": '+ $json.symbol + $json.side + String($now.toMillis()) +' }') }}",
               "type": "object"
             }
           ]
@@ -961,17 +943,6 @@
       "typeVersion": 1,
       "position": [
         3060,
-        440
-      ]
-    },
-    {
-      "parameters": {},
-      "id": "1c034ccf-f5e8-4d48-aee3-45cdcedb49c8",
-      "name": "Place Order",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        2820,
         440
       ]
     },
@@ -1159,55 +1130,6 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
-              "name": "timestamp",
-              "value": "={{ Date.now() }}",
-              "type": "number"
-            },
-            {
-              "id": "70d90f4f-8472-44e7-a2f4-2d416988964b",
-              "name": "method",
-              "value": "GET",
-              "type": "string"
-            },
-            {
-              "id": "f47e6259-b78c-4225-9113-e457f18c7713",
-              "name": "requestPath",
-              "value": "/api/v2/mix/position/single-position",
-              "type": "string"
-            },
-            {
-              "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
-              "name": "body",
-              "value": "={{\"?symbol=\" + ($json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\") + \"&productType=SUSDT-FUTURES&marginCoin=SUSDT\" }}",
-              "type": "string"
-            },
-            {
-              "id": "35e8f57d-8153-4cc3-9499-efc23894a9d6",
-              "name": "symbol",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "id": "2d6e622d-4011-467b-9559-faf7d969d462",
-      "name": "Query String4",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2820,
-        -260
-      ],
-      "executeOnce": true
-    },
-    {
-      "parameters": {
         "action": "hmac",
         "type": "SHA256",
         "value": "={{ $json.timestamp + $json.method.toUpperCase() + $json.requestPath + $json.body }}",
@@ -1323,179 +1245,6 @@
       "position": [
         2540,
         240
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://api.bitget.com{{ $json.requestPath }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "ACCESS-SIGN",
-              "value": "={{ $json.data }}"
-            },
-            {
-              "name": "ACCESS-TIMESTAMP",
-              "value": "={{ $json.timestamp }}"
-            },
-            {
-              "name": "ACCESS-PASSPHRASE",
-              "value": "Inferno123"
-            },
-            {
-              "name": "locale",
-              "value": "en-US"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ $json.body }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "id": "f36d3f14-4da5-45b8-bc3a-e89847bdcd2f",
-      "name": "HTTP Request2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3360,
-        20
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "httpQueryAuth": {
-          "id": "xPPmrpo7lNZEQD92",
-          "name": "Binance ApiKey"
-        },
-        "httpHeaderAuth": {
-          "id": "s7MYHJ2AeCAbH6Lb",
-          "name": "BitGet Api"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "={{$json.method}}",
-        "url": "=https://api.bitget.com{{ $json.requestPath }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "symbol",
-              "value": "={{ $('Query String4').item.json.symbol }}"
-            },
-            {
-              "name": "productType",
-              "value": "SUSDT-FUTURES"
-            },
-            {
-              "name": "marginCoin",
-              "value": "SUSDT"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "ACCESS-SIGN",
-              "value": "={{ $json.data }}"
-            },
-            {
-              "name": "ACCESS-TIMESTAMP",
-              "value": "={{ $json.timestamp }}"
-            },
-            {
-              "name": "ACCESS-PASSPHRASE",
-              "value": "Inferno123"
-            },
-            {
-              "name": "locale",
-              "value": "en-US"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "id": "2e8ef704-2814-48af-a61a-8a638e106fab",
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3140,
-        -260
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "httpQueryAuth": {
-          "id": "xPPmrpo7lNZEQD92",
-          "name": "Binance ApiKey"
-        },
-        "httpHeaderAuth": {
-          "id": "s7MYHJ2AeCAbH6Lb",
-          "name": "BitGet Api"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "8f86d387-69df-4a92-a745-8ccc9f14311d",
-              "leftValue": "={{ Number($json.body.data[0].unrealizedPL) - Number($json.body.data[0].deductedFee) }}",
-              "rightValue": 0,
-              "operator": {
-                "type": "number",
-                "operation": "gt"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "id": "888c8928-bd25-4ec0-add2-8a929bb4fea2",
-      "name": "If",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3580,
-        -260
       ]
     },
     {
@@ -1903,7 +1652,6 @@
     },
     {
       "parameters": {
-        "operation": "update",
         "schema": {
           "__rl": true,
           "mode": "list",
@@ -1918,190 +1666,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "orderId": "={{ $('HTTP Request').first().json.body.data.successList[0].orderId }}",
-            "bot_price_close": "={{ $('Edit Fields').item.json.price }}",
-            "bot_rsi_close": "={{ $('Edit Fields').item.json.rsi }}",
-            "bot_slope_close": "={{ $('Edit Fields').item.json.slope }}",
-            "exchange_price_close": "={{ $json.body.data[0].markPrice }}",
-            "exchange_profit": "={{ $json.body.data[0].achievedProfits }}",
-            "time_close": "={{ DateTime.fromMillis(Number($json.body.requestTime)) }}",
-            "bot_state_close": "={{ $('Edit Fields').item.json }}",
-            "exchange_price_open": "={{ $json.body.data[0].openPriceAvg }}"
-          },
-          "matchingColumns": [
-            "orderId"
-          ],
-          "schema": [
-            {
-              "id": "orderId",
-              "displayName": "orderId",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "time_open",
-              "displayName": "time_open",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "time_close",
-              "displayName": "time_close",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "bot_price_open",
-              "displayName": "bot_price_open",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "bot_price_close",
-              "displayName": "bot_price_close",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "bot_rsi_open",
-              "displayName": "bot_rsi_open",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "bot_rsi_close",
-              "displayName": "bot_rsi_close",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "bot_slope_open",
-              "displayName": "bot_slope_open",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "bot_slope_close",
-              "displayName": "bot_slope_close",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "exchange_price_open",
-              "displayName": "exchange_price_open",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "exchange_price_close",
-              "displayName": "exchange_price_close",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "bot_state_open",
-              "displayName": "bot_state_open",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "object",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "bot_state_close",
-              "displayName": "bot_state_close",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "object",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "exchange_profit",
-              "displayName": "exchange_profit",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "c712ae28-d323-49f1-b1eb-ea19a716a772",
-      "name": "Postgres2",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        3960,
-        20
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "sxFt0uvtx3x5AcFz",
-          "name": "Databot"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "futures_orders",
-          "mode": "list",
-          "cachedResultName": "futures_orders"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "orderId": "={{ $json.body.data.orderId }}",
+            "orderId": "={{ $json.body.data.clientOid }}",
             "time_open": "={{ DateTime.fromMillis(Number($json.body.requestTime)) }}",
             "bot_slope_open": "={{ $('Edit Fields').item.json.slope }}",
             "bot_price_open": "={{ $('Edit Fields').item.json.price }}",
@@ -2263,78 +1828,437 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {},
+      "id": "e56a85ea-6259-4405-8ed3-658827b349ea",
+      "name": "close order",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2540,
+        20
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "1c034ccf-f5e8-4d48-aee3-45cdcedb49c8",
+      "name": "Place Order",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78246e2b-4c5f-4885-9847-0f6ce14b6183",
+              "name": "timestamp",
+              "value": "={{ Date.now() }}",
+              "type": "number"
+            },
+            {
+              "id": "70d90f4f-8472-44e7-a2f4-2d416988964b",
+              "name": "method",
+              "value": "GET",
+              "type": "string"
+            },
+            {
+              "id": "f47e6259-b78c-4225-9113-e457f18c7713",
+              "name": "requestPath",
+              "value": "/api/v2/mix/position/single-position",
+              "type": "string"
+            },
+            {
+              "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
+              "name": "body",
+              "value": "={{\"?symbol=\" + ($json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\") + \"&productType=SUSDT-FUTURES&marginCoin=SUSDT\" }}",
+              "type": "string"
+            },
+            {
+              "id": "35e8f57d-8153-4cc3-9499-efc23894a9d6",
+              "name": "symbol",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "2d6e622d-4011-467b-9559-faf7d969d462",
+      "name": "Query String4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2820,
+        -260
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8f86d387-69df-4a92-a745-8ccc9f14311d",
+              "leftValue": "={{ Number($json.body.data[0].unrealizedPL) - Number($json.body.data[0].deductedFee) }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "888c8928-bd25-4ec0-add2-8a929bb4fea2",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3580,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "futures_orders",
+          "mode": "list",
+          "cachedResultName": "futures_orders"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "orderId": "={{ $json.body.data.successList[0].clientOid }}",
+            "bot_price_close": "={{ $('Edit Fields').item.json.price }}",
+            "bot_rsi_close": "={{ $('Edit Fields').item.json.rsi }}",
+            "bot_slope_close": "={{ $('Edit Fields').item.json.slope }}",
+            "exchange_price_close": "={{ $('HTTP Request').item.json.body.data[0].markPrice }}",
+            "exchange_profit": "={{ $('HTTP Request').item.json.body.data[0].unrealizedPL - $('HTTP Request').item.json.body.data[0].deductedFee }}",
+            "bot_state_close": "={{ $('Edit Fields').item.json }}",
+            "exchange_price_open": "={{ $('HTTP Request').item.json.body.data[0].openPriceAvg }}"
+          },
+          "matchingColumns": [
+            "orderId"
+          ],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time_open",
+              "displayName": "time_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "time_close",
+              "displayName": "time_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_price_open",
+              "displayName": "bot_price_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_price_close",
+              "displayName": "bot_price_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_rsi_open",
+              "displayName": "bot_rsi_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_rsi_close",
+              "displayName": "bot_rsi_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_slope_open",
+              "displayName": "bot_slope_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_slope_close",
+              "displayName": "bot_slope_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "exchange_price_open",
+              "displayName": "exchange_price_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "exchange_price_close",
+              "displayName": "exchange_price_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bot_state_open",
+              "displayName": "bot_state_open",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "bot_state_close",
+              "displayName": "bot_state_close",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "exchange_profit",
+              "displayName": "exchange_profit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c712ae28-d323-49f1-b1eb-ea19a716a772",
+      "name": "Postgres2",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        3960,
+        20
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "={{$json.method}}",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "symbol",
+              "value": "={{ $('Query String4').item.json.symbol }}"
+            },
+            {
+              "name": "productType",
+              "value": "SUSDT-FUTURES"
+            },
+            {
+              "name": "marginCoin",
+              "value": "SUSDT"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "2e8ef704-2814-48af-a61a-8a638e106fab",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3140,
+        -260
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "f36d3f14-4da5-45b8-bc3a-e89847bdcd2f",
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3360,
+        20
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      }
     }
   ],
-  "pinData": {
-    "Place Order": [
-      {
-        "json": {
-          "rsi": 46.538187009279085,
-          "symbol": "XRPUSDT",
-          "time_hr": "2024-11-17T17:39:37.786Z",
-          "price": 1.0727,
-          "moving_average": 1.0806966386554622,
-          "upper_band": 1.0877153960527264,
-          "lower_band": 1.073677881258198,
-          "upper_band_1_05": 1.0842060173540944,
-          "lower_band_1_05": 1.07718725995683,
-          "upper_band_0_5025": 1.0824513280047783,
-          "lower_band_0_5025": 1.078941949306146,
-          "slope": "0.0000"
-        }
-      },
-      {
-        "json": {
-          "rsi": 46.538187009279085,
-          "symbol": "XRPUSDT",
-          "time_hr": "2024-11-17T17:39:08.510Z",
-          "price": 1.0737,
-          "moving_average": 1.0807781512605041,
-          "upper_band": 1.0876534937126452,
-          "lower_band": 1.0739028088083633,
-          "upper_band_1_05": 1.0842158224865748,
-          "lower_band_1_05": 1.0773404800344337,
-          "upper_band_0_5025": 1.0824969868735395,
-          "lower_band_0_5025": 1.079059315647469,
-          "slope": "0.0000"
-        }
-      }
-    ],
-    "close order": [
-      {
-        "json": {
-          "rsi": 46.538187009279085,
-          "symbol": "XRPUSDT",
-          "time_hr": "2024-11-17T17:39:37.786Z",
-          "price": 1.0727,
-          "moving_average": 1.0806966386554622,
-          "upper_band": 1.0877153960527264,
-          "lower_band": 1.073677881258198,
-          "upper_band_1_05": 1.0842060173540944,
-          "lower_band_1_05": 1.07718725995683,
-          "upper_band_0_5025": 1.0824513280047783,
-          "lower_band_0_5025": 1.078941949306146,
-          "slope": "0.0000"
-        }
-      },
-      {
-        "json": {
-          "rsi": 46.538187009279085,
-          "symbol": "XRPUSDT",
-          "time_hr": "2024-11-17T17:39:08.510Z",
-          "price": 1.0737,
-          "moving_average": 1.0807781512605041,
-          "upper_band": 1.0876534937126452,
-          "lower_band": 1.0739028088083633,
-          "upper_band_1_05": 1.0842158224865748,
-          "lower_band_1_05": 1.0773404800344337,
-          "upper_band_0_5025": 1.0824969868735395,
-          "lower_band_0_5025": 1.079059315647469,
-          "slope": "0.0000"
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1",
     "saveDataSuccessExecution": "none",
@@ -2345,6 +2269,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-17T19:08:21.000Z",
-  "versionId": "0d59aadb-9962-4ae6-bc0f-ee17f197c366"
+  "updatedAt": "2024-11-18T08:03:42.000Z",
+  "versionId": "da576621-91b6-4a3d-abb2-ff556f9a8f68"
 }
