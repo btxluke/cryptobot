@@ -78,17 +78,6 @@
         ]
       ]
     },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "redirector": {
       "main": [
         [
@@ -540,6 +529,17 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-11-04T09:08:40.818Z",
@@ -621,7 +621,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT rsi(array_agg(price), 120) AS rsi, calculate_trendline_slope('{{ $json.symbol }}', 60) AS slope\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' AND time_hr >= now() - INTERVAL '60m';",
+        "query": "SELECT time_hr,rsi, trendline AS slope\nFROM exchange_prices\nWHERE symbol = '{{ $json.symbol }}' ORDER BY time_hr DESC LIMIT 2",
         "options": {}
       },
       "id": "0575c7a6-67e7-43c5-bcfb-85b589a92c69",
@@ -659,21 +659,6 @@
           "name": "Databot"
         }
       }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineAll",
-        "options": {}
-      },
-      "id": "00b14358-eeed-4bb6-977b-6650004d4353",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        1820,
-        240
-      ]
     },
     {
       "parameters": {},
@@ -2256,6 +2241,21 @@
           "name": "BitGet Api"
         }
       }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "time_hr",
+        "options": {}
+      },
+      "id": "00b14358-eeed-4bb6-977b-6650004d4353",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1820,
+        240
+      ]
     }
   ],
   "pinData": {},
@@ -2269,6 +2269,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-18T08:03:42.000Z",
-  "versionId": "da576621-91b6-4a3d-abb2-ff556f9a8f68"
+  "updatedAt": "2024-11-19T07:28:02.000Z",
+  "versionId": "2f09a092-83a0-46b6-8a81-cdaf5797adc2"
 }
