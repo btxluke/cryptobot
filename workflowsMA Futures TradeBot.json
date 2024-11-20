@@ -258,6 +258,11 @@
             "node": "Switch2",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -414,25 +419,11 @@
         ]
       ]
     },
-    "Switch2": {
+    "Postgres1": {
       "main": [
         [
           {
-            "node": "sell_fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "buy_fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "If1",
+            "node": "redirector",
             "type": "main",
             "index": 0
           }
@@ -472,6 +463,45 @@
         [
           {
             "node": "Query String4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "sell_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "buy_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "buy_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "sell_fields",
             "type": "main",
             "index": 0
           }
@@ -1100,8 +1130,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2340,
-        240
+        2160,
+        -240
       ]
     },
     {
@@ -1204,6 +1234,12 @@
               "name": "slope",
               "value": "={{ $json.slope  }}",
               "type": "string"
+            },
+            {
+              "id": "e027c6e9-1473-4ff4-a72e-08f63a43e118",
+              "name": "squeeze",
+              "value": "={{ Math.round(((($json.upper_band - $json.lower_band)/$json.upper_band)*100)*100)/100}}",
+              "type": "number"
             }
           ]
         },
@@ -1387,8 +1423,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        4180,
-        320
+        4000,
+        340
       ],
       "credentials": {
         "postgres": {
@@ -1981,78 +2017,9 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        2260,
+        2320,
         -140
       ]
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $input.all()[0].json.slope > 0 && $input.all()[1].json.slope <= 0 && $input.all()[0].rsi >= 50 }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "slope+rsi+"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "130e3884-63e1-408c-ac54-1d86c3628dbb",
-                    "leftValue": "={{ $input.all()[0].json.slope < 0 && $input.all()[1].json.slope >= 0 && $input.all()[0].rsi <= 50 }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "slope-rsi-"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "id": "43857d73-1575-408c-9a86-dad077d181f6",
-      "name": "Switch2",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        2120,
-        240
-      ],
-      "executeOnce": true
     },
     {
       "parameters": {
@@ -2215,9 +2182,128 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        2260,
+        2320,
         -380
       ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all()[0].json.slope > 0 && $input.all()[1].json.slope <= 0 && $input.all()[0].rsi <= 50 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "slope+rsi+"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "130e3884-63e1-408c-ac54-1d86c3628dbb",
+                    "leftValue": "={{ $input.all()[0].json.slope < 0 && $input.all()[1].json.slope >= 0 && $input.all()[0].rsi >= 50 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "slope-rsi-"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4f7f98fa-a6ef-4e98-aaf0-839de3635bfe",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.upper_band && $input.all()[1].json.price < $input.all()[1].json.upper_band && $json.squeeze <= 0.6}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "sq_bo+"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "22459cac-b904-407c-af3c-3e025f591cc6",
+                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band && $input.all()[1].json.price > $input.all()[1].json.upper_band && $json.squeeze <= 0.6}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "sq_bo-"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "43857d73-1575-408c-9a86-dad077d181f6",
+      "name": "Switch2",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2240,
+        620
+      ],
+      "executeOnce": true
     }
   ],
   "pinData": {},
@@ -2231,6 +2317,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-19T19:27:12.000Z",
-  "versionId": "d1779844-b4b9-4e5d-bf7d-9e3ea75172fb"
+  "updatedAt": "2024-11-20T07:34:08.000Z",
+  "versionId": "0891e7ac-a002-4ee4-9d94-d6214e61e9c4"
 }
