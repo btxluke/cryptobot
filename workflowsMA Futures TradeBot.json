@@ -362,17 +362,6 @@
         ]
       ]
     },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Lower Cases": {
       "main": [
         [
@@ -509,6 +498,17 @@
         [
           {
             "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
@@ -871,7 +871,7 @@
             {
               "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
               "name": "body",
-              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDC-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDC\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ', \"clientOid\": '+ $('next_orderId').first().json.next_order_id +' }') }}",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDC-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDC\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ', \"clientOid\": '+ $('next_orderId').first().json.next_orderId +' }') }}",
               "type": "object"
             }
           ]
@@ -924,7 +924,7 @@
             {
               "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
               "name": "symbol",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? \"SBTCSUSDT\" : $json.symbol == \"ETHUSDT\" ? \"SETHSUSDT\" : \"SXRPSUSDT\" }}",
+              "value": "={{ \"SBTCSPERP\" }}",
               "type": "string"
             },
             {
@@ -1737,11 +1737,11 @@
             },
             {
               "name": "productType",
-              "value": "SUSDT-FUTURES"
+              "value": "SUSDC-FUTURES"
             },
             {
               "name": "marginCoin",
-              "value": "SUSDT"
+              "value": "SUSDC"
             }
           ]
         },
@@ -1860,21 +1860,6 @@
           "name": "BitGet Api"
         }
       }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "fieldsToMatchString": "time_hr",
-        "options": {}
-      },
-      "id": "00b14358-eeed-4bb6-977b-6650004d4353",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        1820,
-        240
-      ]
     },
     {
       "parameters": {
@@ -2024,7 +2009,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \n    COALESCE(\n        (SELECT last_value + 1\n         FROM pg_sequences\n         WHERE schemaname = 'public'\n           AND sequencename = (\n             SELECT relname\n             FROM pg_class c\n             JOIN pg_namespace n ON n.oid = c.relnamespace\n             WHERE c.relkind = 'S'\n               AND n.nspname = 'public'\n               AND c.relname = pg_get_serial_sequence('public.futures_orders', 'orderId')\n           )\n        ), 1\n    ) AS next_order_id;\n",
+        "query": "SELECT \"orderId\" + 1 AS next_orderId FROM public.futures_orders\n",
         "options": {}
       },
       "id": "353d2ac2-e23a-474c-a8c6-fb4e31abc3da",
@@ -2304,6 +2289,42 @@
         620
       ],
       "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    COALESCE(\n        (SELECT last_value + 1\n         FROM pg_sequences\n         WHERE schemaname = 'public'\n           AND sequencename = (\n             SELECT relname\n             FROM pg_class c\n             JOIN pg_namespace n ON n.oid = c.relnamespace\n             WHERE c.relkind = 'S'\n               AND n.nspname = 'public'\n               AND c.relname = pg_get_serial_sequence('public.futures_orders', 'orderId')\n           )\n        ), 1\n    ) AS next_order_id;\n",
+        "options": {}
+      },
+      "id": "d0ecf2db-7b3e-4393-a5ba-731cebb5bfd6",
+      "name": "next_orderId1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        460,
+        460
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "time_hr",
+        "options": {}
+      },
+      "id": "00b14358-eeed-4bb6-977b-6650004d4353",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1820,
+        240
+      ]
     }
   ],
   "pinData": {},
@@ -2317,6 +2338,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-20T07:34:08.000Z",
-  "versionId": "0891e7ac-a002-4ee4-9d94-d6214e61e9c4"
+  "updatedAt": "2024-11-20T15:33:05.000Z",
+  "versionId": "952afc8b-2b63-493c-9eef-ceb4c7b88ab3"
 }
