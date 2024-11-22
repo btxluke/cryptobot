@@ -317,47 +317,6 @@
         ]
       ]
     },
-    "Short Cases": {
-      "main": [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Long Cases": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "root": {
       "main": [
         [
@@ -381,17 +340,6 @@
             "node": "Merge1",
             "type": "main",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge1": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -467,6 +415,127 @@
         [
           {
             "node": "Place Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Short Cases",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Long Cases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Short Cases": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Long Cases": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -829,7 +898,7 @@
             {
               "id": "4feabfd4-a176-43c0-beb0-2dc002c8ee6c",
               "name": "body",
-              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDC-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDC\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ', \"clientOid\": '+ $('next_orderId').first().json.next_orderId +' }') }}",
+              "value": "={{ JSON.parse('{ \"symbol\": \"'+ $json.symbol +'\", \"productType\": \"SUSDC-FUTURES\", \"marginMode\": \"isolated\", \"marginCoin\": \"SUSDC\", \"size\": \"'+ String($json.size) +'\", \"side\": \"' + $json.side + '\", \"orderType\": \"market\", \"reduceOnly\":\"NO\", \"oneWayMode\": true, \"presetStopLossPrice\": ' + $json.stopLoss + ', \"clientOid\": '+ $('next_orderId').first().json.next_orderid +' }') }}",
               "type": "object"
             }
           ]
@@ -865,31 +934,6 @@
     },
     {
       "parameters": {
-        "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
-        "message": "={{ $json.error.message }}\n________________________\n{{ JSON.stringify($json) }}",
-        "priority": 0,
-        "additionalFields": {
-          "html": true,
-          "title": "=BitGet Error"
-        }
-      },
-      "id": "1ed56b2c-7331-4308-8793-2a6ea43552f4",
-      "name": "Pushover",
-      "type": "n8n-nodes-base.pushover",
-      "typeVersion": 1,
-      "position": [
-        1220,
-        -860
-      ],
-      "credentials": {
-        "pushoverApi": {
-          "id": "qmm7O1MHQ9s5cH25",
-          "name": "Pushover account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "action": "hmac",
         "type": "SHA256",
         "value": "={{ $json.timestamp + $json.method.toUpperCase() + $json.requestPath + $json.body }}",
@@ -918,11 +962,11 @@
           "conditions": [
             {
               "id": "7d07e4e0-13c9-4456-b3f7-5b2f147130ca",
-              "leftValue": "={{ $json.price }}",
-              "rightValue": "={{ $json.moving_average }}",
+              "leftValue": "={{ $json.body.data[0].holdSide }}",
+              "rightValue": "=short",
               "operator": {
-                "type": "number",
-                "operation": "gt"
+                "type": "string",
+                "operation": "equals"
               }
             }
           ],
@@ -1545,27 +1589,6 @@
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT \n    COALESCE(\n        (SELECT last_value + 1\n         FROM pg_sequences\n         WHERE schemaname = 'public'\n           AND sequencename = (\n             SELECT relname\n             FROM pg_class c\n             JOIN pg_namespace n ON n.oid = c.relnamespace\n             WHERE c.relkind = 'S'\n               AND n.nspname = 'public'\n               AND c.relname = pg_get_serial_sequence('public.futures_orders', 'orderId')\n           )\n        ), 1\n    ) AS next_order_id;\n",
-        "options": {}
-      },
-      "id": "d0ecf2db-7b3e-4393-a5ba-731cebb5bfd6",
-      "name": "next_orderId1",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        460,
-        460
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "sxFt0uvtx3x5AcFz",
-          "name": "Databot"
-        }
-      }
-    },
-    {
-      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -1953,246 +1976,6 @@
     },
     {
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "f4e2db00-d3b6-4d27-9bed-070d27fcafb5",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band && $input.all()[1].json.price > $input.all()[1].json.lower_band && $json.slope <= 0.1 }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Lower Down"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
-                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band && $input.all()[1].json.price <= $input.all()[1].json.lower_band}}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Lower Up"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "6283a803-5334-437a-8eef-611cea8fa3fe",
-                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.lower_band_1_05 && $input.all()[1].json.price <= $input.all()[1].json.lower_band_1_05 && $json.rsi <= 40}}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "LM Up"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "8abd4411-9662-497b-aea8-cebaf78d7455",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band_1_05 && $input.all()[1].json.price > $input.all()[1].json.lower_band_1_05 }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "LM Down"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "e1c58c18-c915-48fc-b95f-e37561eeaa01",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band && $input.all()[1].json.price > $input.all()[1].json.lower_band }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "MA Down"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra",
-          "allMatchingOutputs": true
-        }
-      },
-      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
-      "name": "Short Cases",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        3220,
-        -680
-      ]
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "e9983be0-ae41-456c-90eb-9b45f1756ee6",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band && $input.all()[1].json.price > $input.all()[1].json.upper_band }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Upper Down"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "b0697279-0654-4e2f-9e70-b3ac0e66ea18",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band_1_05 && $input.all()[1].json.price >= $input.all()[1].json.upper_band_1_05  }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "UM Down"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "08cca6a5-60f7-4d01-89cc-1f1d546ebfe9",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.lower_band && $input.all()[1].json.price > $input.all()[1].json.lower_band }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Lower Down"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra",
-          "allMatchingOutputs": true
-        }
-      },
-      "id": "a38b1e86-8d25-4f5d-a876-e7632718e376",
-      "name": "Long Cases",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        3220,
-        -980
-      ]
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -2296,21 +2079,6 @@
       "typeVersion": 2,
       "position": [
         2560,
-        -760
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "id": "7b05d87e-2464-4c59-87ca-5ecccfcceda3",
-      "name": "Merge1",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        2720,
         -760
       ]
     },
@@ -2508,7 +2276,7 @@
             {
               "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
               "name": "size",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.01 : $json.symbol == \"ETHUSDT\" ? 0.16 : 710}}",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.1 : $json.symbol == \"ETHUSDT\" ? 0.16 : 710}}",
               "type": "number"
             },
             {
@@ -2556,7 +2324,7 @@
             {
               "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
               "name": "size",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.01 : $json.symbol == \"ETHUSDT\" ? 0.016 : 71}}",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.1 : $json.symbol == \"ETHUSDT\" ? 0.016 : 71}}",
               "type": "number"
             },
             {
@@ -2584,6 +2352,311 @@
         2540,
         360
       ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
+                    "leftValue": "={{ $('Code1').all()[0].json.price >=$('Code1').all()[0].json.lower_band && $('Code1').all()[1].json.price <= $('Code1').all()[1].json.lower_band}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Lower Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6283a803-5334-437a-8eef-611cea8fa3fe",
+                    "leftValue": "={{ $('Code1').all()[0].json.price >= $('Code1').all()[0].json.lower_band_1_05 && $('Code1').all()[1].json.price <= $('Code1').all()[1].json.lower_band_1_05 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "LM Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "85db2955-6ebf-4fba-bec7-27d04e655f74",
+                    "leftValue": "={{ $('Code1').all()[0].json.price >= $('Code1').all()[0].json.moving_average && $('Code1').all()[1].json.price <= $('Code1').all()[1].json.moving_average }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c7e82f84-c14c-4ad1-a6e5-5a42a8303a7b",
+                    "leftValue": "={{ $('Code1').all()[0].json.price >= $('Code1').all()[0].json.upper_band_1_05 && $('Code1').all()[1].json.price <= $('Code1').all()[1].json.upper_band_1_05 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "UM Up"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7ffe219d-3fcb-45e4-9ce2-89e753bb8e51",
+                    "leftValue": "={{ $('Code1').all()[0].json.price >= $('Code1').all()[0].json.upper_band && $('Code1').all()[1].json.price <= $('Code1').all()[1].json.upper_band }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Upper Up"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "c1f21ca5-871c-46f9-8179-a403f3509528",
+      "name": "Short Cases",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3220,
+        -900
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
+                    "leftValue": "={{ $('Code1').all()[0].json.price <=$('Code1').all()[0].json.lower_band && $('Code1').all()[1].json.price >= $('Code1').all()[1].json.lower_band}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Lower Down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6283a803-5334-437a-8eef-611cea8fa3fe",
+                    "leftValue": "={{ $('Code1').all()[0].json.price <= $('Code1').all()[0].json.lower_band_1_05 && $('Code1').all()[1].json.price >= $('Code1').all()[1].json.lower_band_1_05 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "LM Down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "85db2955-6ebf-4fba-bec7-27d04e655f74",
+                    "leftValue": "={{ $('Code1').all()[0].json.price <= $('Code1').all()[0].json.moving_average && $('Code1').all()[1].json.price >= $('Code1').all()[1].json.moving_average }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "MA Down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c7e82f84-c14c-4ad1-a6e5-5a42a8303a7b",
+                    "leftValue": "={{ $('Code1').all()[0].json.price <= $('Code1').all()[0].json.upper_band_1_05 && $('Code1').all()[1].json.price >= $('Code1').all()[1].json.upper_band_1_05 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "UM Down"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "7ffe219d-3fcb-45e4-9ce2-89e753bb8e51",
+                    "leftValue": "={{ $('Code1').all()[0].json.price <= $('Code1').all()[0].json.upper_band && $('Code1').all()[1].json.price >= $('Code1').all()[1].json.upper_band }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Upper Down"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "ae09b4c1-529b-4b10-8b36-7ac84b0303ea",
+      "name": "Long Cases",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3220,
+        -640
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "7b05d87e-2464-4c59-87ca-5ecccfcceda3",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2720,
+        -760
+      ]
     }
   ],
   "pinData": {},
@@ -2597,6 +2670,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-22T09:38:27.000Z",
-  "versionId": "e7a5f700-7222-4368-98e1-e0868200f470"
+  "updatedAt": "2024-11-22T13:47:03.000Z",
+  "versionId": "a0f08eaa-125e-4237-a4f4-7e7742be546e"
 }
