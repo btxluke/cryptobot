@@ -166,62 +166,6 @@
         ]
       ]
     },
-    "buy_fields": {
-      "main": [
-        [
-          {
-            "node": "Place Order",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "sell_fields": {
-      "main": [
-        [
-          {
-            "node": "Place Order",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Postgres1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Pushover",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Pushover": {
-      "main": [
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Crypto4": {
       "main": [
         [
@@ -485,6 +429,44 @@
         [
           {
             "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buy_fields": {
+      "main": [
+        [
+          {
+            "node": "Place Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sell_fields": {
+      "main": [
+        [
+          {
+            "node": "Place Order",
             "type": "main",
             "index": 0
           }
@@ -883,159 +865,6 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
-              "name": "side",
-              "value": "buy",
-              "type": "string"
-            },
-            {
-              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
-              "name": "size",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.001 : $json.symbol == \"ETHUSDT\" ? 0.16 : 710}}",
-              "type": "number"
-            },
-            {
-              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
-              "name": "symbol",
-              "value": "={{ \"SBTCSPERP\" }}",
-              "type": "string"
-            },
-            {
-              "id": "7797d2e7-90a4-4dc2-b6bd-8bc81c07abdf",
-              "name": "stopLoss",
-              "value": "={{Math.round((Number($json.price) * 0.995)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
-              "type": "number"
-            },
-            {
-              "id": "47ca3989-dc33-4386-86a7-7127ec4bd26a",
-              "name": "takeProfit",
-              "value": "={{Math.round((Number($json.price) * 1.025)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "id": "64714541-9cd3-464d-baa7-28a7a2a89de6",
-      "name": "buy_fields",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2540,
-        540
-      ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
-              "name": "side",
-              "value": "sell",
-              "type": "string"
-            },
-            {
-              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
-              "name": "size",
-              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.001 : $json.symbol == \"ETHUSDT\" ? 0.016 : 71}}",
-              "type": "number"
-            },
-            {
-              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
-              "name": "symbol",
-              "value": "={{ \"SBTCSPERP\" }}",
-              "type": "string"
-            },
-            {
-              "id": "e4e6fa00-d27a-4a42-bfba-40b9b769b0cf",
-              "name": "stopLoss",
-              "value": "={{Math.round((Number($json.price) * 1.005)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
-              "type": "number"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "id": "088e2a77-6707-429c-a8ce-7b42277ec3bb",
-      "name": "sell_fields",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2540,
-        360
-      ]
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://api.bitget.com{{ $json.requestPath }}",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "ACCESS-SIGN",
-              "value": "={{ $json.data }}"
-            },
-            {
-              "name": "ACCESS-TIMESTAMP",
-              "value": "={{ $json.timestamp }}"
-            },
-            {
-              "name": "ACCESS-PASSPHRASE",
-              "value": "Inferno123"
-            },
-            {
-              "name": "locale",
-              "value": "en-US"
-            },
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ $json.body }}",
-        "options": {
-          "response": {
-            "response": {
-              "fullResponse": true
-            }
-          }
-        }
-      },
-      "id": "50208525-defd-4363-89ab-0336f7cc2bd2",
-      "name": "HTTP Request1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3580,
-        420
-      ],
-      "executeOnce": true,
-      "credentials": {
-        "httpQueryAuth": {
-          "id": "xPPmrpo7lNZEQD92",
-          "name": "Binance ApiKey"
-        },
-        "httpHeaderAuth": {
-          "id": "s7MYHJ2AeCAbH6Lb",
-          "name": "BitGet Api"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
         "userKey": "ut43h4z2qbb6yyoaecknu8899rh78y",
         "message": "={{ $json.error.message }}\n________________________\n{{ JSON.stringify($json) }}",
         "priority": 0,
@@ -1049,8 +878,8 @@
       "type": "n8n-nodes-base.pushover",
       "typeVersion": 1,
       "position": [
-        4400,
-        560
+        1220,
+        -860
       ],
       "credentials": {
         "pushoverApi": {
@@ -2603,6 +2432,158 @@
         620
       ],
       "executeOnce": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.bitget.com{{ $json.requestPath }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ACCESS-SIGN",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "name": "ACCESS-TIMESTAMP",
+              "value": "={{ $json.timestamp }}"
+            },
+            {
+              "name": "ACCESS-PASSPHRASE",
+              "value": "Inferno123"
+            },
+            {
+              "name": "locale",
+              "value": "en-US"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "50208525-defd-4363-89ab-0336f7cc2bd2",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3580,
+        420
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "xPPmrpo7lNZEQD92",
+          "name": "Binance ApiKey"
+        },
+        "httpHeaderAuth": {
+          "id": "s7MYHJ2AeCAbH6Lb",
+          "name": "BitGet Api"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
+              "name": "side",
+              "value": "buy",
+              "type": "string"
+            },
+            {
+              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
+              "name": "size",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.01 : $json.symbol == \"ETHUSDT\" ? 0.16 : 710}}",
+              "type": "number"
+            },
+            {
+              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
+              "name": "symbol",
+              "value": "={{ \"SBTCSPERP\" }}",
+              "type": "string"
+            },
+            {
+              "id": "7797d2e7-90a4-4dc2-b6bd-8bc81c07abdf",
+              "name": "stopLoss",
+              "value": "={{Math.round((Number($json.price) * 0.995)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
+              "type": "number"
+            },
+            {
+              "id": "47ca3989-dc33-4386-86a7-7127ec4bd26a",
+              "name": "takeProfit",
+              "value": "={{Math.round((Number($json.price) * 1.025)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "64714541-9cd3-464d-baa7-28a7a2a89de6",
+      "name": "buy_fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2540,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f75de16f-b11f-4fdc-80bb-168bc8134b07",
+              "name": "side",
+              "value": "sell",
+              "type": "string"
+            },
+            {
+              "id": "bc8253b5-1ed1-4de0-8f3a-7687942af901",
+              "name": "size",
+              "value": "={{ $json.symbol == \"BTCUSDT\" ? 0.01 : $json.symbol == \"ETHUSDT\" ? 0.016 : 71}}",
+              "type": "number"
+            },
+            {
+              "id": "a8c64095-d9ab-4950-b09a-167f7bf18369",
+              "name": "symbol",
+              "value": "={{ \"SBTCSPERP\" }}",
+              "type": "string"
+            },
+            {
+              "id": "e4e6fa00-d27a-4a42-bfba-40b9b769b0cf",
+              "name": "stopLoss",
+              "value": "={{Math.round((Number($json.price) * 1.005)*($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000))/($json.symbol == \"BTCUSDT\" ? 1 : $json.symbol == \"ETHUSDT\" ? 10 : 1000)}}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "088e2a77-6707-429c-a8ce-7b42277ec3bb",
+      "name": "sell_fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2540,
+        360
+      ]
     }
   ],
   "pinData": {},
@@ -2616,6 +2597,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-21T07:49:25.000Z",
-  "versionId": "cd20c671-055a-4022-9355-5e2d3677bda3"
+  "updatedAt": "2024-11-22T09:38:27.000Z",
+  "versionId": "e7a5f700-7222-4368-98e1-e0868200f470"
 }
