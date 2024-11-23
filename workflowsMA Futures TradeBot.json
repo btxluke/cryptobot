@@ -1569,7 +1569,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT \"orderId\" + 1 AS next_orderId FROM public.futures_orders\n",
+        "query": "SELECT \"orderId\" + 1 AS next_orderId FROM public.futures_orders ORDER BY \"orderId\" DESC LIMIT 1;\n",
         "options": {}
       },
       "id": "353d2ac2-e23a-474c-a8c6-fb4e31abc3da",
@@ -2670,6 +2670,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-22T13:47:03.000Z",
-  "versionId": "a0f08eaa-125e-4237-a4f4-7e7742be546e"
+  "updatedAt": "2024-11-23T07:46:25.000Z",
+  "versionId": "d0ce9f10-8732-4dec-9e81-4d08985dbbef"
 }
