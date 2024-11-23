@@ -208,7 +208,7 @@
       "main": [
         [
           {
-            "node": "close order",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -344,45 +344,6 @@
         ]
       ]
     },
-    "Switch2": {
-      "main": [
-        [
-          {
-            "node": "sell_fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "buy_fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "buy_fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "sell_fields",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "redirector",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "HTTP Request1": {
       "main": [
         [
@@ -443,35 +404,74 @@
       "main": [
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "sell_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "buy_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "buy_fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "sell_fields",
             "type": "main",
             "index": 0
           }
@@ -489,35 +489,35 @@
       "main": [
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "If",
+            "node": "close order",
             "type": "main",
             "index": 0
           }
@@ -535,7 +535,7 @@
       "main": [
         [
           {
-            "node": "If1",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -979,7 +979,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2920,
+        3060,
         -760
       ]
     },
@@ -1194,8 +1194,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2700,
-        20
+        3840,
+        -280
       ]
     },
     {
@@ -1222,7 +1222,7 @@
             {
               "id": "8f86d387-69df-4a92-a745-8ccc9f14311d",
               "leftValue": "={{ Number($json.body.data[0].unrealizedPL) - Number($json.body.data[0].deductedFee) }}",
-              "rightValue": 0,
+              "rightValue": "={{ $json.body.data[0].deductedFee }}",
               "operator": {
                 "type": "number",
                 "operation": "gt"
@@ -1239,8 +1239,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3580,
-        -260
+        2880,
+        -760
       ]
     },
     {
@@ -2084,125 +2084,6 @@
     },
     {
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $input.all()[0].json.slope > 0 && $input.all()[1].json.slope <= 0 && $input.all()[0].rsi <= 50 }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "slope+rsi+"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "130e3884-63e1-408c-ac54-1d86c3628dbb",
-                    "leftValue": "={{ $input.all()[0].json.slope < 0 && $input.all()[1].json.slope >= 0 && $input.all()[0].rsi >= 50 }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "slope-rsi-"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "4f7f98fa-a6ef-4e98-aaf0-839de3635bfe",
-                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.upper_band && $input.all()[1].json.price < $input.all()[1].json.upper_band && $json.squeeze <= 0.6}}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "sq_bo+"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "22459cac-b904-407c-af3c-3e025f591cc6",
-                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band && $input.all()[1].json.price > $input.all()[1].json.upper_band && $json.squeeze <= 0.6}}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "sq_bo-"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "id": "43857d73-1575-408c-9a86-dad077d181f6",
-      "name": "Switch2",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        2240,
-        620
-      ],
-      "executeOnce": true
-    },
-    {
-      "parameters": {
         "method": "POST",
         "url": "=https://api.bitget.com{{ $json.requestPath }}",
         "authentication": "genericCredentialType",
@@ -2512,6 +2393,125 @@
                 },
                 "conditions": [
                   {
+                    "leftValue": "={{ $input.all()[0].json.slope > 0 && $input.all()[1].json.slope <= 0 && $input.all()[0].rsi <= 45 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "slope+rsi+"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "130e3884-63e1-408c-ac54-1d86c3628dbb",
+                    "leftValue": "={{ $input.all()[0].json.slope < 0 && $input.all()[1].json.slope >= 0 && $input.all()[0].rsi >= 55 }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "slope-rsi-"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "4f7f98fa-a6ef-4e98-aaf0-839de3635bfe",
+                    "leftValue": "={{ $input.all()[0].json.price >= $input.all()[0].json.upper_band && $input.all()[1].json.price < $input.all()[1].json.upper_band && $json.squeeze <= 0.6}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "sq_bo+"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "22459cac-b904-407c-af3c-3e025f591cc6",
+                    "leftValue": "={{ $input.all()[0].json.price <= $input.all()[0].json.upper_band && $input.all()[1].json.price > $input.all()[1].json.upper_band && $json.squeeze <= 0.6}}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "sq_bo-"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "43857d73-1575-408c-9a86-dad077d181f6",
+      "name": "Switch2",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2240,
+        620
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
                     "id": "f4c4cb8b-9ca5-4b9b-9579-627d8c68655a",
                     "leftValue": "={{ $('Code1').all()[0].json.price <=$('Code1').all()[0].json.lower_band && $('Code1').all()[1].json.price >= $('Code1').all()[1].json.lower_band}}",
                     "rightValue": "",
@@ -2662,7 +2662,7 @@
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
-    "saveDataSuccessExecution": "none",
+    "saveDataSuccessExecution": "all",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
     "saveDataErrorExecution": "all"
@@ -2670,6 +2670,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-23T07:46:25.000Z",
-  "versionId": "d0ce9f10-8732-4dec-9e81-4d08985dbbef"
+  "updatedAt": "2024-11-23T13:29:30.000Z",
+  "versionId": "8bbf3ca3-2bd4-45a7-b72d-77ad951d7f22"
 }
