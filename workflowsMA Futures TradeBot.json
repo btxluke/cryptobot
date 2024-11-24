@@ -200,7 +200,13 @@
     },
     "Postgres2": {
       "main": [
-        [],
+        [
+          {
+            "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Pushover1",
@@ -542,35 +548,35 @@
       "main": [
         [
           {
-            "node": "l",
+            "node": "l1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "lm",
+            "node": "lm1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "ma",
+            "node": "ma1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "um",
+            "node": "um1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "u",
+            "node": "u1",
             "type": "main",
             "index": 0
           }
@@ -578,6 +584,61 @@
         [
           {
             "node": "redirector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lm1": {
+      "main": [
+        [
+          {
+            "node": "move TP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "um1": {
+      "main": [
+        [
+          {
+            "node": "move TP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "u1": {
+      "main": [
+        [
+          {
+            "node": "move TP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ma1": {
+      "main": [
+        [
+          {
+            "node": "move TP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "l1": {
+      "main": [
+        [
+          {
+            "node": "move TP",
             "type": "main",
             "index": 0
           }
@@ -747,8 +808,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2820,
-        20
+        3200,
+        160
       ]
     },
     {
@@ -764,8 +825,8 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        2980,
-        20
+        3360,
+        160
       ]
     },
     {
@@ -942,8 +1003,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3560,
-        420
+        3500,
+        560
       ]
     },
     {
@@ -959,8 +1020,8 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        3680,
-        420
+        3620,
+        560
       ]
     },
     {
@@ -1029,8 +1090,8 @@
       "type": "n8n-nodes-base.pushover",
       "typeVersion": 1,
       "position": [
-        4380,
-        140
+        4260,
+        300
       ],
       "credentials": {
         "pushoverApi": {
@@ -1225,8 +1286,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2900,
-        440
+        2840,
+        580
       ]
     },
     {
@@ -1402,8 +1463,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        4180,
-        20
+        4120,
+        160
       ],
       "credentials": {
         "postgres": {
@@ -1537,8 +1598,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3580,
-        20
+        3520,
+        160
       ],
       "executeOnce": true,
       "credentials": {
@@ -1563,8 +1624,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2920,
-        240
+        2860,
+        380
       ],
       "credentials": {
         "postgres": {
@@ -1825,8 +1886,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4020,
-        420
+        3960,
+        560
       ],
       "executeOnce": true,
       "credentials": {
@@ -1884,8 +1945,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2760,
-        540
+        2700,
+        680
       ]
     },
     {
@@ -1926,8 +1987,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2760,
-        360
+        2700,
+        500
       ]
     },
     {
@@ -2056,8 +2117,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4660,
-        -240
+        5080,
+        -40
       ]
     },
     {
@@ -2260,11 +2321,12 @@
             {
               "id": "c659389c-89cf-4075-a356-d7a8225d3423",
               "name": "tp",
-              "value": "={{ $json.lower_band_1_05 }}",
+              "value": "={{ $json.moving_average }}",
               "type": "number"
             }
           ]
         },
+        "includeOtherFields": true,
         "options": {}
       },
       "id": "257b8844-5412-460a-a325-a3cbe28755ad",
@@ -2272,8 +2334,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4480,
-        -900
+        4440,
+        -1360
       ]
     },
     {
@@ -2283,11 +2345,12 @@
             {
               "id": "c659389c-89cf-4075-a356-d7a8225d3423",
               "name": "tp",
-              "value": "={{ $json.lower_band }}",
+              "value": "={{ $json.lower_band_1_05 }}",
               "type": "number"
             }
           ]
         },
+        "includeOtherFields": true,
         "options": {}
       },
       "id": "1998865a-9f8b-40e2-8792-708ab29f4dac",
@@ -2295,31 +2358,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4480,
-        -1060
-      ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "c659389c-89cf-4075-a356-d7a8225d3423",
-              "name": "tp",
-              "value": "={{ $json.moving_average }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "b5c25710-2286-4bea-8c3b-4ee105492d3d",
-      "name": "ma",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        4480,
-        -740
+        4440,
+        -1520
       ]
     },
     {
@@ -2334,15 +2374,16 @@
             }
           ]
         },
+        "includeOtherFields": true,
         "options": {}
       },
-      "id": "6e85a8db-3b3b-4220-a96b-bc76d63cefc3",
-      "name": "um",
+      "id": "b5c25710-2286-4bea-8c3b-4ee105492d3d",
+      "name": "ma",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4480,
-        -580
+        4440,
+        -1200
       ]
     },
     {
@@ -2357,6 +2398,31 @@
             }
           ]
         },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "6e85a8db-3b3b-4220-a96b-bc76d63cefc3",
+      "name": "um",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4440,
+        -1040
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c659389c-89cf-4075-a356-d7a8225d3423",
+              "name": "tp",
+              "value": "={{ $json.upper_band * 1.01 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
         "options": {}
       },
       "id": "84c08886-3302-4752-a79f-b0105060d724",
@@ -2364,8 +2430,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4480,
-        -420
+        4440,
+        -880
       ]
     },
     {
@@ -2533,6 +2599,126 @@
           "name": "Databot"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c659389c-89cf-4075-a356-d7a8225d3423",
+              "name": "tp",
+              "value": "={{ $json.lower_band }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "92925ed9-cd11-4e2a-bed0-1772467ce443",
+      "name": "lm1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4440,
+        -540
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c659389c-89cf-4075-a356-d7a8225d3423",
+              "name": "tp",
+              "value": "={{ $json.moving_average }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "60db3015-b359-4d15-a7a9-e282319b5f10",
+      "name": "um1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4440,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c659389c-89cf-4075-a356-d7a8225d3423",
+              "name": "tp",
+              "value": "={{ $json.upper_band_1_05 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "d3fec229-c428-4d3f-bb22-50ae882bb706",
+      "name": "u1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4440,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c659389c-89cf-4075-a356-d7a8225d3423",
+              "name": "tp",
+              "value": "={{ $json.lower_band * 0.99 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "79faa143-ff0f-41ac-ade8-fec776371ba4",
+      "name": "l1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4440,
+        -700
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c659389c-89cf-4075-a356-d7a8225d3423",
+              "name": "tp",
+              "value": "={{ $json.lower_band_1_05 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "0fdf5e0e-652c-4fea-9e23-7763a6dae8e0",
+      "name": "ma1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4440,
+        -380
+      ]
     }
   ],
   "pinData": {},
@@ -2546,6 +2732,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-24T09:24:15.000Z",
-  "versionId": "70d4fcb8-9c0a-48d1-9939-a0b6e3c9f065"
+  "updatedAt": "2024-11-24T18:43:33.000Z",
+  "versionId": "cfe662e6-8ece-466b-b983-7fa40130a13a"
 }
