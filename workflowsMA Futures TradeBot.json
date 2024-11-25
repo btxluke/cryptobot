@@ -1835,8 +1835,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3420,
-        -780
+        3440,
+        -580
       ]
     },
     {
@@ -2590,7 +2590,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3460,
+        3440,
         -280
       ],
       "credentials": {
@@ -2732,6 +2732,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-24T18:43:33.000Z",
-  "versionId": "cfe662e6-8ece-466b-b983-7fa40130a13a"
+  "updatedAt": "2024-11-25T10:06:18.000Z",
+  "versionId": "c2a59a30-31ee-440d-9c2f-e5a237cea6b3"
 }
