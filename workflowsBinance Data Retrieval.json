@@ -1041,70 +1041,6 @@
       ]
     },
     {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "value": "exchange_prices",
-          "mode": "list",
-          "cachedResultName": "exchange_prices"
-        },
-        "columns": {
-          "mappingMode": "autoMapInputData",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "time_hr",
-              "displayName": "time_hr",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "symbol",
-              "displayName": "symbol",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "price",
-              "displayName": "price",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "bebc57b1-5bd9-4524-b632-3a647844f0a1",
-      "name": "Postgres4",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        2940,
-        1580
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "sxFt0uvtx3x5AcFz",
-          "name": "Databot"
-        }
-      }
-    },
-    {
       "parameters": {},
       "id": "d4b9822c-997d-47c3-b97d-b6f05ae80c81",
       "name": "No Operation, do nothing",
@@ -1763,6 +1699,70 @@
         3560,
         1240
       ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "exchange_prices",
+          "mode": "list",
+          "cachedResultName": "exchange_prices"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "time_hr",
+              "displayName": "time_hr",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "symbol",
+              "displayName": "symbol",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bebc57b1-5bd9-4524-b632-3a647844f0a1",
+      "name": "Postgres4",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2940,
+        1580
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1779,6 +1779,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-10T05:50:22.000Z",
-  "versionId": "c5b59e22-db9a-43e0-859a-4cfb4f70e96b"
+  "updatedAt": "2024-11-30T17:19:35.000Z",
+  "versionId": "355393e5-dcd1-4994-9607-4715f7e0422b"
 }
