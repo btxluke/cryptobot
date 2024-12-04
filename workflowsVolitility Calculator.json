@@ -263,17 +263,6 @@
         ]
       ]
     },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "If2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If2": {
       "main": [
         [
@@ -286,38 +275,6 @@
         [
           {
             "node": "dump",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit Fields4",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "place new pair",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit Fields8",
             "type": "main",
             "index": 0
           }
@@ -495,6 +452,49 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "place new pair",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-11-14T09:38:09.504Z",
@@ -518,7 +518,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT symbol,MAX(price),MIN(price), AVG(price) FROM public.exchange_prices WHERE time_hr >= now() - INTERVAL'120m' AND symbol NOT LIKE '%USDT' GROUP BY symbol ORDER BY symbol DESC",
+        "query": "SELECT symbol,MAX(price),MIN(price), AVG(price) FROM public.exchange_prices WHERE time_hr >= now() - INTERVAL'180m' GROUP BY symbol ORDER BY symbol DESC",
         "options": {}
       },
       "id": "1db56821-e0d3-456f-9f9e-8549d3e7c2e5",
@@ -973,23 +973,8 @@
           "id": "qmm7O1MHQ9s5cH25",
           "name": "Pushover account"
         }
-      }
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "fieldsToMatchString": "symbol",
-        "joinMode": "keepEverything",
-        "options": {}
       },
-      "id": "f4cd1158-96e2-4752-aa42-4200e2df6b3b",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        3280,
-        420
-      ]
+      "disabled": true
     },
     {
       "parameters": {
@@ -1034,120 +1019,6 @@
       "position": [
         3500,
         620
-      ]
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $input.all().length }}",
-                    "rightValue": 2,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Pair Intact"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "05338493-a68d-4202-a67a-9539b42b89a3",
-                    "leftValue": "={{ $input.all().length == 1 && $json.orderId !== undefined }}",
-                    "rightValue": 1,
-                    "operator": {
-                      "type": "boolean",
-                      "operation": "true",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "Single Order"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "6ed7c8fb-62e5-4e18-af84-105ef8c7a9d0",
-                    "leftValue": "={{ $input.all()[0].json.orderId  }}",
-                    "rightValue": 0,
-                    "operator": {
-                      "type": "string",
-                      "operation": "notExists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "No Orders"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "bf01ad6b-4547-4c5e-a75f-ba13c01fd249",
-                    "leftValue": "={{ $input.all()[0].json.time_hr }}",
-                    "rightValue": "={{ $now.minus(2,'days') }}",
-                    "operator": {
-                      "type": "dateTime",
-                      "operation": "before"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "expired"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "86e3cdaa-de0c-412e-8553-0800b87d6234",
-      "name": "Switch",
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        3980,
-        420
       ]
     },
     {
@@ -1582,7 +1453,7 @@
             {
               "id": "41c2064a-4ee7-4ed8-88f5-21c6d985572d",
               "name": "up_price",
-              "value": "={{ Math.round(($json.last_price * ((100 + Number($json.spread_details.spread_up))/100)) * $json.tick_size)/$json.tick_size }}",
+              "value": "={{ Math.round((Number($json.last_price) * ((100 + Number($json.spread_details.spread_up))/100)) * $json.tick_size)/$json.tick_size }}",
               "type": "number"
             }
           ]
@@ -1618,7 +1489,7 @@
             {
               "id": "2868edd4-35c1-436d-a1d1-66031fe4f444",
               "name": "down_price",
-              "value": "={{ Math.round($json.last_price * ((100 - Number($json.spread_details.spread_down))/100) * $json.tick_size)/$json.tick_size }}",
+              "value": "={{ Math.round(Number($json.last_price) * ((100 - Number($json.spread_details.spread_down))/100) * $json.tick_size)/$json.tick_size }}",
               "type": "number"
             }
           ]
@@ -1739,6 +1610,136 @@
         4740,
         400
       ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "symbol",
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "id": "f4cd1158-96e2-4752-aa42-4200e2df6b3b",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3280,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bf01ad6b-4547-4c5e-a75f-ba13c01fd249",
+                    "leftValue": "={{ $input.all()[0].json.time_hr }}",
+                    "rightValue": "={{ $now.minus(2,'days') }}",
+                    "operator": {
+                      "type": "dateTime",
+                      "operation": "before"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "expired"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $input.all().length }}",
+                    "rightValue": 2,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Pair Intact"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "05338493-a68d-4202-a67a-9539b42b89a3",
+                    "leftValue": "={{ $input.all().length == 1 && $json.orderId !== undefined }}",
+                    "rightValue": 1,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Single Order"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6ed7c8fb-62e5-4e18-af84-105ef8c7a9d0",
+                    "leftValue": "={{ $input.all()[0].json.orderId  }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "string",
+                      "operation": "notExists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "No Orders"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "86e3cdaa-de0c-412e-8553-0800b87d6234",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3980,
+        420
+      ]
     }
   ],
   "pinData": {},
@@ -1751,6 +1752,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-11-15T23:21:41.000Z",
-  "versionId": "769bb808-7d0f-4a20-adcd-64b45bbaa161"
+  "updatedAt": "2024-12-04T21:45:42.000Z",
+  "versionId": "22ffa1f6-a984-4a48-8a1b-69bbecaa5df7"
 }
