@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -1414,7 +1414,8 @@
         1040
       ],
       "executeOnce": true,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "disabled": true
     }
   ],
   "pinData": {},
@@ -1433,6 +1434,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-11-30T18:46:03.000Z",
-  "versionId": "e2efe024-c08c-4aef-9541-98fbc641bc5b"
+  "updatedAt": "2024-12-04T18:29:21.000Z",
+  "versionId": "c1bf06ff-101c-49a4-9949-0eb779a74eae"
 }
