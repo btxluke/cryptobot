@@ -15,7 +15,7 @@
             "index": 0
           },
           {
-            "node": "Postgres",
+            "node": "avg_volitility",
             "type": "main",
             "index": 0
           },
@@ -31,17 +31,6 @@
           },
           {
             "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Postgres": {
-      "main": [
-        [
-          {
-            "node": "Postgres1",
             "type": "main",
             "index": 0
           }
@@ -135,17 +124,7 @@
       "main": [
         [
           {
-            "node": "loop collector",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "Query String1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "place new pair",
             "type": "main",
             "index": 0
           }
@@ -294,7 +273,13 @@
     },
     "HTTP Request1": {
       "main": [
-        [],
+        [
+          {
+            "node": "place new pair",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Pushover1",
@@ -453,11 +438,11 @@
         ]
       ]
     },
-    "Merge": {
+    "avg_volitility": {
       "main": [
         [
           {
-            "node": "If2",
+            "node": "Postgres1",
             "type": "main",
             "index": 0
           }
@@ -495,6 +480,17 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-11-14T09:38:09.504Z",
@@ -518,28 +514,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT symbol,MAX(price),MIN(price), AVG(price) FROM public.exchange_prices WHERE time_hr >= now() - INTERVAL'180m' GROUP BY symbol ORDER BY symbol DESC",
-        "options": {}
-      },
-      "id": "1db56821-e0d3-456f-9f9e-8549d3e7c2e5",
-      "name": "Postgres",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.5,
-      "position": [
-        2540,
-        -100
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "sxFt0uvtx3x5AcFz",
-          "name": "Databot"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "UPDATE public.spot_volitility SET \n  \"max\" = {{ $json.max }},\n  \"min\" = {{ $json.min }},\n  \"average\" = {{ $json.avg }}\nWHERE symbol = '{{ $json.symbol.trim() }}';",
+        "query": "UPDATE public.spot_volitility SET \n  \"max\" = {{ $json.max_price }},\n  \"min\" = {{ $json.min_price }},\n  \"average\" = {{ $json.avg_price }}\nWHERE symbol = '{{ $json.symbol.trim() }}';",
         "options": {}
       },
       "id": "415779ec-d9aa-497f-a507-6248ec5aebf4",
@@ -697,7 +672,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT symbol, price AS last_price FROM public.trades WHERE symbol ='{{ $json.symbol }}' ORDER BY time_hr DESC LIMIT 1",
+        "query": "SELECT symbol, price AS last_price, time_hr FROM public.trades WHERE symbol ='{{ $json.symbol }}' ORDER BY time_hr DESC LIMIT 1",
         "options": {}
       },
       "id": "724b8803-389e-44b0-84a8-357fa0148e2c",
@@ -1405,6 +1380,12 @@
               "name": "lot_size",
               "value": "={{ Math.round(1 / $('exchange_info').all().filter(item => item.json.symbol === $json.symbol.trim())[0].json.filters[1].stepSize) }}",
               "type": "number"
+            },
+            {
+              "id": "2de98eb7-3ce6-4ae9-9ade-d16367a36cb0",
+              "name": "last_price",
+              "value": "={{ Date.parse($json.time_hr) <= $now.minus(2, 'days') || $json.last_price == undefined ? $('avg_volitility').all().filter(item => item.json.symbol === $json.symbol)[0].json.latest_price : $json.last_price }}",
+              "type": "number"
             }
           ]
         },
@@ -1613,19 +1594,24 @@
     },
     {
       "parameters": {
-        "mode": "combine",
-        "fieldsToMatchString": "symbol",
-        "joinMode": "keepEverything",
+        "operation": "executeQuery",
+        "query": "SELECT \n    ep.symbol,\n    MAX(ep.price) AS max_price,\n    MIN(ep.price) AS min_price,\n    AVG(ep.price) AS avg_price,\n    latest_price.latest_price\nFROM public.exchange_prices ep\nJOIN (\n    SELECT DISTINCT ON (symbol) symbol, price AS latest_price\n    FROM public.exchange_prices\n    WHERE time_hr >= now() - INTERVAL '180m'\n    ORDER BY symbol, time_hr DESC\n) latest_price ON ep.symbol = latest_price.symbol\nWHERE ep.time_hr >= now() - INTERVAL '180m'\nGROUP BY ep.symbol, latest_price.latest_price\nORDER BY ep.symbol DESC;\n",
         "options": {}
       },
-      "id": "f4cd1158-96e2-4752-aa42-4200e2df6b3b",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
+      "id": "1db56821-e0d3-456f-9f9e-8549d3e7c2e5",
+      "name": "avg_volitility",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
       "position": [
-        3280,
-        420
-      ]
+        2540,
+        -100
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     },
     {
       "parameters": {
@@ -1642,11 +1628,12 @@
                 "conditions": [
                   {
                     "id": "bf01ad6b-4547-4c5e-a75f-ba13c01fd249",
-                    "leftValue": "={{ $input.all()[0].json.time_hr }}",
+                    "leftValue": "={{ $input.all()[0].json.time_hr <= $now.minus(2,'days') && $json.orderId != undefined }}",
                     "rightValue": "={{ $now.minus(2,'days') }}",
                     "operator": {
-                      "type": "dateTime",
-                      "operation": "before"
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
                     }
                   }
                 ],
@@ -1740,6 +1727,22 @@
         3980,
         420
       ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "symbol",
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "id": "f4cd1158-96e2-4752-aa42-4200e2df6b3b",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3280,
+        420
+      ]
     }
   ],
   "pinData": {},
@@ -1752,6 +1755,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2024-12-04T21:45:42.000Z",
-  "versionId": "22ffa1f6-a984-4a48-8a1b-69bbecaa5df7"
+  "updatedAt": "2024-12-05T16:24:55.000Z",
+  "versionId": "cce7f3ba-da4c-46fe-af1f-f05894fbfe04"
 }
