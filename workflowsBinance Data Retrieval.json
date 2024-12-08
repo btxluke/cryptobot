@@ -131,6 +131,11 @@
             "node": "Code",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Postgres8",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -464,7 +469,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2900,
+        3120,
         320
       ],
       "credentials": {
@@ -490,7 +495,7 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        2700,
+        2920,
         320
       ]
     },
@@ -503,7 +508,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        580,
+        800,
         180
       ]
     },
@@ -516,7 +521,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1160,
+        1380,
         180
       ]
     },
@@ -552,7 +557,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2480,
+        2700,
         320
       ]
     },
@@ -708,7 +713,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3640,
+        3860,
         320
       ],
       "credentials": {
@@ -729,7 +734,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2060,
+        2280,
         320
       ],
       "alwaysOutputData": true,
@@ -769,7 +774,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3500,
+        3720,
         540
       ]
     },
@@ -793,7 +798,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3480,
+        3700,
         320
       ]
     },
@@ -837,7 +842,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2360,
+        2580,
         960
       ],
       "alwaysOutputData": true,
@@ -864,7 +869,7 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        2220,
+        2440,
         960
       ]
     },
@@ -877,7 +882,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1540,
+        1760,
         980
       ]
     },
@@ -907,7 +912,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2080,
+        2300,
         960
       ]
     },
@@ -922,7 +927,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3780,
+        4000,
         1240
       ],
       "credentials": {
@@ -987,7 +992,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3340,
+        3560,
         1240
       ]
     },
@@ -1001,7 +1006,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1200,
+        1420,
         1580
       ]
     },
@@ -1036,7 +1041,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1840,
+        2060,
         1580
       ]
     },
@@ -1047,7 +1052,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1520,
+        1740,
         1320
       ]
     },
@@ -1062,7 +1067,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2080,
+        2300,
         1820
       ],
       "executeOnce": true,
@@ -1122,7 +1127,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2300,
+        2520,
         1820
       ]
     },
@@ -1137,7 +1142,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2520,
+        2740,
         1820
       ],
       "credentials": {
@@ -1154,7 +1159,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2060,
+        2280,
         120
       ]
     },
@@ -1188,7 +1193,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2280,
+        2500,
         320
       ]
     },
@@ -1221,7 +1226,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2900,
+        3120,
         480
       ],
       "alwaysOutputData": true,
@@ -1248,7 +1253,7 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        2700,
+        2920,
         480
       ]
     },
@@ -1278,7 +1283,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2480,
+        2700,
         480
       ]
     },
@@ -1312,7 +1317,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3120,
+        3340,
         480
       ]
     },
@@ -1327,7 +1332,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2080,
+        2300,
         800
       ],
       "executeOnce": true,
@@ -1359,7 +1364,7 @@
       "type": "n8n-nodes-base.compareDatasets",
       "typeVersion": 2.3,
       "position": [
-        2820,
+        3040,
         820
       ]
     },
@@ -1401,7 +1406,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2500,
+        2720,
         800
       ]
     },
@@ -1437,7 +1442,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2500,
+        2720,
         960
       ]
     },
@@ -1496,7 +1501,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3340,
+        3560,
         1080
       ]
     },
@@ -1530,7 +1535,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3780,
+        4000,
         820
       ],
       "credentials": {
@@ -1547,7 +1552,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1820,
+        2040,
         1320
       ]
     },
@@ -1558,7 +1563,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3340,
+        3560,
         920
       ]
     },
@@ -1592,7 +1597,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3560,
+        3780,
         1240
       ]
     },
@@ -1650,7 +1655,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        2940,
+        3160,
         1580
       ],
       "credentials": {
@@ -1754,7 +1759,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.5,
       "position": [
-        3780,
+        4000,
         1080
       ],
       "credentials": {
@@ -1764,6 +1769,27 @@
         }
       },
       "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM public.exchange_prices WHERE time_hr < now() - interval '31 days';",
+        "options": {}
+      },
+      "id": "8bbbf378-b9b4-4c06-b1ea-73df2dab3a0f",
+      "name": "Postgres8",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        800,
+        -20
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "sxFt0uvtx3x5AcFz",
+          "name": "Databot"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1780,6 +1806,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2024-12-08T10:26:24.000Z",
-  "versionId": "79af4bed-df7f-444f-ba3e-90162f5beba8"
+  "updatedAt": "2024-12-08T18:12:01.000Z",
+  "versionId": "1ab3a253-c182-4a12-860d-1da209d9504b"
 }
