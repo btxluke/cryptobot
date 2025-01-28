@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -318,8 +318,15 @@
               "value1": "={{ Number($json.free) + Number($json.locked)}}",
               "operation": "larger"
             }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ $json.asset == \"BTC\" || $json.asset == \"ETH\" || $json.asset == \"XRP\" || $json.asset == \"USDT\"}}",
+              "value2": true
+            }
           ]
-        }
+        },
+        "combineOperation": "any"
       },
       "id": "7df3d20a-ca4c-4711-b9b2-50c83f4f0428",
       "name": "IF",
@@ -897,12 +904,6 @@
               "name": "timestamp",
               "value": "={{ Date.now() }}",
               "type": "number"
-            },
-            {
-              "id": "49678578-712b-4ec9-9862-69f469c2c56b",
-              "name": "omitZeroBalances",
-              "value": "=true",
-              "type": "string"
             }
           ]
         },
@@ -922,7 +923,7 @@
       "parameters": {
         "action": "hmac",
         "type": "SHA256",
-        "value": "=omitZeroBalances=true&timestamp={{ $json.timestamp }}",
+        "value": "=timestamp={{ $json.timestamp }}",
         "secret": "OiOpVYEpwyNetbOXK85p0kPnrWneFyWk61DqOBzE19hqNtru2eQfDScmITQWaYDh"
       },
       "id": "d09a9c6e-4742-4d09-8d93-a75481c0db6b",
@@ -942,10 +943,6 @@
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            {
-              "name": "=omitZeroBalances",
-              "value": "true"
-            },
             {
               "name": "signature",
               "value": "={{ $json.data }}"
@@ -1042,8 +1039,8 @@
       "type": "n8n-nodes-base.pushover",
       "typeVersion": 1,
       "position": [
-        1920,
-        200
+        1940,
+        40
       ],
       "executeOnce": true,
       "credentials": {
@@ -1354,7 +1351,8 @@
         2100,
         1040
       ],
-      "executeOnce": true
+      "executeOnce": true,
+      "disabled": true
     },
     {
       "parameters": {
@@ -1434,6 +1432,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-15T20:54:59.000Z",
-  "versionId": "78af821b-da04-4209-a109-a99617bc3de7"
+  "updatedAt": "2025-01-27T12:10:17.000Z",
+  "versionId": "f6bdd52d-50ad-4b5e-9cb4-367200dac737"
 }
