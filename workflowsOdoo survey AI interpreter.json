@@ -16,52 +16,19 @@
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Code",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
+    "Code": {
       "main": [
         [
           {
-            "node": "Google Sheets",
+            "node": "OpenAI",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Window Buffer Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send Email": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -100,77 +67,49 @@
         0
       ],
       "id": "bdd61808-69a0-47a1-b988-e925baf0964b",
-      "name": "Odoo"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.7,
-      "position": [
-        120,
-        0
-      ],
-      "id": "e90d3304-bd7f-490e-939e-13935ce69f0b",
-      "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.1,
-      "position": [
-        40,
-        220
-      ],
-      "id": "71e56685-361c-4938-9214-53291fc9f5fc",
-      "name": "OpenAI Chat Model"
-    },
-    {
-      "parameters": {
-        "resource": "spreadsheet",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
-      "position": [
-        520,
-        0
-      ],
-      "id": "6225d6a3-dc20-4bf7-a6e3-90b9d6ad957d",
-      "name": "Google Sheets",
+      "name": "Odoo",
       "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "MCsNWA7c8RPHz3yK",
-          "name": "Google Sheets account"
+        "odooApi": {
+          "id": "ndIkNgMNvXw943vZ",
+          "name": "purple juice"
         }
       }
     },
     {
-      "parameters": {},
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
       "position": [
-        240,
-        220
+        120,
+        0
       ],
-      "id": "f23ae41b-7b04-4f61-bf11-51b4986f7157",
-      "name": "Window Buffer Memory"
+      "id": "3d148ebb-9cba-4a28-b3d2-5a66ec3cd0ce",
+      "name": "OpenAI"
     },
     {
       "parameters": {
-        "options": {}
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
       },
-      "type": "n8n-nodes-base.emailSendTool",
-      "typeVersion": 2.1,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        380,
-        220
+        -140,
+        0
       ],
-      "id": "fb19bac5-a5ea-46b4-a687-222b0773d950",
-      "name": "Send Email"
+      "id": "387b392d-37ac-469d-8f07-a1f056ccbdd3",
+      "name": "Code"
     }
   ],
   "pinData": {},
@@ -180,6 +119,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-02-17T10:20:46.612Z",
-  "versionId": "ed61bec4-b0b8-4856-ab5e-c1450a0c8bee"
+  "updatedAt": "2025-02-17T17:34:43.000Z",
+  "versionId": "ae20cbac-ce1d-43df-b5b9-55a0758d0db9"
 }
