@@ -495,6 +495,7 @@
   },
   "createdAt": "2023-11-14T09:38:09.504Z",
   "id": "wPxmsKOIBLEsBRga",
+  "isArchived": false,
   "meta": {
     "templateCredsSetupCompleted": true
   },
