@@ -37,7 +37,7 @@
   },
   "createdAt": "2025-02-17T10:20:46.612Z",
   "id": "neHvlt8TJv77v0Mn",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Odoo survey AI interpreter",
   "nodes": [
@@ -120,6 +120,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-02-17T17:34:43.000Z",
-  "versionId": "ae20cbac-ce1d-43df-b5b9-55a0758d0db9"
+  "updatedAt": "2025-08-17T08:34:35.000Z",
+  "versionId": "234fe155-270e-4168-abed-d2be7f20959e"
 }
