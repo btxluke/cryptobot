@@ -2730,6 +2730,15 @@
     "callerPolicy": "workflowsFromSameOwner",
     "saveDataErrorExecution": "all"
   },
+  "shared": [
+    {
+      "createdAt": "2024-11-04T09:08:40.835Z",
+      "updatedAt": "2024-11-04T09:08:40.835Z",
+      "role": "workflow:owner",
+      "workflowId": "DZXDaMK2Qv2dCyGG",
+      "projectId": "BhdUeMHAyfNcD7eA"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
