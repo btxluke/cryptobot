@@ -495,6 +495,15 @@
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner"
   },
+  "shared": [
+    {
+      "createdAt": "2024-11-05T09:29:35.719Z",
+      "updatedAt": "2024-11-05T09:29:35.719Z",
+      "role": "workflow:owner",
+      "workflowId": "3q0xYlJaI1wnAavg",
+      "projectId": "BhdUeMHAyfNcD7eA"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
